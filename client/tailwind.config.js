@@ -10,9 +10,9 @@ module.exports = {
         } ,
         colors: {
           custom: {
-            'color1': '#FFFFFF ',
-            'color2': '#EEF6FA ',
-            'color3': '#062D41 ',
+            'color1': '#f7faff ',
+            'color2': '#bbd4fa ',
+            'color3': '#6487bd ',
           },
         },
       },
