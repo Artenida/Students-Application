@@ -32,7 +32,7 @@ const FormInputsComponent: React.FC<FormInputProps> = ({
           {label}
         </label>
       </div>
-      <div className="w-[300px]">
+      <div>
         <input
           autoComplete="off"
           type={type}
