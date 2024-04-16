@@ -10,7 +10,6 @@ const routes = [
   { path: "/", element: <Home /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
-  { path: "/forum", element: <Forum /> },
   { path: "*", element: <Home /> },
 ];
 
@@ -24,6 +23,7 @@ const AppRoutes = () => {
           ))}
           <Route element={<PrivateRoutes />}>
             <Route element={<Account />} path="/account" />
+            <Route element={<Forum />} path="/forum" />
           </Route>
         </Routes>
       </Router>
