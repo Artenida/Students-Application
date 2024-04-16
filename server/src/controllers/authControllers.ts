@@ -11,7 +11,7 @@ export const register = async (
   try {
     const existingUser = await User.findByUsername(req.body.username);
     if (existingUser.length > 0) {
-      return res.status(409).json("User already exists");
+      return res.status(409).json({message: "User already exists"});
     } else {
       const success = await User.createUser(
         req.body.username,
@@ -19,9 +19,9 @@ export const register = async (
         req.body.password
       );
       if (success) {
-        return res.status(201).json("User has been created");
+        return res.status(201).json({message: "User has been created"});
       } else {
-        return res.status(400).json("Failed to create user");
+        return res.status(400).json({message: "Failed to create user"});
       }
     }
   } catch (error) {
@@ -37,7 +37,7 @@ export const login = async (
   try {
     const userData: any[] = await User.findByUsername(req.body.username);
     if (userData.length === 0) {
-      return res.status(400).json("User not found");
+      return res.status(400).json({message: "User not found"});
     }
 
     const isPasswordCorrect = bcrypt.compareSync(
@@ -46,7 +46,7 @@ export const login = async (
     );
 
     if (!isPasswordCorrect) {
-      return res.status(400).json("Wrong username or password!");
+      return res.status(400).json({message: "Wrong username or password!"});
     }
 
     const token = jwt.sign(

@@ -86,12 +86,12 @@ const Login = () => {
         </div>
         <div className="text-center text-custom-color3 mt-3">
           <Link to={"/register"}>
-            Don't have an account?{" "}
+            Don't have an account?
             <span className="text-custom-color3 font-semibold">Sign Up</span>
           </Link>
         </div>
         {loginError && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500">
+          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
             {JSON.stringify(loginError)}
           </div>
         )}

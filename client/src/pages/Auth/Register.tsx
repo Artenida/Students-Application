@@ -141,12 +141,12 @@ const Register = () => {
           </Link>
         </div>
         {registerError && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500">
+          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
             {JSON.stringify(registerError)}
           </div>
         )}
         {message && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500">
+          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
             "Fix errors before register!"
           </div>
         )}
