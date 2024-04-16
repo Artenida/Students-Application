@@ -1,5 +1,6 @@
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { LargeButton } from "./ButtonComponent";
+import { Link } from "react-router-dom";
 
 interface HomeCard {
   image: string;
@@ -23,7 +24,7 @@ const HomeCardComponent: React.FC<HomeCard> = ({
   isLastCard,
 }) => {
   return (
-    <div className="flex flex-col items-center p-4 bg-custom-color1 h-[630px] w-[400px] rounded-xl">
+    <div className="flex flex-col items-center p-4 bg-custom-color1 h-screen w-[400px] rounded-xl">
       <div>
         <img src={image} alt="WELCOME" className="rounded-xl" />
       </div>
@@ -31,9 +32,13 @@ const HomeCardComponent: React.FC<HomeCard> = ({
         <h2 className="font-bold">{title}</h2>
         <h3 className="mt-2">{description}</h3>
       </div>
-      {isLastCard && (<div className="mt-8">
-        <LargeButton children={"Get started"} />
-      </div>)}
+      {isLastCard && (
+        <div className="mt-8">
+          <Link to={"/login"}>
+            <LargeButton children={"Get started"} />
+          </Link>
+        </div>
+      )}
       <div className="flex justify-between mt-auto w-full text-custom-color3 font-semibold text-[20px] cursor-pointer">
         <div className="flex items-center">
           {showPrevious && (

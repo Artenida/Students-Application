@@ -4,11 +4,13 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import Account from "../pages/Forum/Account";
+import Forum from "../pages/Forum/Forum";
 
 const routes = [
   { path: "/", element: <Home /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
+  { path: "/forum", element: <Forum /> },
   { path: "*", element: <Home /> },
 ];
 
@@ -21,7 +23,6 @@ const AppRoutes = () => {
             <Route key={index} path={route.path} element={route.element} />
           ))}
           <Route element={<PrivateRoutes />}>
-            <Route element={<Home />} path="/" />
             <Route element={<Account />} path="/account" />
           </Route>
         </Routes>
