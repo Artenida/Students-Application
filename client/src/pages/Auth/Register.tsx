@@ -6,6 +6,10 @@ import { registerUser } from "../../api/userThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useEffect, useState } from "react";
 import { selectUser } from "../../redux/user/userSlice";
+import {
+  validateRegisterForm,
+  validateConfirmPassword, // Import validateConfirmPassword
+} from "../../utils/validateUser";
 
 interface FormData {
   username: string;
@@ -13,6 +17,7 @@ interface FormData {
   password: string;
   confirmPassword: string;
 }
+
 const Register = () => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -41,40 +46,37 @@ const Register = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    let updatedErrors = { ...formDataErrors };
 
-    const updatedFormData = { ...formData, [id]: value.trim() };
-
+    let errors = formDataErrors;
     if (id === "confirmPassword") {
-      if (value !== formData.password) {
-        updatedErrors = {
-          ...updatedErrors,
-          confirmPassword: "Passwords do not match",
-        };
-      } else {
-        updatedErrors = { ...updatedErrors, confirmPassword: "" };
-      }
+      errors = {
+        ...errors,
+        confirmPassword: validateConfirmPassword(formData.password, value),
+      };
+    } else {
+      errors = validateRegisterForm(id, value, formDataErrors);
     }
 
-    setFormData(updatedFormData);
-    setFormDataErrors(updatedErrors);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [id]: value.trim(),
+    }));
+    setFormDataErrors(errors);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { username, email, password, confirmPassword } = formData;
 
-    const hasErrors = Object.values(formDataErrors).some(
-      (error) => error !== ""
-    );
+    const errors = Object.values(formDataErrors).some((error) => error !== "");
 
-    if (!hasErrors) {
+    if (!errors) {
       setMessage(false);
       const resultAction = await dispatch(
         registerUser({ username, email, password, confirmPassword })
       );
       if (registerUser.fulfilled.match(resultAction)) {
-        navigate("/signIn");
+        navigate("/login");
       } else if (registerUser.rejected.match(resultAction)) {
         console.error(resultAction.error.message);
       }
@@ -124,7 +126,7 @@ const Register = () => {
           />
           <FormInputsComponent
             id={"confirmPassword"}
-            label={"Password"}
+            label={"Confirm Password"}
             type={"password"}
             placeholder="Confirm password"
             onChange={handleChange}
@@ -136,8 +138,8 @@ const Register = () => {
         </div>
         <div className="text-custom-color3 mt-3 text-center">
           <Link to={"/login"}>
-            Already have an account?{" "}
-            <span className="text-custom-color3 font-semibold">Sign In</span>
+            Already have an account?
+            <span className="text-custom-color3 font-semibold">  Sign In</span>
           </Link>
         </div>
         {registerError && (

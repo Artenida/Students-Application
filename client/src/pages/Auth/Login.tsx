@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn, loading, loginError } = useAppSelector(selectUser);
   const navigate = useNavigate();
+  const [message, setMessage] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -36,13 +37,18 @@ const Login = () => {
     }
   }, [isLoggedIn]);
 
-  const handleSubmit = async (
+  const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  ) => {
+    const errors = Object.values(formDataErrors).some((error) => error !== "");
+
     event.preventDefault();
-    try {
-      await dispatch(loginUser(formData));
-    } catch (error) {}
+    if(!errors) {
+      setMessage(false);
+      dispatch(loginUser(formData));
+    } else {
+      setMessage(true);
+    }
   };
 
   return (
@@ -87,12 +93,17 @@ const Login = () => {
         <div className="text-center text-custom-color3 mt-3">
           <Link to={"/register"}>
             Don't have an account?
-            <span className="text-custom-color3 font-semibold">Sign Up</span>
+            <span className="text-custom-color3 font-semibold">  Sign Up</span>
           </Link>
         </div>
         {loginError && (
           <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
             {JSON.stringify(loginError)}
+          </div>
+        )}
+         {message && (
+          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
+            "Fix errors before login!"
           </div>
         )}
       </form>
