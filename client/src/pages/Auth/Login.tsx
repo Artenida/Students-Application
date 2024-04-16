@@ -10,7 +10,7 @@ import { validateLoginForm } from "../../utils/validateUser";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { isLoggedIn, loginError } = useAppSelector(selectUser);
+  const { isLoggedIn, loading, loginError } = useAppSelector(selectUser);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -29,6 +29,12 @@ const Login = () => {
     setFormData({ ...formData, [id]: value.trim() });
     setFormDataErrors(updatedErrors);
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/forum");
+    }
+  }, [isLoggedIn]);
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
