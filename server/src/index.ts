@@ -1,13 +1,18 @@
-// src/app.ts
-import express, { Request, Response } from 'express';
+import express from 'express';
+import cors from "cors";
+import dotenv from 'dotenv';
+import authRoutes from "./routes/authRoutes";
+
+dotenv.config();
 
 const app = express();
-const port = 5000;
+const base_url = process.env.BASE_URL;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
+app.use(cors());
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`);
+app.use(`${base_url}auth`, authRoutes);
+
+app.listen(process.env.DEV_PORT, () => {
+  console.log(`Server is listening at http://localhost:${process.env.DEV_PORT}`);
 });
