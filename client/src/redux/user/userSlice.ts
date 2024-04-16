@@ -7,11 +7,8 @@ interface UserState {
   loading: boolean;
   loginError: string | null;
   registerError: string | null;
-  deleteError: string | null;
-  updateError: string | null;
   token?: string;
   isLoggedIn: boolean;
-  isUpdated: boolean;
   user: any;
   success: boolean;
 }
@@ -20,12 +17,9 @@ const initialState: UserState = {
   currentUser: null,
   loginError: null,
   registerError: null,
-  deleteError: null,
-  updateError: null,
   loading: false,
   token: undefined,
   isLoggedIn: false,
-  isUpdated: false,
   user: null,
   success: false,
 };

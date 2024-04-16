@@ -21,6 +21,7 @@ const MediumButton: React.FC<ButtonProps> = ({ children, onClick }) => {
     <button
       className="w-full rounded-xl bg-custom-color3 px-6 py-3 text-xl font-medium text-custom-color1 hover:bg-custom-color1 hover:text-custom-color3 hover:border-2 hover:border-custom-color3 active:bg-custom-color1"
       onClick={onClick}
+      type="submit"
     >
       {children}
     </button>
