@@ -3,7 +3,7 @@ import Home from "../pages/Auth/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import PrivateRoutes from "./PrivateRoutes";
-import Account from "../pages/Forum/Account";
+import Account from "../pages/Auth/Account";
 import Forum from "../pages/Forum/Forum";
 
 const routes = [
