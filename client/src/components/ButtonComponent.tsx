@@ -8,7 +8,7 @@ interface ButtonProps {
 const SmallButton: React.FC<ButtonProps> = ({ children, onClick }) => {
   return (
     <button
-      className="block w-full rounded bg-custom-color4 px-7 py-2 text-lg font-medium text-custom-color1 hover:bg-custom-color1 hover:text-custom-color3 hover:border-2 hover:border-custom-color3 active:bg-custom-color1 sm:w-auto"
+      className="sm:w-auto w-full rounded-lg bg-custom-color4 px-6 py-1 text-lg font-medium text-custom-color1 hover:bg-custom-color1 hover:text-custom-color3 hover:border-2 hover:border-custom-color3 active:bg-custom-color1"
       onClick={onClick}
     >
       {children}

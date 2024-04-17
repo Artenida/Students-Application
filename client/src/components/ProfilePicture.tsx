@@ -19,7 +19,7 @@ const ProfilePicture = () => {
           <div className="text-custom-color3 p-4 mt-8">
             <h3 className="font-bold text-[20px] text-custom-color3">Your photo</h3>
             <h6>This will be displayed on your profile</h6>
-            <div className="flex gap-4 pt-2">
+            <div className="flex gap-4 pt-4">
               {/* <SmallButton children={"Upload new"} /> */}
               <SmallButton children={"Save"} />
             </div>
