@@ -28,8 +28,8 @@ const HomeCardComponent: React.FC<HomeCard> = ({
       <div>
         <img src={image} alt="WELCOME" className="rounded-xl" />
       </div>
-      <div className="flex justify-center flex-col items-center mt-16 text-custom-color3 text-[20px]">
-        <h2 className="font-bold">{title}</h2>
+      <div className="text-center mt-16 text-custom-color3">
+        <h2 className="font-bold text-[30px]">{title}</h2>
         <h3 className="mt-2">{description}</h3>
       </div>
       {isLastCard && (

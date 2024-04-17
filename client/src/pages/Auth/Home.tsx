@@ -6,24 +6,24 @@ const Home = () => {
   const cards = [
     {
       image: home,
-      title: "WELCOME TO EduConnect",
+      title: "Welcome to EduConnect",
       description:
         "Get ready to explore a world of opportunities tailored just for you!",
     },
     {
       image: home,
-      title: "SECURITY PAGE",
+      title: "Security Page",
       description: "At EduConnect, we prioritize your privacy and security.",
     },
     {
       image: home,
-      title: "COLLABORATE AND CONQUER TOGETHER",
+      title: "Collaborate and Conquer Together",
       description:
         "Join group discussions, share insights, and learn from each other's experiences to achieve mutual success.",
     },
     {
       image: home,
-      title: "YOUR ULTIMATE RESOURCE HUB",
+      title: "Your Ultimate Resource Hub",
       description:
         "Ready to take your academic journey to the next level? Let's dive in!",
     },

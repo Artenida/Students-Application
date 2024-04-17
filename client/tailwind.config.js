@@ -13,6 +13,7 @@ module.exports = {
             'color1': '#f7faff ',
             'color2': '#bbd4fa ',
             'color3': '#6487bd ',
+            'color4': '#143a4e ',
           },
         },
       },
