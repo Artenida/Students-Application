@@ -5,6 +5,7 @@ import Register from "../pages/Auth/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import Account from "../pages/Auth/Account";
 import Forum from "../pages/Forum/Forum";
+import ChangePassword from "../pages/Auth/ChangePassword";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -25,6 +26,7 @@ const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<Account />} path="/account" />
             <Route element={<Forum />} path="/forum" />
+            <Route element={<ChangePassword />} path="/changePassword" />
           </Route>
         </Routes>
       </Router>
