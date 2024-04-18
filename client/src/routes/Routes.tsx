@@ -6,6 +6,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import Account from "../pages/Auth/Account";
 import Forum from "../pages/Forum/Forum";
 import ChangePassword from "../pages/Auth/ChangePassword";
+import Contact from "../pages/Auth/Contact";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -27,6 +28,7 @@ const AppRoutes = () => {
             <Route element={<Account />} path="/account" />
             <Route element={<Forum />} path="/forum" />
             <Route element={<ChangePassword />} path="/changePassword" />
+            <Route element={<Contact />} path="/contact" />
           </Route>
         </Routes>
       </Router>
