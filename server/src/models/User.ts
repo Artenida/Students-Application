@@ -16,6 +16,7 @@ interface DeleteResult {
 interface UpdateResult {
   success: boolean;
   message: string;
+  result?: string;
 }
 export class User {
   static async findByUsername(username: string): Promise<UserData[]> {
@@ -93,7 +94,7 @@ export class User {
   static async updateUser(
     id: string,
     username: string,
-    email: string
+    email: string,
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -136,12 +137,7 @@ export class User {
           if (error) {
             console.error("Error updating user:", error);
             reject("Error updating user");
-          } else if (result.changedRows === 0) {
-            resolve({
-              success: false,
-              message: "No changes detected in user information",
-            });
-          } else if (result.changedRows === 1) {
+          } else {
             resolve({
               success: true,
               message: "User updated successfully",
@@ -163,6 +159,46 @@ export class User {
       throw error;
     }
   }
+
+  static async updateUniversity(id: string, newSubject: string): Promise<UpdateResult> {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+  
+    try {
+      let query: string;
+      let queryParams: (string | number)[];
+  
+      query = "UPDATE university SET user_id = ?, subject = ? WHERE user_id = ?";
+      queryParams = [id, newSubject, id];
+  
+      const result: any = await new Promise((resolve, reject) => {
+        db.query(query, queryParams, (error, result) => {
+          if (error) {
+            console.error("Error updating university:", error);
+            reject("Error updating university");
+          } else {
+            resolve({
+              success: true,
+              message: "University updated successfully",
+            });
+          }
+        });
+      });
+  
+      connection.closeConnection();
+  
+      if (!result) {
+        throw new Error("University update failed");
+      }
+  
+      return result;
+    } catch (error) {
+      console.error("Error updating university:", error);
+      connection.closeConnection();
+      throw error;
+    }
+  }
+   
 
   static async updateBio(id: string, bio: string): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
