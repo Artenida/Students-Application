@@ -1,5 +1,6 @@
 import createDatabaseConnection from "../config";
 import bcrypt from "bcrypt";
+import { deleteSocialMediaAccounts } from "../controllers/userControllers";
 
 interface UserData {
   id: number;
@@ -103,7 +104,7 @@ export class User {
     id: string,
     username: string,
     email: string,
-    bio: string,
+    bio: string
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -139,6 +140,58 @@ export class User {
     } catch (error) {
       console.error("Error updating user:", error);
       connection.closeConnection();
+      throw error;
+    }
+  }
+
+  static async addSocialMediaAccounts(userID: string, social_media: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const insertQuery =
+        "INSERT INTO socials (user_id, social_media) VALUES (?, ?)";
+      const values = [userID, social_media];
+
+      await db.query(insertQuery, values);
+      connection.closeConnection();
+
+      return true;
+    } catch (error) {
+      connection.closeConnection();
+      throw error;
+    }
+  }
+
+  static async deleteSocialMediaAccounts(
+    social_media: string
+  ): Promise<boolean> {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const query = `DELETE FROM socials WHERE  social_media = ?;`;
+      const result: DeleteResult = await new Promise((resolve, reject) => {
+        db.query(query, [social_media], (error, result) => {
+          if (error) {
+            console.error("Error deleting account:", error);
+            connection.closeConnection();
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      connection.closeConnection();
+
+      if (result && result.affectedRows === 0) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error deleting account:", error);
       throw error;
     }
   }
