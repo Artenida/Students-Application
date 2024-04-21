@@ -1,8 +1,14 @@
 import HomeCardComponent from "../../components/HomeCardComponent";
 import home from "../../assets/home.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { isLoggedIn } = useAppSelector(selectUser);
+  const navigate = useNavigate();
+
   const cards = [
     {
       image: home,
@@ -39,6 +45,12 @@ const Home = () => {
     setCurrentCardIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
   };
   const isLastCard = currentCardIndex === cards.length - 1;
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      navigate('/forum');
+    }
+  })
 
   return (
     <div className="flex justify-center items-center h-screen">
