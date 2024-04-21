@@ -64,15 +64,18 @@ export class User {
     }
   }
 
-  static async getAllUserData(userId: string): Promise<any[]> {
+  static async getAllUserData(id: string): Promise<any[]> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
     try {
       const data = await new Promise<any[]>((resolve, reject) => {
         db.query(
-          "SELECT * FROM users WHERE id = ?",
-          [userId],
+          `SELECT u.id, u.username, u.password, u.email, u.profile_picture, u.bio, uni.subject 
+   FROM users u
+   LEFT JOIN university uni ON u.id = uni.user_id
+   WHERE u.id = ?`,
+          [id],
           (error, result) => {
             if (error) {
               reject(error);
@@ -94,7 +97,7 @@ export class User {
   static async updateUser(
     id: string,
     username: string,
-    email: string,
+    email: string
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -102,32 +105,6 @@ export class User {
     try {
       let query: string;
       let queryParams: (string | number)[];
-
-      const checkExistingUserQuery =
-        "SELECT COUNT(*) AS count FROM users WHERE (username = ? OR email = ?) AND id != ?";
-      const checkExistingUserParams = [username, email, id];
-
-      const existingUser: any = await new Promise((resolve, reject) => {
-        db.query(
-          checkExistingUserQuery,
-          checkExistingUserParams,
-          (error, results) => {
-            if (error) {
-              console.error("Error checking existing user:", error);
-              reject("Error checking existing user");
-            } else {
-              resolve(results[0]);
-            }
-          }
-        );
-      });
-
-      if (existingUser && existingUser.count > 0) {
-        return {
-          success: false,
-          message: "A user with the provided username or email already exists.",
-        };
-      }
 
       query = "UPDATE users SET username = ?, email = ? WHERE id = ?";
       queryParams = [username, email, id];
@@ -160,17 +137,43 @@ export class User {
     }
   }
 
-  static async updateUniversity(id: string, newSubject: string): Promise<UpdateResult> {
+  static async updateUniversity(
+    id: string,
+    newSubject: string
+  ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
-  
+
     try {
+      // Check if a record with the provided id exists in the university table
+      const checkQuery =
+        "SELECT COUNT(*) AS count FROM university WHERE user_id = ?";
+      const checkParams = [id];
+
+      const countResult: any = await new Promise((resolve, reject) => {
+        db.query(checkQuery, checkParams, (error, result) => {
+          if (error) {
+            console.error("Error checking university record:", error);
+            reject("Error checking university record");
+          } else {
+            resolve(result[0].count);
+          }
+        });
+      });
+
       let query: string;
       let queryParams: (string | number)[];
-  
-      query = "UPDATE university SET user_id = ?, subject = ? WHERE user_id = ?";
-      queryParams = [id, newSubject, id];
-  
+
+      if (countResult === 1) {
+        // Update the existing record
+        query = "UPDATE university SET subject = ? WHERE user_id = ?";
+        queryParams = [newSubject, id];
+      } else {
+        // Insert a new record
+        query = "INSERT INTO university (user_id, subject) VALUES (?, ?)";
+        queryParams = [id, newSubject];
+      }
+
       const result: any = await new Promise((resolve, reject) => {
         db.query(query, queryParams, (error, result) => {
           if (error) {
@@ -184,13 +187,13 @@ export class User {
           }
         });
       });
-  
+
       connection.closeConnection();
-  
+
       if (!result) {
         throw new Error("University update failed");
       }
-  
+
       return result;
     } catch (error) {
       console.error("Error updating university:", error);
@@ -198,7 +201,6 @@ export class User {
       throw error;
     }
   }
-   
 
   static async updateBio(id: string, bio: string): Promise<UpdateResult> {
     const connection = createDatabaseConnection();

@@ -29,7 +29,7 @@ router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);
 router.put("/updateBio/:id", updateBio);
 // router.put("/changePassword/:id", changePassword);
-router.delete("/delete/:id", deleteUser);
+router.delete("/delete/:userId", deleteUser);
 router.put("/updatePicture", upload.single("files"), updateProfilePicture);
 
 export default router;

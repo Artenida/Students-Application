@@ -25,32 +25,29 @@ export const updateUser = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   try {
     const { username, email, subject } = req.body;
     const { id } = req.params;
 
     const userUpdateResult = await User.updateUser(id, username, email);
-
-    if (!userUpdateResult.success) {
-      return res.status(400).json({ message: userUpdateResult.message });
-    }
-
     const universityUpdateResult = await User.updateUniversity(id, subject);
 
-    if (!universityUpdateResult.success) {
-      return res.status(400).json({ message: universityUpdateResult.message });
+    if (userUpdateResult.success && universityUpdateResult.success) {
+      res.status(200).json({
+        message: "User and university updated successfully",
+        user: {
+          id,
+          username,
+          email,
+          subject,
+        },
+      });
+    } else {
+      res.status(400).json({
+        message: userUpdateResult.message || universityUpdateResult.message,
+      });
     }
-
-    res.status(200).json({
-      message: "User and university updated successfully",
-      user: {
-        id,
-        username,
-        email,
-        subject,
-      },
-    });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ message: "Internal Server Error" });
