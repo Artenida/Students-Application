@@ -29,10 +29,10 @@ export const updateUser = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { username, email, subject } = req.body;
+    const { username, email, subject, bio, profile_picture } = req.body;
     const { id } = req.params;
 
-    const userUpdateResult = await User.updateUser(id, username, email);
+    const userUpdateResult = await User.updateUser(id, username, email, bio);
     const universityUpdateResult = await User.updateUniversity(id, subject);
 
     if (userUpdateResult.success && universityUpdateResult.success) {
@@ -42,6 +42,8 @@ export const updateUser = async (
           id,
           username,
           email,
+          bio,
+          profile_picture,
           subject,
         },
       });
@@ -52,34 +54,6 @@ export const updateUser = async (
     }
   } catch (error) {
     console.error("Error updating user:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-
-export const updateBio = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { bio } = req.body;
-    const { id } = req.params;
-
-    const { success, message } = await User.updateBio(id, bio);
-
-    if (success) {
-      res.status(200).json({
-        message: message,
-        user: {
-          id: id,
-          bio: bio,
-        },
-      });
-    } else {
-      res.status(400).json({ message: message });
-    }
-  } catch (error) {
-    console.error("Error updating bio:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -4,8 +4,6 @@ import {
   updateUser,
   deleteUser,
   updateProfilePicture,
-  updateBio,
-  // changePassword,
   // changePassword,
 } from "../controllers/userControllers";
 import { verifyToken } from "../middleware/verifyToken";
@@ -28,7 +26,6 @@ router.use(verifyToken);
 
 router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);
-router.put("/updateBio/:id", updateBio);
 // router.put("/changePassword/:id", changePassword);
 router.delete("/delete/:userId", deleteUser);
 router.put("/updatePicture", upload.single("files"), updateProfilePicture);

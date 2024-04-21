@@ -97,7 +97,8 @@ export class User {
   static async updateUser(
     id: string,
     username: string,
-    email: string
+    email: string,
+    bio: string,
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -106,8 +107,8 @@ export class User {
       let query: string;
       let queryParams: (string | number)[];
 
-      query = "UPDATE users SET username = ?, email = ? WHERE id = ?";
-      queryParams = [username, email, id];
+      query = "UPDATE users SET username = ?, email = ?, bio = ? WHERE id = ?";
+      queryParams = [username, email, bio, id];
 
       const result: any = await new Promise((resolve, reject) => {
         db.query(query, queryParams, (error, result) => {
@@ -197,50 +198,6 @@ export class User {
       return result;
     } catch (error) {
       console.error("Error updating university:", error);
-      connection.closeConnection();
-      throw error;
-    }
-  }
-
-  static async updateBio(id: string, bio: string): Promise<UpdateResult> {
-    const connection = createDatabaseConnection();
-    const db = connection.getConnection();
-
-    try {
-      let query: string;
-      let queryParams: (string | number)[];
-
-      query = "UPDATE users SET bio = ? WHERE id = ?";
-      queryParams = [bio, id];
-
-      const result: any = await new Promise((resolve, reject) => {
-        db.query(query, queryParams, (error, result) => {
-          if (error) {
-            console.error("Error updating bio:", error);
-            reject("Error updating bio");
-          } else if (result.changedRows === 0) {
-            resolve({
-              success: false,
-              message: "No changes detected in bio",
-            });
-          } else if (result.changedRows === 1) {
-            resolve({
-              success: true,
-              message: "Bio updated successfully",
-            });
-          }
-        });
-      });
-
-      connection.closeConnection();
-
-      if (!result) {
-        throw new Error("Bio update failed");
-      }
-
-      return result;
-    } catch (error) {
-      console.error("Error updating bio:", error);
       connection.closeConnection();
       throw error;
     }

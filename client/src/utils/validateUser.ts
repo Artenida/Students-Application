@@ -14,6 +14,7 @@ interface FormUpdateErrors {
   username: string;
   email: string;
   subject: string;
+  bio: string;
 }
 
 export function validateUsername(value: string): string {
@@ -43,6 +44,10 @@ export function validatePassword(value: string): string {
       }
       return "";
 }
+
+export const validateBio = (value: string): string => {
+  return value.trim().length <= 30 ? "" : "Bio must be at most 30 characters";
+};
 
 export function validateConfirmPassword(password: string, verify: string) {
   return password === verify ? "" : "Passwords should match.";
@@ -94,8 +99,11 @@ export const validateUpdateForm = (
   if (id === "email") {
     errors.email = validateEmail(value);
   }
-  if (id === "bio") {
+  if (id === "subject") {
     errors.subject = validateUniversity(value);
+  }
+  if (id === "bio") {
+    errors.subject = validateBio(value);
   }
   return errors;
 };

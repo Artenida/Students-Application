@@ -112,26 +112,6 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const updateBio = createAsyncThunk(
-  "api/users/updateBio",
-  async ({ body }: UserEndpointType, { rejectWithValue, getState }) => {
-    try {
-      const state: RootState = getState() as RootState;
-      const token: string = state.user.token ?? "";
-
-      const response = await createAPI(`api/users/updateBio/${body.id}`, {
-        method: "PUT",
-        token: token,
-        body: JSON.stringify(body),
-      })(body);
-      const data = await response.json();
-      return !response.ok ? rejectWithValue(data.message) : data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 export const updateProfilePicture = createAsyncThunk(
   "api/users/updatePicture",
   async (formData: FormData, { rejectWithValue, getState }) => {

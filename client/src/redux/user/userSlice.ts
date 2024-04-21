@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { deleteUser, getUser, loginUser, registerUser, updateBio, updateProfilePicture, updateUser } from "../../api/userThunk";
+import { deleteUser, getUser, loginUser, registerUser, updateProfilePicture, updateUser } from "../../api/userThunk";
 
 interface UserState {
   currentUser: any;
@@ -107,24 +107,6 @@ const userSlice = createSlice({
         state.currentUser = action.payload;
       })
       .addCase(updateUser.rejected, (state, action) => {
-        state.loading = true;
-        state.isUpdated = false;
-        state.updateError = action.payload as string | null;
-      })
-
-      .addCase(updateBio.pending, (state) => {
-        state.loading = true;
-        state.isUpdated = true;
-        state.updateError = null;
-      })
-      .addCase(updateBio.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isUpdated = true;
-        state.updateError = null;
-        state.isLoggedIn = true;
-        state.currentUser = action.payload;
-      })
-      .addCase(updateBio.rejected, (state, action) => {
         state.loading = true;
         state.isUpdated = false;
         state.updateError = action.payload as string | null;
