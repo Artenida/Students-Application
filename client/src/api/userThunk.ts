@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createAPI } from "../utils/createApi";
+import { RootState } from "../redux/store";
 
 type UserBodyType = {
   username: string;
@@ -14,17 +15,17 @@ type UserBodyTypeRegister = {
 };
 
 type UserBodyTypeUpdate = {
+  userId: string;
   username: string;
   email: string;
-  bio: string;
-  profile_picture: string;
-  userId: number;
+  subject: string;
 };
 
 type UserEndpointType = {
   token?: string;
   body: UserBodyTypeUpdate;
 };
+
 type RegisterUserResponse = {
   data: any;
   error?: string;
@@ -62,6 +63,109 @@ export const registerUser = createAsyncThunk<
         const error = await response.json();
         return rejectWithValue(error.message);
       }
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "api/users/delete",
+  async (userId: number, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token = state.user.token ?? "";
+      const response = await createAPI(`api/users/delete/${userId}`, {
+        method: "DELETE",
+        token: token,
+      })(null);
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        return rejectWithValue(errorMessage);
+      }
+      return { success: true };
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "api/users/updateUser",
+  async ({ body }: UserEndpointType, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/users/updateUser/${body.userId}`, {
+        method: "PUT",
+        token: token,
+        body: JSON.stringify(body),
+      })(body);
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateBio = createAsyncThunk(
+  "api/users/updateBio",
+  async ({ body }: UserEndpointType, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/users/updateBio/${body.userId}`, {
+        method: "PUT",
+        token: token,
+        body: JSON.stringify(body),
+      })(body);
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateProfilePicture = createAsyncThunk(
+  "api/users/updatePicture",
+  async (formData: FormData, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/users/updatePicture`, {
+        method: "PUT",
+        token: token,
+        body: JSON.stringify(formData),
+      })(formData);
+
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  "api/users/find",
+  async (userId: string, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token = state.user.token ?? "";
+      const response = await createAPI(`api/users/find/${userId}`, {
+        method: "GET",
+        token: token,
+      })();
+      if (!response.ok) {
+        throw new Error("Failed to retrieve single post");
+      }
+      const data = await response.json();
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

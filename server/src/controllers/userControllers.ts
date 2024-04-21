@@ -28,16 +28,16 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const { username, email, subject } = req.body;
-    const { id } = req.params;
+    const { userId } = req.params;
 
-    const userUpdateResult = await User.updateUser(id, username, email);
-    const universityUpdateResult = await User.updateUniversity(id, subject);
+    const userUpdateResult = await User.updateUser(userId, username, email);
+    const universityUpdateResult = await User.updateUniversity(userId, subject);
 
     if (userUpdateResult.success && universityUpdateResult.success) {
       res.status(200).json({
         message: "User and university updated successfully",
         user: {
-          id,
+          userId,
           username,
           email,
           subject,

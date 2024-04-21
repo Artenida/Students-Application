@@ -24,9 +24,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// router.use(verifyToken);
+router.use(verifyToken);
 router.use("/find/:userId", getUser);
-router.put("/updateUser/:id", updateUser);
+router.put("/updateUser/:userId", updateUser);
 router.put("/updateBio/:id", updateBio);
 // router.put("/changePassword/:id", changePassword);
 router.delete("/delete/:userId", deleteUser);

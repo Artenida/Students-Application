@@ -10,12 +10,25 @@ interface FormLoginErrors {
   password: string;
 }
 
+interface FormUpdateErrors {
+  username: string;
+  email: string;
+  subject: string;
+}
+
 export function validateUsername(value: string): string {
    if (!value.trim()) {
     return "Username is required";
   }
   return "";
 }
+
+export function validateUniversity (value: string): string {
+  if (!value.trim()) {
+    return "Username is required";
+  }
+  return "";
+};
 
 export function validateEmail(value: string): string {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,6 +77,25 @@ export const validateLoginForm = (
   }
   if (id === "password") {
     errors.password = validatePassword(value);
+  }
+  return errors;
+};
+
+export const validateUpdateForm = (
+  id: string,
+  value: string,
+  formData: FormUpdateErrors
+): FormUpdateErrors => {
+  let errors: FormUpdateErrors = { ...formData };
+
+  if (id === "username") {
+    errors.username = validateUsername(value);
+  }
+  if (id === "email") {
+    errors.email = validateEmail(value);
+  }
+  if (id === "bio") {
+    errors.subject = validateUniversity(value);
   }
   return errors;
 };

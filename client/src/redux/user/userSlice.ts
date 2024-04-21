@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { loginUser, registerUser } from "../../api/userThunk";
+import { deleteUser, getUser, loginUser, registerUser, updateBio, updateProfilePicture, updateUser } from "../../api/userThunk";
 
 interface UserState {
   currentUser: any;
   loading: boolean;
   loginError: string | null;
   registerError: string | null;
+  deleteError: string | null;
+  updateError: string | null;
   token?: string;
   isLoggedIn: boolean;
+  isUpdated: boolean;
   user: any;
   success: boolean;
 }
@@ -17,9 +20,12 @@ const initialState: UserState = {
   currentUser: null,
   loginError: null,
   registerError: null,
+  deleteError: null,
+  updateError: null,
   loading: false,
   token: undefined,
   isLoggedIn: false,
+  isUpdated: false,
   user: null,
   success: false,
 };
@@ -73,6 +79,63 @@ const userSlice = createSlice({
         state.loading = false;
         state.registerError = action.payload as string;
         state.success = false;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.deleteError = null;
+        state.loading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.isLoggedIn = false;
+        state.currentUser = null;
+        state.deleteError = null;
+        state.loading = false;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.deleteError = action.payload as string;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.isUpdated = true;
+        state.updateError = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isUpdated = true;
+        state.updateError = null;
+        state.isLoggedIn = true;
+        state.currentUser = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = true;
+        state.isUpdated = false;
+        state.updateError = action.payload as string | null;
+      })
+
+      .addCase(updateBio.pending, (state) => {
+        state.loading = true;
+        state.isUpdated = true;
+        state.updateError = null;
+      })
+      .addCase(updateBio.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isUpdated = true;
+        state.updateError = null;
+        state.isLoggedIn = true;
+        state.currentUser = action.payload;
+      })
+      .addCase(updateBio.rejected, (state, action) => {
+        state.loading = true;
+        state.isUpdated = false;
+        state.updateError = action.payload as string | null;
+      })
+
+      .addCase(updateProfilePicture.fulfilled, (state, action) => {
+        state.isUpdated = true;
+      })
+      
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
   },
 });

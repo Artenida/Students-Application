@@ -8,7 +8,7 @@ interface FormInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   name?: string;
-  value?: string | number | undefined;
+  value?: string | undefined;
   errorMessage?: string;
   updateValue?: (value: string) => void;
 }
