@@ -24,7 +24,12 @@ export class User {
     const db = connection.getConnection();
 
     try {
-      const checkQuery = "SELECT * FROM users WHERE username = ?";
+      const checkQuery = `SELECT u.*, uni.subject, s.social_media
+      FROM users u
+      LEFT JOIN university uni ON u.id = uni.user_id
+      LEFT JOIN socials s ON u.id = s.user_id
+      WHERE u.username = ?;
+      `;
       const data = await new Promise<UserData[]>((resolve, reject) => {
         db.query(checkQuery, [username], (error, data) => {
           connection.closeConnection();
