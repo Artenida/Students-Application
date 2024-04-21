@@ -7,10 +7,10 @@ import { validateUpdateForm } from "../utils/validateUser";
 import { updateUser } from "../api/userThunk";
 
 interface User {
-  userId: string;
+  id: string;
   username: string | undefined;
   email: string | undefined;
-  university: string | undefined;
+  subject: string | undefined;
 }
 
 interface UserState {
@@ -36,7 +36,7 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
   const [data, setData] = useState({
     username: user?.username ?? "",
     email: user?.email ?? "",
-    university: user?.university ?? "",
+    subject: user?.subject ?? "",
   });
 
   const handleInputChange = useCallback(
@@ -63,8 +63,8 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
       const newUser = {
         username: data.username,
         email: data.email,
-        subject: data.university,
-        userId: user?.userId,
+        subject: data.subject,
+        id: user?.id,
       };
       dispatch(updateUser({ body: newUser, token: token }));
     }
@@ -98,7 +98,7 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
           placeholder="University / Job"
           type="text"
           label="University / Job"
-          value={user.university}
+          value={user.subject}
           onChange={handleInputChange}
           errorMessage={formDataErrors.subject}
         />

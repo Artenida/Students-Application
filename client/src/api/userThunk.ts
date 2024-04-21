@@ -15,7 +15,7 @@ type UserBodyTypeRegister = {
 };
 
 type UserBodyTypeUpdate = {
-  userId: string;
+  id: string;
   username: string;
   email: string;
   subject: string;
@@ -97,7 +97,7 @@ export const updateUser = createAsyncThunk(
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/users/updateUser/${body.userId}`, {
+      const response = await createAPI(`api/users/updateUser/${body.id}`, {
         method: "PUT",
         token: token,
         body: JSON.stringify(body),
@@ -117,7 +117,7 @@ export const updateBio = createAsyncThunk(
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/users/updateBio/${body.userId}`, {
+      const response = await createAPI(`api/users/updateBio/${body.id}`, {
         method: "PUT",
         token: token,
         body: JSON.stringify(body),

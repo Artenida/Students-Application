@@ -138,7 +138,7 @@ export class User {
   }
 
   static async updateUniversity(
-    id: string,
+    userId: string,
     newSubject: string
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
@@ -148,7 +148,7 @@ export class User {
       // Check if a record with the provided id exists in the university table
       const checkQuery =
         "SELECT COUNT(*) AS count FROM university WHERE user_id = ?";
-      const checkParams = [id];
+      const checkParams = [userId];
 
       const countResult: any = await new Promise((resolve, reject) => {
         db.query(checkQuery, checkParams, (error, result) => {
@@ -167,11 +167,11 @@ export class User {
       if (countResult === 1) {
         // Update the existing record
         query = "UPDATE university SET subject = ? WHERE user_id = ?";
-        queryParams = [newSubject, id];
+        queryParams = [newSubject, userId];
       } else {
         // Insert a new record
         query = "INSERT INTO university (user_id, subject) VALUES (?, ?)";
-        queryParams = [id, newSubject];
+        queryParams = [userId, newSubject];
       }
 
       const result: any = await new Promise((resolve, reject) => {

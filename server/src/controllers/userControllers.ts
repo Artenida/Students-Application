@@ -10,14 +10,16 @@ export const getUser = async (
     const { userId } = req.params;
 
     if (!userId) {
-      return next(res.status(400).json({message: "User ID is required"}));
+      return next(res.status(400).json({ message: "User ID is required" }));
     }
 
     const userData = await User.getAllUserData(userId);
     res.json(userData);
   } catch (error) {
     console.error("Error retrieving user data", error);
-    return next(res.status(500).json({message: "Error retrieving user data"}));
+    return next(
+      res.status(500).json({ message: "Error retrieving user data" })
+    );
   }
 };
 
@@ -28,16 +30,16 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const { username, email, subject } = req.body;
-    const { userId } = req.params;
+    const { id } = req.params;
 
-    const userUpdateResult = await User.updateUser(userId, username, email);
-    const universityUpdateResult = await User.updateUniversity(userId, subject);
+    const userUpdateResult = await User.updateUser(id, username, email);
+    const universityUpdateResult = await User.updateUniversity(id, subject);
 
     if (userUpdateResult.success && universityUpdateResult.success) {
       res.status(200).json({
         message: "User and university updated successfully",
         user: {
-          userId,
+          id,
           username,
           email,
           subject,
@@ -63,10 +65,7 @@ export const updateBio = async (
     const { bio } = req.body;
     const { id } = req.params;
 
-    const { success, message } = await User.updateBio(
-      id,
-      bio,
-    );
+    const { success, message } = await User.updateBio(id, bio);
 
     if (success) {
       res.status(200).json({
@@ -107,11 +106,11 @@ export const deleteUser = async (
     const { id } = req.params;
     const isDeleted = await User.deleteUser(Number(id));
     if (!isDeleted) {
-      return next(res.status(400).json({message: "User not found"}));
+      return next(res.status(400).json({ message: "User not found" }));
     }
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);
-    return next(res.status(500).json({message: "Error deleting user:"}));
+    return next(res.status(500).json({ message: "Error deleting user:" }));
   }
 };

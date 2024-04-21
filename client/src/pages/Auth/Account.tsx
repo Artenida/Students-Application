@@ -8,7 +8,7 @@ import { selectUser } from "../../redux/user/userSlice";
 
 const Account = () => {
   const { currentUser } = useAppSelector(selectUser);
-
+console.log(currentUser)
   return (
     <div className="my-20 mx-4 md:mx-28 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="flex gap-4 flex-col">
