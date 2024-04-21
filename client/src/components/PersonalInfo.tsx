@@ -10,20 +10,24 @@ interface User {
   id: string;
   username: string | undefined;
   email: string | undefined;
+  bio: string | undefined;
   subject: string | undefined;
+  profile_picture: string | undefined;
 }
 
-interface UserState {
+interface UpdateProps {
   user: User;
 }
+
 interface FormData {
   username: string;
   email: string;
-  subject: string,
+  subject: string;
 }
-const PersonalInfo: React.FC<UserState> = ({user}) => {
+
+const PersonalInfo: React.FC<UpdateProps> = ({user}) => {
   const dispatch = useAppDispatch();
-  const { updateError, token } = useAppSelector(selectUser);
+  const { currentUser, updateError, token } = useAppSelector(selectUser);
   const [message, setMessage] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -34,9 +38,12 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
   });
 
   const [data, setData] = useState({
-    username: user?.username ?? "",
-    email: user?.email ?? "",
-    subject: user?.subject ?? "",
+    username: currentUser?.user?.username ?? "",
+    email: currentUser?.user?.email ?? "",
+    bio: currentUser?.user?.bio ?? "",
+    subject: currentUser?.user?.subject ?? "",
+    password: "",
+    profile_picture: "",
   });
 
   const handleInputChange = useCallback(
@@ -63,13 +70,15 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
       const newUser = {
         username: data.username,
         email: data.email,
+        password: data.password,
         subject: data.subject,
-        id: user?.id,
+        bio: currentUser?.user?.bio,
+        profile_picture: currentUser?.user?.profile_picture,
+        id: currentUser?.user?.id,
       };
       dispatch(updateUser({ body: newUser, token: token }));
     }
-  }, [hasErrors, data, user, dispatch]);
-
+  }, [hasErrors, data, currentUser, dispatch]);
 
   return (
     <div>
@@ -80,7 +89,7 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
           placeholder="Your username"
           type="text"
           label="Username"
-          value={user.username}
+          value={data.username}
           onChange={handleInputChange}
           errorMessage={formDataErrors.username}
         />
@@ -89,7 +98,7 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
           placeholder="Your email"
           type="email"
           label="Email address"
-          value={user.email}
+          value={data.email}
           onChange={handleInputChange}
           errorMessage={formDataErrors.email}
         />
@@ -98,7 +107,7 @@ const PersonalInfo: React.FC<UserState> = ({user}) => {
           placeholder="University / Job"
           type="text"
           label="University / Job"
-          value={user.subject}
+          value={data.subject}
           onChange={handleInputChange}
           errorMessage={formDataErrors.subject}
         />

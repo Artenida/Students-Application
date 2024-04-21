@@ -19,6 +19,8 @@ type UserBodyTypeUpdate = {
   username: string;
   email: string;
   subject: string;
+  bio: string;
+  profile_picture: string;
 };
 
 type UserEndpointType = {
