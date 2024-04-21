@@ -103,7 +103,7 @@ const PersonalInfo: React.FC<UpdateProps> = ({user}) => {
           errorMessage={formDataErrors.email}
         />
         <FormInputsComponent
-          id="uni"
+          id="subject"
           placeholder="University / Job"
           type="text"
           label="University / Job"
