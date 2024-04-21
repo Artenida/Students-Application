@@ -102,31 +102,32 @@ export class User {
       let query: string;
       let queryParams: (string | number)[];
 
-      // Retrieve the existing user data from the database
-      const getUserQuery = "SELECT username, email FROM users WHERE id = ?";
-      const getUserParams = [id];
+      const checkExistingUserQuery =
+        "SELECT COUNT(*) AS count FROM users WHERE (username = ? OR email = ?) AND id != ?";
+      const checkExistingUserParams = [username, email, id];
 
       const existingUser: any = await new Promise((resolve, reject) => {
-        db.query(getUserQuery, getUserParams, (error, results) => {
-          if (error) {
-            console.error("Error retrieving user data:", error);
-            reject("Error retrieving user data");
-          } else {
-            resolve(results[0]);
+        db.query(
+          checkExistingUserQuery,
+          checkExistingUserParams,
+          (error, results) => {
+            if (error) {
+              console.error("Error checking existing user:", error);
+              reject("Error checking existing user");
+            } else {
+              resolve(results[0]);
+            }
           }
-        });
+        );
       });
 
-      if (!existingUser) {
-        throw new Error("User not found");
+      if (existingUser && existingUser.count > 0) {
+        return {
+          success: false,
+          message: "A user with the provided username or email already exists.",
+        };
       }
 
-      // Check if the new data matches the existing data
-      if (username === existingUser.username && email === existingUser.email) {
-        throw new Error("No changes detected. User update aborted.");
-      }
-
-      // Update the user data in the database
       query = "UPDATE users SET username = ?, email = ? WHERE id = ?";
       queryParams = [username, email, id];
 
@@ -135,6 +136,11 @@ export class User {
           if (error) {
             console.error("Error updating user:", error);
             reject("Error updating user");
+          } else if (result.changedRows === 0) {
+            resolve({
+              success: false,
+              message: "No changes detected in user information",
+            });
           } else if (result.changedRows === 1) {
             resolve({
               success: true,
@@ -172,8 +178,13 @@ export class User {
       const result: any = await new Promise((resolve, reject) => {
         db.query(query, queryParams, (error, result) => {
           if (error) {
-            console.error("Error updating nio:", error);
-            reject("Error updating nio");
+            console.error("Error updating bio:", error);
+            reject("Error updating bio");
+          } else if (result.changedRows === 0) {
+            resolve({
+              success: false,
+              message: "No changes detected in bio",
+            });
           } else if (result.changedRows === 1) {
             resolve({
               success: true,

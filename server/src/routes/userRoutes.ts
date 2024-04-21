@@ -5,6 +5,8 @@ import {
   deleteUser,
   updateProfilePicture,
   updateBio,
+  // changePassword,
+  // changePassword,
 } from "../controllers/userControllers";
 import { verifyToken } from "../middleware/verifyToken";
 import multer from "multer";
@@ -22,10 +24,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.use(verifyToken);
+// router.use(verifyToken);
 router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);
 router.put("/updateBio/:id", updateBio);
+// router.put("/changePassword/:id", changePassword);
 router.delete("/delete/:id", deleteUser);
 router.put("/updatePicture", upload.single("files"), updateProfilePicture);
 
