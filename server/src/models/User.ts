@@ -77,10 +77,8 @@ export class User {
     try {
       const data = await new Promise<any[]>((resolve, reject) => {
         db.query(
-          `SELECT u.id, u.username, u.password, u.email, u.profile_picture, u.bio, uni.subject 
-   FROM users u
-   LEFT JOIN university uni ON u.id = uni.user_id
-   WHERE u.id = ?`,
+          `SELECT * FROM users 
+           WHERE id = ?`,
           [id],
           (error, result) => {
             if (error) {
@@ -104,7 +102,8 @@ export class User {
     id: string,
     username: string,
     email: string,
-    bio: string
+    bio: string,
+    subject: string,
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -113,8 +112,8 @@ export class User {
       let query: string;
       let queryParams: (string | number)[];
 
-      query = "UPDATE users SET username = ?, email = ?, bio = ? WHERE id = ?";
-      queryParams = [username, email, bio, id];
+      query = "UPDATE users SET username = ?, email = ?, bio = ?, fields = ? WHERE id = ?";
+      queryParams = [username, email, bio, subject, id];
 
       const result: any = await new Promise((resolve, reject) => {
         db.query(query, queryParams, (error, result) => {
@@ -196,70 +195,70 @@ export class User {
     }
   }
 
-  static async updateUniversity(
-    userId: string,
-    newSubject: string
-  ): Promise<UpdateResult> {
-    const connection = createDatabaseConnection();
-    const db = connection.getConnection();
+  // static async updateUniversity(
+  //   userId: string,
+  //   newSubject: string
+  // ): Promise<UpdateResult> {
+  //   const connection = createDatabaseConnection();
+  //   const db = connection.getConnection();
 
-    try {
-      // Check if a record with the provided id exists in the university table
-      const checkQuery =
-        "SELECT COUNT(*) AS count FROM university WHERE user_id = ?";
-      const checkParams = [userId];
+  //   try {
+  //     // Check if a record with the provided id exists in the university table
+  //     const checkQuery =
+  //       "SELECT COUNT(*) AS count FROM university WHERE user_id = ?";
+  //     const checkParams = [userId];
 
-      const countResult: any = await new Promise((resolve, reject) => {
-        db.query(checkQuery, checkParams, (error, result) => {
-          if (error) {
-            console.error("Error checking university record:", error);
-            reject("Error checking university record");
-          } else {
-            resolve(result[0].count);
-          }
-        });
-      });
+  //     const countResult: any = await new Promise((resolve, reject) => {
+  //       db.query(checkQuery, checkParams, (error, result) => {
+  //         if (error) {
+  //           console.error("Error checking university record:", error);
+  //           reject("Error checking university record");
+  //         } else {
+  //           resolve(result[0].count);
+  //         }
+  //       });
+  //     });
 
-      let query: string;
-      let queryParams: (string | number)[];
+  //     let query: string;
+  //     let queryParams: (string | number)[];
 
-      if (countResult === 1) {
-        // Update the existing record
-        query = "UPDATE university SET subject = ? WHERE user_id = ?";
-        queryParams = [newSubject, userId];
-      } else {
-        // Insert a new record
-        query = "INSERT INTO university (user_id, subject) VALUES (?, ?)";
-        queryParams = [userId, newSubject];
-      }
+  //     if (countResult === 1) {
+  //       // Update the existing record
+  //       query = "UPDATE university SET subject = ? WHERE user_id = ?";
+  //       queryParams = [newSubject, userId];
+  //     } else {
+  //       // Insert a new record
+  //       query = "INSERT INTO university (user_id, subject) VALUES (?, ?)";
+  //       queryParams = [userId, newSubject];
+  //     }
 
-      const result: any = await new Promise((resolve, reject) => {
-        db.query(query, queryParams, (error, result) => {
-          if (error) {
-            console.error("Error updating university:", error);
-            reject("Error updating university");
-          } else {
-            resolve({
-              success: true,
-              message: "University updated successfully",
-            });
-          }
-        });
-      });
+  //     const result: any = await new Promise((resolve, reject) => {
+  //       db.query(query, queryParams, (error, result) => {
+  //         if (error) {
+  //           console.error("Error updating university:", error);
+  //           reject("Error updating university");
+  //         } else {
+  //           resolve({
+  //             success: true,
+  //             message: "University updated successfully",
+  //           });
+  //         }
+  //       });
+  //     });
 
-      connection.closeConnection();
+  //     connection.closeConnection();
 
-      if (!result) {
-        throw new Error("University update failed");
-      }
+  //     if (!result) {
+  //       throw new Error("University update failed");
+  //     }
 
-      return result;
-    } catch (error) {
-      console.error("Error updating university:", error);
-      connection.closeConnection();
-      throw error;
-    }
-  }
+  //     return result;
+  //   } catch (error) {
+  //     console.error("Error updating university:", error);
+  //     connection.closeConnection();
+  //     throw error;
+  //   }
+  // }
 
   static async updateProfilePicture(userId: string, file: Express.Multer.File) {
     const connection = createDatabaseConnection();

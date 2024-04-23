@@ -32,10 +32,10 @@ export const updateUser = async (
     const { username, email, subject, bio, profile_picture } = req.body;
     const { id } = req.params;
 
-    const userUpdateResult = await User.updateUser(id, username, email, bio);
-    const universityUpdateResult = await User.updateUniversity(id, subject);
+    const userUpdateResult = await User.updateUser(id, username, email, bio, subject);
+    // const universityUpdateResult = await User.updateUniversity(id, subject);
 
-    if (userUpdateResult.success && universityUpdateResult.success) {
+    if (userUpdateResult.success) {
       res.status(200).json({
         message: "User and university updated successfully",
         user: {
@@ -49,7 +49,7 @@ export const updateUser = async (
       });
     } else {
       res.status(400).json({
-        message: userUpdateResult.message || universityUpdateResult.message,
+        message: userUpdateResult.message,
       });
     }
   } catch (error) {
