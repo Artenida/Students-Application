@@ -112,6 +112,36 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+interface SocialMediaType {
+  id: String;
+  account: String;
+}
+
+type SocialMediaEndpointType = {
+  token?: string;
+  body: SocialMediaType;
+};
+
+export const addSocialMediaAccount = createAsyncThunk(
+  "api/users/addAccount",
+  async ({ body }: SocialMediaEndpointType, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/users/addAccount/${body.id}`, {
+        method: "POST",
+        token: token,
+        body: JSON.stringify(body),
+      })(body);
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const updateProfilePicture = createAsyncThunk(
   "api/users/updatePicture",
   async (formData: FormData, { rejectWithValue, getState }) => {

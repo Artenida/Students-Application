@@ -1,12 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { deleteUser, getUser, loginUser, registerUser, updateProfilePicture, updateUser } from "../../api/userThunk";
+import {
+  addSocialMediaAccount,
+  deleteUser,
+  getUser,
+  loginUser,
+  registerUser,
+  updateProfilePicture,
+  updateUser,
+} from "../../api/userThunk";
 
+interface SocialMediaType {
+  id: String;
+  account: String;
+}
 interface UserState {
   currentUser: any;
+  socialMedia: SocialMediaType;
   loading: boolean;
   loginError: string | null;
   registerError: string | null;
+  socialMediaError: string | null;
   deleteError: string | null;
   updateError: string | null;
   token?: string;
@@ -18,10 +32,15 @@ interface UserState {
 
 const initialState: UserState = {
   currentUser: null,
+  socialMedia: {
+    id: " ",
+    account: " ",
+  },
   loginError: null,
   registerError: null,
   deleteError: null,
   updateError: null,
+  socialMediaError: null,
   loading: false,
   token: undefined,
   isLoggedIn: false,
@@ -112,13 +131,28 @@ const userSlice = createSlice({
         state.updateError = action.payload as string | null;
       })
 
+      .addCase(addSocialMediaAccount.pending, (state) => {
+        state.loading = true;
+        state.socialMediaError = null;
+      })
+      .addCase(addSocialMediaAccount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.socialMediaError = null;
+        state.isLoggedIn = true;
+        state.socialMedia = action.payload;
+      })
+      .addCase(addSocialMediaAccount.rejected, (state, action) => {
+        state.loading = true;
+        state.socialMediaError = action.payload as string | null;
+      })
+
       .addCase(updateProfilePicture.fulfilled, (state, action) => {
         state.isUpdated = true;
       })
-      
+
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
-      })
+      });
   },
 });
 
