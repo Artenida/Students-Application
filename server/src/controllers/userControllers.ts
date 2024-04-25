@@ -94,10 +94,10 @@ export const deleteSocialMediaAccounts = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // const { id } = req.params;
-    const { social_media } = req.body;
+    const { id } = req.params;
+    // const { social_media } = req.body;
 
-    const isDeleted = await User.deleteSocialMediaAccounts(social_media);
+    const isDeleted = await User.deleteSocialMediaAccounts(id);
     if (!isDeleted) {
       return next(res.status(400).json({ message: "Account not found" }));
     }

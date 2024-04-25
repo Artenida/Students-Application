@@ -112,28 +112,18 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-interface SocialMediaType {
-  id: String;
-  account: String;
-}
-
-type SocialMediaEndpointType = {
-  token?: string;
-  body: SocialMediaType;
-};
-
 export const addSocialMediaAccount = createAsyncThunk(
   "api/users/addAccount",
-  async ({ body }: SocialMediaEndpointType, { rejectWithValue, getState }) => {
+  async ({ id, social_media } : {id: String, social_media: string}, { rejectWithValue, getState }) => {
     try {
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/users/addAccount/${body.id}`, {
+      const response = await createAPI(`api/users/addAccount/${id}`, {
         method: "POST",
         token: token,
-        body: JSON.stringify(body),
-      })(body);
+        body: JSON.stringify({id, social_media}),
+      })({id, social_media});
       const data = await response.json();
       return !response.ok ? rejectWithValue(data.message) : data;
     } catch (error: any) {
@@ -178,6 +168,27 @@ export const getUser = createAsyncThunk(
       }
       const data = await response.json();
       return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteSocialMediaAccounts = createAsyncThunk(
+  "api/users/deleteAccounts",
+  async (id: number, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token = state.user.token ?? "";
+      const response = await createAPI(`api/users/deleteAccounts/${id}`, {
+        method: "DELETE",
+        token: token,
+      })(null);
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        return rejectWithValue(errorMessage);
+      }
+      return { success: true };
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

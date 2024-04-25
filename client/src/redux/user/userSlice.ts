@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
 import {
   addSocialMediaAccount,
+  deleteSocialMediaAccounts,
   deleteUser,
   getUser,
   loginUser,
@@ -12,7 +13,7 @@ import {
 
 interface SocialMediaType {
   id: String;
-  account: String;
+  social_media: string;
 }
 interface UserState {
   currentUser: any;
@@ -34,7 +35,7 @@ const initialState: UserState = {
   currentUser: null,
   socialMedia: {
     id: " ",
-    account: " ",
+    social_media: " ",
   },
   loginError: null,
   registerError: null,
@@ -144,6 +145,20 @@ const userSlice = createSlice({
       .addCase(addSocialMediaAccount.rejected, (state, action) => {
         state.loading = true;
         state.socialMediaError = action.payload as string | null;
+      })
+
+      .addCase(deleteSocialMediaAccounts.pending, (state) => {
+        state.deleteError = null;
+        state.loading = true;
+      })
+      .addCase(deleteSocialMediaAccounts.fulfilled, (state) => {
+        state.isLoggedIn = false;
+        state.deleteError = null;
+        state.loading = false;
+      })
+      .addCase(deleteSocialMediaAccounts.rejected, (state, action) => {
+        state.loading = false;
+        state.deleteError = action.payload as string;
       })
 
       .addCase(updateProfilePicture.fulfilled, (state, action) => {

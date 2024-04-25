@@ -70,33 +70,49 @@ export class User {
     }
   }
 
-  static async getAllUserData(id: string): Promise<any[]> {
+  static async getAllUserData(id: string): Promise<any> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
     try {
-      const data = await new Promise<any[]>((resolve, reject) => {
-        db.query(
-          `SELECT * FROM users 
-           WHERE id = ?`,
-          [id],
-          (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-            connection.closeConnection();
-          }
-        );
-      });
+        const userData = await new Promise<any>((resolve, reject) => {
+            db.query(
+                `SELECT * FROM users WHERE id = ?`,
+                [id],
+                (error, userResult) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(userResult[0]);
+                    }
+                }
+            );
+        });
 
-      return data;
+        const socialMediaData = await new Promise<any[]>((resolve, reject) => {
+            db.query(
+                `SELECT id, social_media FROM socials WHERE user_id = ?`,
+                [id],
+                (error, socialResult) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(socialResult);
+                    }
+                }
+            );
+        });
+
+        userData.social_media = socialMediaData;
+
+        connection.closeConnection();
+
+        return userData;
     } catch (error) {
-      console.error("Error in getAllUserData:", error);
-      throw error;
+        console.error("Error in getAllUserData:", error);
+        throw error;
     }
-  }
+}
 
   static async updateUser(
     id: string,
@@ -163,15 +179,15 @@ export class User {
   }
 
   static async deleteSocialMediaAccounts(
-    social_media: string
+    id: string
   ): Promise<boolean> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
     try {
-      const query = `DELETE FROM socials WHERE  social_media = ?;`;
+      const query = `DELETE FROM socials WHERE  id = ?;`;
       const result: DeleteResult = await new Promise((resolve, reject) => {
-        db.query(query, [social_media], (error, result) => {
+        db.query(query, [id], (error, result) => {
           if (error) {
             console.error("Error deleting account:", error);
             connection.closeConnection();
@@ -194,71 +210,6 @@ export class User {
       throw error;
     }
   }
-
-  // static async updateUniversity(
-  //   userId: string,
-  //   newSubject: string
-  // ): Promise<UpdateResult> {
-  //   const connection = createDatabaseConnection();
-  //   const db = connection.getConnection();
-
-  //   try {
-  //     // Check if a record with the provided id exists in the university table
-  //     const checkQuery =
-  //       "SELECT COUNT(*) AS count FROM university WHERE user_id = ?";
-  //     const checkParams = [userId];
-
-  //     const countResult: any = await new Promise((resolve, reject) => {
-  //       db.query(checkQuery, checkParams, (error, result) => {
-  //         if (error) {
-  //           console.error("Error checking university record:", error);
-  //           reject("Error checking university record");
-  //         } else {
-  //           resolve(result[0].count);
-  //         }
-  //       });
-  //     });
-
-  //     let query: string;
-  //     let queryParams: (string | number)[];
-
-  //     if (countResult === 1) {
-  //       // Update the existing record
-  //       query = "UPDATE university SET subject = ? WHERE user_id = ?";
-  //       queryParams = [newSubject, userId];
-  //     } else {
-  //       // Insert a new record
-  //       query = "INSERT INTO university (user_id, subject) VALUES (?, ?)";
-  //       queryParams = [userId, newSubject];
-  //     }
-
-  //     const result: any = await new Promise((resolve, reject) => {
-  //       db.query(query, queryParams, (error, result) => {
-  //         if (error) {
-  //           console.error("Error updating university:", error);
-  //           reject("Error updating university");
-  //         } else {
-  //           resolve({
-  //             success: true,
-  //             message: "University updated successfully",
-  //           });
-  //         }
-  //       });
-  //     });
-
-  //     connection.closeConnection();
-
-  //     if (!result) {
-  //       throw new Error("University update failed");
-  //     }
-
-  //     return result;
-  //   } catch (error) {
-  //     console.error("Error updating university:", error);
-  //     connection.closeConnection();
-  //     throw error;
-  //   }
-  // }
 
   static async updateProfilePicture(userId: string, file: Express.Multer.File) {
     const connection = createDatabaseConnection();
