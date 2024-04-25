@@ -1,7 +1,7 @@
-import PersonalInfo from "../../components/PersonalInfo";
-import ProfilePicture from "../../components/ProfilePicture";
-import SocialAccounts from "../../components/SocialAccounts";
-import Studies from "../../components/Studies";
+import PersonalInfo from "../../components/Account/PersonalInfo";
+import ProfilePicture from "../../components/Account/ProfilePicture";
+import SocialAccounts from "../../components/Account/SocialAccounts";
+import Studies from "../../components/Account/Studies";
 
 const Account = () => {
   return (

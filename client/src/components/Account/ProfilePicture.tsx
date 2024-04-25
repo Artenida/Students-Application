@@ -1,10 +1,10 @@
-import profile from "../assets/home.png";
-import { SmallButton } from "./ButtonComponent"
-import cover from "../assets/cover3.jpg"
+import profile from "../../assets/home.png";
+import { SmallButton } from "../ButtonComponent"
+import cover from "../../assets/cover3.jpg"
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectUser } from "../redux/user/userSlice";
-import { getUser, updateProfilePicture } from "../api/userThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/user/userSlice";
+import { getUser, updateProfilePicture } from "../../api/userThunk";
 
 const ProfilePicture = () => {
   const [image, setImage] = useState<File>();

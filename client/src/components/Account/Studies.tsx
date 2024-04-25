@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectUser } from "../redux/user/userSlice";
-import { SmallButton } from "./ButtonComponent";
-import FormInputsComponent from "./FormInputsComponent";
-import { validateUpdateForm } from "../utils/validateUser";
-import { updateUser } from "../api/userThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/user/userSlice";
+import { SmallButton } from "../ButtonComponent";
+import FormInputsComponent from "../FormInputsComponent";
+import { validateUpdateForm } from "../../utils/validateUser";
+import { updateUser } from "../../api/userThunk";
 
 interface FormData {
   username: string;

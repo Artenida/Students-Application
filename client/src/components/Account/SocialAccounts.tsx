@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import FormInputsComponent from "./FormInputsComponent";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectUser } from "../redux/user/userSlice";
+import FormInputsComponent from "../FormInputsComponent";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/user/userSlice";
 import {
   addSocialMediaAccount,
   deleteSocialMediaAccounts,
   getUser,
-} from "../api/userThunk";
-import Account from "../pages/Auth/Account";
+} from "../../api/userThunk";
+import Account from "../../pages/Auth/Account";
 
 interface Account {
   id: number;
