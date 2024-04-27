@@ -6,5 +6,5 @@ const router = express.Router()
 
 router.post("/login", validateLogin, login)
 router.post("/register", validateRegistration, register)
-
+// router.get("/email", contact);
 export default router

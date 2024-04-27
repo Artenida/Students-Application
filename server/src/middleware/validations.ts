@@ -24,3 +24,38 @@ export const validateLogin = (
   next();
 };
 
+export const validateDeleteUser = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+  next();
+};
+
+export const validateCreatePost = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { title, description } = req.body;
+  if (!title || !description) {
+    return res.status(400).json("Please fill out all fields");
+  }
+  next();
+};
+
+export const validateUpdatePost = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { title, description } = req.body;
+  if (!title || !description) {
+    return res.status(400).json("Cannot send empty values");
+  }
+  next();
+};

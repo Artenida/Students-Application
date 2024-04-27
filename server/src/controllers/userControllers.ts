@@ -138,3 +138,4 @@ export const deleteUser = async (
     return next(res.status(500).json({ message: "Error deleting user:" }));
   }
 };
+

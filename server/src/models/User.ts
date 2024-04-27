@@ -1,6 +1,7 @@
 import createDatabaseConnection from "../config";
 import bcrypt from "bcrypt";
 import { deleteSocialMediaAccounts } from "../controllers/userControllers";
+import { Query } from "mysql";
 
 interface UserData {
   id: number;
@@ -25,9 +26,8 @@ export class User {
     const db = connection.getConnection();
 
     try {
-      const checkQuery = `SELECT u.*, uni.subject, s.social_media
+      const checkQuery = `SELECT u.*, s.social_media
       FROM users u
-      LEFT JOIN university uni ON u.id = uni.user_id
       LEFT JOIN socials s ON u.id = s.user_id
       WHERE u.username = ?;
       `;
@@ -75,51 +75,51 @@ export class User {
     const db = connection.getConnection();
 
     try {
-        const userData = await new Promise<any>((resolve, reject) => {
-            db.query(
-                `SELECT * FROM users WHERE id = ?`,
-                [id],
-                (error, userResult) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(userResult[0]);
-                    }
-                }
-            );
-        });
+      const userData = await new Promise<any>((resolve, reject) => {
+        db.query(
+          `SELECT * FROM users WHERE id = ?`,
+          [id],
+          (error, userResult) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(userResult[0]);
+            }
+          }
+        );
+      });
 
-        const socialMediaData = await new Promise<any[]>((resolve, reject) => {
-            db.query(
-                `SELECT id, social_media FROM socials WHERE user_id = ?`,
-                [id],
-                (error, socialResult) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(socialResult);
-                    }
-                }
-            );
-        });
+      const socialMediaData = await new Promise<any[]>((resolve, reject) => {
+        db.query(
+          `SELECT id, social_media FROM socials WHERE user_id = ?`,
+          [id],
+          (error, socialResult) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(socialResult);
+            }
+          }
+        );
+      });
 
-        userData.social_media = socialMediaData;
+      userData.social_media = socialMediaData;
 
-        connection.closeConnection();
+      connection.closeConnection();
 
-        return userData;
+      return userData;
     } catch (error) {
-        console.error("Error in getAllUserData:", error);
-        throw error;
+      console.error("Error in getAllUserData:", error);
+      throw error;
     }
-}
+  }
 
   static async updateUser(
     id: string,
     username: string,
     email: string,
     bio: string,
-    subject: string,
+    subject: string
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -128,7 +128,8 @@ export class User {
       let query: string;
       let queryParams: (string | number)[];
 
-      query = "UPDATE users SET username = ?, email = ?, bio = ?, fields = ? WHERE id = ?";
+      query =
+        "UPDATE users SET username = ?, email = ?, bio = ?, fields = ? WHERE id = ?";
       queryParams = [username, email, bio, subject, id];
 
       const result: any = await new Promise((resolve, reject) => {
@@ -178,9 +179,7 @@ export class User {
     }
   }
 
-  static async deleteSocialMediaAccounts(
-    id: string
-  ): Promise<boolean> {
+  static async deleteSocialMediaAccounts(id: string): Promise<boolean> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
