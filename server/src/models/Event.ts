@@ -10,7 +10,7 @@ type EventInputs = {
     files: Express.Multer.File[];
   };
 
-class Post {
+class Event {
   static async getEvents() {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -88,9 +88,9 @@ class Post {
   static async searchEvent(word: string) {
     return new Promise(async (resolve, reject) => {
       try {
-        const getEventByTitle = await Post.filterByTitle(word);
-        const getEventByDescription = await Post.filterByDescription(word);
-        const getEventByAuthor = await Post.filterByAuthor(word);
+        const getEventByTitle = await this.filterByTitle(word);
+        const getEventByDescription = await this.filterByDescription(word);
+        const getEventByAuthor = await this.filterByAuthor(word);
         resolve({
             getEventByTitle,
             getEventByDescription,
@@ -193,4 +193,4 @@ class Post {
   }
 }
 
-export default Post;
+export default Event;
