@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 const router = express.Router();
 
 router.get("/allEvents", allEvents);
-router.post("/createEvent", verifyToken, upload.array("file", 7), createEvent);
+router.post("/createEvent",  upload.array("file", 7), createEvent);
 router.delete("/deleteEvent/:id", deleteEvent);
 // router.put("/update/:id", verifyToken, validateUpdatePost, updatePost);
 router.get("/searchEvent", searchEvent);

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Event from "../models/Event";
 
 type EventInputs = {
+  id: string;
   title: string;
   description: string;
   date: Date;
@@ -31,11 +32,11 @@ export const createEvent = async (
   next: NextFunction
 ) => {
   try {
-    const { title, description, date, location, details, user_id } = req.body;
+    const {id, title, description, date, location, details, user_id } = req.body;
     const files: Express.Multer.File[] = Array.isArray(req.files)
       ? req.files
       : [];
-    const inputs: EventInputs = { title, description, date, location, details, user_id, files };
+    const inputs: EventInputs = { id, title, description, date, location, details, user_id, files };
     await Event.createEvent(inputs);
     res
       .status(200)

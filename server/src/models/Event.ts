@@ -1,14 +1,15 @@
 import createDatabaseConnection from "../config";
 
 type EventInputs = {
-    title: string;
-    description: string;
-    date: Date;
-    location: string;
-    details: string;
-    user_id: string;
-    files: Express.Multer.File[];
-  };
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+  location: string;
+  details: string;
+  user_id: string;
+  files: Express.Multer.File[];
+};
 
 class Event {
   static async getEvents() {
@@ -41,28 +42,74 @@ class Event {
     const db = connection.getConnection();
 
     try {
-      const eventQuery = `INSERT INTO events (title, description, date, location, details, user_id, image) VALUES (?, ?, ?, ?, ?, ?);`;
-      const eventValues = [
-        inputs.title,
-        inputs.description,
-        new Date(),
-        inputs.location,
-        inputs.details,
-        inputs.user_id,
-        inputs.files,
-      ];
+      const existingEventQuery = `SELECT * FROM events WHERE id = ?`;
+      db.query(
+        existingEventQuery,
+        [inputs.id],
+        async (error, existingResult) => {
+          if (error) {
+            console.error("Error checking existing event:", error);
+            connection.closeConnection();
+            throw error;
+          } else {
+            if (existingResult.length > 0) {
+              const updateEventQuery = `UPDATE events SET title = ?, description = ?, date = ?, location = ?, details = ?, user_id = ? WHERE id = ?;`;
+              const updateEventValues = [
+                inputs.title,
+                inputs.description,
+                new Date(),
+                inputs.location,
+                inputs.details,
+                inputs.user_id,
+                inputs.id,
+                // inputs.files,
+              ];
 
-      db.query(eventQuery, eventValues, async (error, result) => {
-        if (error) {
-          console.error("Error creating event:", error);
-          connection.closeConnection();
-          throw error;
-        } else {
-          return result;
+              db.query(
+                updateEventQuery,
+                updateEventValues,
+                async (updateError, updateResult) => {
+                  if (updateError) {
+                    console.error("Error updating event:", updateError);
+                    connection.closeConnection();
+                    throw updateError;
+                  } else {
+                    return updateResult;
+                  }
+                }
+              );
+            } else {
+              const createEventQuery = `INSERT INTO events (id, title, description, date, location, details, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+              const createEventValues = [
+                inputs.id,
+                inputs.title,
+                inputs.description,
+                new Date(),
+                inputs.location,
+                inputs.details,
+                inputs.user_id,
+                // inputs.files,
+              ];
+
+              db.query(
+                createEventQuery,
+                createEventValues,
+                async (createError, createResult) => {
+                  if (createError) {
+                    console.error("Error creating event:", createError);
+                    connection.closeConnection();
+                    throw createError;
+                  } else {
+                    return createResult;
+                  }
+                }
+              );
+            }
+          }
         }
-      });
+      );
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error creating or updating event:", error);
       connection.closeConnection();
       throw error;
     }
@@ -92,9 +139,9 @@ class Event {
         const getEventByDescription = await this.filterByDescription(word);
         const getEventByAuthor = await this.filterByAuthor(word);
         resolve({
-            getEventByTitle,
-            getEventByDescription,
-            getEventByAuthor,
+          getEventByTitle,
+          getEventByDescription,
+          getEventByAuthor,
         });
       } catch (error) {
         reject(error);
