@@ -14,28 +14,22 @@ import {
 interface Image {
   url: string;
 }
-interface Tag {
-  id: number;
-  name: string;
-}
+
 interface PostDetails {
-  user_id: string;
+  userId: string;
   username: string;
   profile_picture: string;
-  post_id: string;
+  postId: string;
   title: string;
   description: string;
   createdAt: Date;
   images: Image[];
-  tags: Tag[];
-  tag_Id: string;
 }
 
 interface Paginated {
   id: string;
   images: Image[];
   title: string;
-  tags: Tag[];
   username: string;
   profile_picture: string | undefined;
   description: string;
