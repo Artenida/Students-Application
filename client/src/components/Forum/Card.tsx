@@ -57,7 +57,7 @@ const Card: React.FC<Paginated> = ({
                 /\\/g,
                 "/"
               )}`}
-              alt="blogPicture"
+              alt="forumPicture"
               className="w-full object-cover object-center h-64"
             />
           )}

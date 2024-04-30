@@ -12,7 +12,6 @@ export interface EventType {
     user_id: string;
     image: string;
   }
-
 interface PostState {
   currentEvents: EventType[];
   loading: boolean;
