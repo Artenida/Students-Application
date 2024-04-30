@@ -87,10 +87,10 @@ const Forum = () => {
     );
     setCurrentBlogs(filteredPosts);
   };
-    
-    useEffect(() => {
-        dispatch(retrieveAllEvents());
-    }, [dispatch])
+
+  useEffect(() => {
+    dispatch(retrieveAllEvents());
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen bg-custom-color1 w-full">
@@ -102,32 +102,36 @@ const Forum = () => {
         ) : retrieveError ? (
           <div>Error: {retrieveError}</div>
         ) : (
-          <div>
-            {currentBlogs.map((blog) => (
-              <Card
-                key={blog.id}
-                id={blog.id}
-                username={blog.username}
-                createdAt={blog.createdAt}
-                title={blog.title}
-                description={blog.description}
-                profile_picture={blog.profile_picture}
-                images={blog.images}
-              />
-            ))}
-            {currentEvents?.map((event) => (
-              <EventCard 
-              key={event.id}
-              id={event.id}
-              title={event.title} 
-              description={event.description}
-              date={event.date}
-              location={event.location}
-              details={event.details}
-              user_id={event.user_id}
-              image={event.image}
-              />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              {currentBlogs.map((blog) => (
+                <Card
+                  key={blog.id}
+                  id={blog.id}
+                  username={blog.username}
+                  createdAt={blog.createdAt}
+                  title={blog.title}
+                  description={blog.description}
+                  profile_picture={blog.profile_picture}
+                  images={blog.images}
+                />
+              ))}
+            </div>
+            <div>
+              {currentEvents?.map((event) => (
+                <EventCard
+                  key={event.id}
+                  id={event.id}
+                  title={event.title}
+                  description={event.description}
+                  date={event.date}
+                  location={event.location}
+                  details={event.details}
+                  user_id={event.user_id}
+                  image={event.image}
+                />
+              ))}
+            </div>
           </div>
         )}
 
