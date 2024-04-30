@@ -9,6 +9,20 @@ import {
 import { selectPost } from "../../redux/forum/postSlice";
 import PaginationButtons from "../../components/Forum/PaginationButtons";
 import Loading from "../../components/Loading";
+import EventCard from "../../components/Forum/EventCard";
+import { retrieveAllEvents } from "../../api/eventThunk";
+import { selectEvent } from "../../redux/forum/eventSlice";
+
+export interface EventType {
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+  location: string;
+  details: string;
+  user_id: string;
+  image: string;
+}
 
 const Forum = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +35,7 @@ const Forum = () => {
   const [pageCount, setPageCount] = useState(1);
   const [keyword, setKeyword] = useState("New");
   const [searching, setSearching] = useState(false);
+  const { currentEvents } = useAppSelector(selectEvent);
 
   useEffect(() => {
     dispatch(filterPosts({ keyword: keyword }));
@@ -72,6 +87,10 @@ const Forum = () => {
     );
     setCurrentBlogs(filteredPosts);
   };
+    
+    useEffect(() => {
+        dispatch(retrieveAllEvents());
+    }, [dispatch])
 
   return (
     <div className="min-h-screen bg-custom-color1 w-full">
@@ -94,6 +113,19 @@ const Forum = () => {
                 description={blog.description}
                 profile_picture={blog.profile_picture}
                 images={blog.images}
+              />
+            ))}
+            {currentEvents?.map((event) => (
+              <EventCard 
+              key={event.id}
+              id={event.id}
+              title={event.title} 
+              description={event.description}
+              date={event.date}
+              location={event.location}
+              details={event.details}
+              user_id={event.user_id}
+              image={event.image}
               />
             ))}
           </div>
