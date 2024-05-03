@@ -36,7 +36,7 @@ const Forum = () => {
   const [keyword, setKeyword] = useState("New");
   const [searching, setSearching] = useState(false);
   const { currentEvents } = useAppSelector(selectEvent);
-
+  console.log(currentPost);
   useEffect(() => {
     dispatch(filterPosts({ keyword: keyword }));
   }, [dispatch, keyword]);
@@ -93,8 +93,9 @@ const Forum = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-custom-color1 w-full">
+    <div className="min-h-screen bg-gray-100 w-full p-10">
       <div className="">
+        
         {loading ? (
           <div>
             <Loading />
@@ -103,7 +104,7 @@ const Forum = () => {
           <div>Error: {retrieveError}</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            <div className="">
               {currentBlogs.map((blog) => (
                 <Card
                   key={blog.id}
@@ -114,10 +115,11 @@ const Forum = () => {
                   description={blog.description}
                   profile_picture={blog.profile_picture}
                   images={blog.images}
+                  user_id={blog.user_id}
                 />
               ))}
             </div>
-            <div>
+            <div className="flex flex-col md:items-end">
               {currentEvents?.map((event) => (
                 <EventCard
                   key={event.id}

@@ -2,20 +2,27 @@ import React from "react";
 import moment from "moment";
 import profile from "../../assets/userProfile.jpg";
 import { BsThreeDots } from "react-icons/bs";
+import { useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/user/userSlice";
+import { selectPost } from "../../redux/forum/postSlice";
 
 interface AuthorProps {
   authorName: string;
   profile_picture: string | undefined;
   createdAt: Date;
+  userId: string;
 }
 
 const UserAccount: React.FC<AuthorProps> = ({
   authorName,
   profile_picture,
   createdAt,
+  userId,
 }) => {
   const formattedDate = moment(createdAt).format("MMMM Do YYYY");
   const imagePath = profile_picture ? profile_picture.replace(/\\/g, "/") : "";
+  const { currentUser } = useAppSelector(selectUser);
+  const { currentPost } = useAppSelector(selectPost);
 
   return (
     <div className="flex justify-between flex-nowrap items-center">
@@ -40,9 +47,13 @@ const UserAccount: React.FC<AuthorProps> = ({
           <h3 className="text-gray-500 text-sm">{formattedDate}</h3>
         </div>
       </div>
-      <div className="mr-2 cursor-pointer">
-        <BsThreeDots className="text-xl" />
-      </div>
+      {currentUser?.user?.id === userId ? (
+        <div className="mr-2 cursor-pointer">
+          <BsThreeDots className="text-xl" />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

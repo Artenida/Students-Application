@@ -34,6 +34,7 @@ interface Paginated {
   profile_picture: string | undefined;
   description: string;
   createdAt: Date;
+  user_id: string;
 }
 interface PaginatedPosts {
   result: Paginated[];
@@ -56,7 +57,6 @@ interface PostState {
   filterSearch: string | null;
   paginatedPost: PaginatedPosts | null;
   currentAuthor: Authors[];
-  postTags: [] | null;
   loading: boolean;
   successful: boolean;
   successfulUpdate: boolean;
@@ -78,7 +78,6 @@ const initialState: PostState = {
   filterSearch: null,
   paginatedPost: null,
   currentAuthor: [],
-  postTags: [],
   retrieveError: null,
   deleteError: null,
   updateError: null,
