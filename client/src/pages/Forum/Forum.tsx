@@ -14,6 +14,7 @@ import { retrieveAllEvents } from "../../api/eventThunk";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import Banner from "../../components/Forum/Banner";
 import Searchbar from "../../components/Searchbar";
+import ExtraInfo from "../../components/Forum/ExtraInfo";
 
 export interface EventType {
   id: string;
@@ -142,6 +143,9 @@ const Forum = () => {
                     image={event.image}
                   />
                 ))}
+              </div>
+              <div className="mt-8">
+                <ExtraInfo />
               </div>
             </div>
           </div>
