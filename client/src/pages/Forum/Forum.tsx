@@ -39,7 +39,7 @@ const Forum = () => {
   const [keyword, setKeyword] = useState("New");
   const [searching, setSearching] = useState(false);
   const { currentEvents } = useAppSelector(selectEvent);
-  console.log(currentPost);
+
   useEffect(() => {
     dispatch(filterPosts({ keyword: keyword }));
   }, [dispatch, keyword]);
