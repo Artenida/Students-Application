@@ -12,6 +12,7 @@ import Loading from "../../components/Loading";
 import EventCard from "../../components/Forum/EventCard";
 import { retrieveAllEvents } from "../../api/eventThunk";
 import { selectEvent } from "../../redux/forum/eventSlice";
+import Banner from "../../components/Forum/Banner";
 
 export interface EventType {
   id: string;
@@ -95,7 +96,6 @@ const Forum = () => {
   return (
     <div className="min-h-screen bg-gray-100 w-full p-10">
       <div className="">
-        
         {loading ? (
           <div>
             <Loading />
@@ -103,8 +103,11 @@ const Forum = () => {
         ) : retrieveError ? (
           <div>Error: {retrieveError}</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex justify-between">
             <div className="">
+              <div className="md:pl-44 mb-8">
+                <Banner />
+              </div>
               {currentBlogs.map((blog) => (
                 <Card
                   key={blog.id}
@@ -119,20 +122,22 @@ const Forum = () => {
                 />
               ))}
             </div>
-            <div className="flex flex-col md:items-end">
-              {currentEvents?.map((event) => (
-                <EventCard
-                  key={event.id}
-                  id={event.id}
-                  title={event.title}
-                  description={event.description}
-                  date={event.date}
-                  location={event.location}
-                  details={event.details}
-                  user_id={event.user_id}
-                  image={event.image}
-                />
-              ))}
+            <div className="col-span-1 md:col-span-1 md:pr-4">
+              <div className="flex flex-col md:items-end">
+                {currentEvents?.map((event) => (
+                  <EventCard
+                    key={event.id}
+                    id={event.id}
+                    title={event.title}
+                    description={event.description}
+                    date={event.date}
+                    location={event.location}
+                    details={event.details}
+                    user_id={event.user_id}
+                    image={event.image}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}

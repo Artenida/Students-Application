@@ -25,8 +25,8 @@ const EventCard: React.FC<EventType> = ({
   const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
 
   return (
-    <div className="bg-white shadow-md rounded-lg py-2 mt-2 sm:ml-44 sm:pr-8 lg:px-8 xl:pr-8 flex flex-col md:items-end">
-      <div className="flex flex-col sm:flex-row gap-4">
+    <div className="bg-white shadow-md rounded-lg py-2 mt-2 flex">
+      <div className="flex flex-row px-4 gap-4">
         <div className="w-full sm:w-24">
           {image ? (
             <img

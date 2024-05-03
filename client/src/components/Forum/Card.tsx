@@ -31,7 +31,7 @@ const Card: React.FC<Paginated> = ({
   user_id
 }) => {
   return (
-    <div className=" md:pl-44 md:items-end mb-8 flex"> 
+    <div className="md:pl-44 md:items-end mb-8 flex"> 
       <div className="bg-white w-full md:w-[800px] h-auto rounded-lg p-4 md:flex-shrink-0 ">
         <div className="flex flex-col">
           <div className="mb-4 md:mb-0 md:mr-4 md:flex-shrink-0">
