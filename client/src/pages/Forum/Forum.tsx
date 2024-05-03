@@ -13,6 +13,7 @@ import EventCard from "../../components/Forum/EventCard";
 import { retrieveAllEvents } from "../../api/eventThunk";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import Banner from "../../components/Forum/Banner";
+import Searchbar from "../../components/Searchbar";
 
 export interface EventType {
   id: string;
@@ -94,8 +95,12 @@ const Forum = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 w-full p-10">
+    <div className="min-h-screen bg-gray-100 w-full pb-10">
       <div className="">
+        <div className="bg-white shadow-md p-4 rounded-lg">
+          <Searchbar onChange={filter} />
+        </div>
+
         {loading ? (
           <div>
             <Loading />
@@ -103,7 +108,7 @@ const Forum = () => {
         ) : retrieveError ? (
           <div>Error: {retrieveError}</div>
         ) : (
-          <div className="flex justify-between">
+          <div className="flex justify-between mt-4">
             <div className="">
               <div className="md:pl-44 mb-8">
                 <Banner />
