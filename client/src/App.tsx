@@ -1,5 +1,5 @@
-import React from 'react';
-import AppRoutes from './routes/Routes';
+import React, { useState } from "react";
+import AppRoutes from "./routes/Routes";
 
 const App = () => {
   return (
@@ -7,6 +7,6 @@ const App = () => {
       <AppRoutes />
     </div>
   );
-}
+};
 
 export default App;

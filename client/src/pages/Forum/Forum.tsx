@@ -15,6 +15,7 @@ import { selectEvent } from "../../redux/forum/eventSlice";
 import Banner from "../../components/Forum/Banner";
 import Searchbar from "../../components/Searchbar";
 import ExtraInfo from "../../components/Forum/ExtraInfo";
+import Sidebar from "../../components/Sidebar";
 
 export interface EventType {
   id: string;
@@ -97,11 +98,15 @@ const Forum = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 w-full pb-10">
-      <div className="">
+      <div>
         <div className="bg-white shadow-md p-4 rounded-lg">
           <Searchbar onChange={filter} />
         </div>
-
+        <div className="flex">
+          <Sidebar />
+        </div>
+      </div>
+      <div className="">
         {loading ? (
           <div>
             <Loading />
