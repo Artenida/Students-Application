@@ -18,7 +18,7 @@ type UserBodyTypeUpdate = {
   id: string;
   username: string;
   email: string;
-  subject: string;
+  fields: string;
   bio: string;
   profile_picture: string;
 };

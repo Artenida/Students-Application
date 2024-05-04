@@ -9,7 +9,7 @@ import { updateUser } from "../../api/userThunk";
 interface FormData {
   username: string;
   email: string;
-  subject: string;
+  fields: string;
   bio: string;
 }
 const Studies = () => {
@@ -21,7 +21,7 @@ const Studies = () => {
   const [formDataErrors, setFormDataErrors] = useState<FormData>({
     username: "",
     email: "",
-    subject: "",
+    fields: "",
     bio: "",
   });
 
@@ -29,7 +29,7 @@ const Studies = () => {
     username: currentUser?.user?.username ?? "",
     email: currentUser?.user?.email ?? "",
     bio: currentUser?.user?.bio ?? "",
-    subject: currentUser?.user?.subject ?? "",
+    fields: currentUser?.user?.fields ?? "",
     password: "",
     profile_picture: "",
   });
@@ -59,7 +59,7 @@ const Studies = () => {
         username: currentUser?.user?.username,
         email: currentUser?.user?.email,
         password: currentUser?.user?.password,
-        subject: data.subject,
+        fields: data.fields,
         bio: currentUser?.user?.bio,
         profile_picture: currentUser?.user?.profile_picture,
         id: currentUser?.user?.id,
@@ -76,9 +76,9 @@ const Studies = () => {
       <div className="mt-2">
         <FormInputsComponent
           id="subject"
-          value={data.subject}
+          value={data.fields}
           onChange={handleInputChange}
-          errorMessage={formDataErrors.subject}
+          errorMessage={formDataErrors.fields}
         />
       </div>
 

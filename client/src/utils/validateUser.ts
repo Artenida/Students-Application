@@ -13,7 +13,7 @@ interface FormLoginErrors {
 interface FormUpdateErrors {
   username: string;
   email: string;
-  subject: string;
+  fields: string;
   bio: string;
 }
 
@@ -100,10 +100,10 @@ export const validateUpdateForm = (
     errors.email = validateEmail(value);
   }
   if (id === "subject") {
-    errors.subject = validateUniversity(value);
+    errors.fields = validateUniversity(value);
   }
   if (id === "bio") {
-    errors.subject = validateBio(value);
+    errors.bio = validateBio(value);
   }
   return errors;
 };

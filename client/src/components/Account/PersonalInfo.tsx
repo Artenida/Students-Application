@@ -9,7 +9,7 @@ import { updateUser } from "../../api/userThunk";
 interface FormData {
   username: string;
   email: string;
-  subject: string;
+  fields: string;
   bio: string;
 }
 
@@ -22,7 +22,7 @@ const PersonalInfo = () => {
   const [formDataErrors, setFormDataErrors] = useState<FormData>({
     username: "",
     email: "",
-    subject: "",
+    fields: "",
     bio: "",
   });
 
@@ -30,7 +30,7 @@ const PersonalInfo = () => {
     username: currentUser?.user?.username ?? "",
     email: currentUser?.user?.email ?? "",
     bio: currentUser?.user?.bio ?? "",
-    subject: currentUser?.user?.subject ?? "",
+    fields: currentUser?.user?.fields ?? "",
     password: "",
     profile_picture: "",
   });
@@ -60,7 +60,7 @@ const PersonalInfo = () => {
         username: data.username,
         email: data.email,
         password: data.password,
-        subject: data.subject,
+        fields: data.fields,
         bio: data.bio,
         profile_picture: currentUser?.user?.profile_picture,
         id: currentUser?.user?.id,
