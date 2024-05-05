@@ -10,9 +10,8 @@ interface CommentInputs {
 class Comments {
   static async addComments(
     postId: String,
-    userId: String,
-    commentText: String,
-    dateCreated: String
+    user_id: String,
+    comment_text: String
   ) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -22,7 +21,7 @@ class Comments {
       await new Promise((resolve, reject) => {
         db.query(
           query,
-          [postId, userId, commentText, dateCreated],
+          [postId, user_id, comment_text, new Date()],
           (err, result) => {
             if (err) {
               reject(err);

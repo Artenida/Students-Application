@@ -3,7 +3,6 @@ import Comment from "../models/Comment";
 
 type CommentInputs = {
   commentText: string;
-  commentDate: Date;
   postId: string;
   userId: string;
 };
@@ -14,11 +13,9 @@ export const addComments = async (
   next: NextFunction
 ) => {
   try {
-    const { commentText, commentDate, userId } = req.body;
+    const { user_id, comment_text } = req.body;
     const { postId } = req.params;
-    // const { userId } = req.body.user.id;
-    const inputs: CommentInputs = { commentText, commentDate, postId, userId };
-    await Comment.addComments(userId, postId, commentText, commentDate);
+    await Comment.addComments(postId, user_id, comment_text);
     res
       .status(200)
       .json({ success: true, message: "Comment added successfully" });
@@ -38,8 +35,8 @@ export const deleteComments = async (
   next: NextFunction
 ) => {
   try {
-    const postId = req.params.id;
-      await Comment.deleteCommentsById(postId);
+    const {id} = req.params;
+      await Comment.deleteCommentsById(id);
       res.status(200).json("Comment has been deleted!");
   } catch (error) {
     next(error);
