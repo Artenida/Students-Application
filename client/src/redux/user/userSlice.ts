@@ -152,7 +152,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteSocialMediaAccounts.fulfilled, (state) => {
-        state.isLoggedIn = false;
+        state.isLoggedIn = true;
         state.deleteError = null;
         state.loading = false;
       })
