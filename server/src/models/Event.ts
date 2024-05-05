@@ -6,7 +6,8 @@ type EventInputs = {
   description: string;
   date: Date;
   location: string;
-  details: string;
+  music: string;
+  cost: string;
   user_id: string;
   files: Express.Multer.File[];
 };
@@ -53,14 +54,15 @@ class Event {
             throw error;
           } else {
             if (existingResult.length > 0) {
-              const updateEventQuery = `UPDATE events SET title = ?, description = ?, date = ?, location = ?, details = ?, user_id = ? WHERE id = ?;`;
+              const updateEventQuery = `UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, cost = ? WHERE id = ?;`;
               const updateEventValues = [
                 inputs.title,
                 inputs.description,
                 new Date(),
                 inputs.location,
-                inputs.details,
                 inputs.user_id,
+                inputs.music,
+                inputs.cost,
                 inputs.id,
                 // inputs.files,
               ];
@@ -79,15 +81,16 @@ class Event {
                 }
               );
             } else {
-              const createEventQuery = `INSERT INTO events (id, title, description, date, location, details, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+              const createEventQuery = `INSERT INTO events (id, title, description, date, location, user_id, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
               const createEventValues = [
                 inputs.id,
                 inputs.title,
                 inputs.description,
                 new Date(),
                 inputs.location,
-                inputs.details,
                 inputs.user_id,
+                inputs.music,
+                inputs.cost,
                 // inputs.files,
               ];
 
@@ -138,10 +141,12 @@ class Event {
         const getEventByTitle = await this.filterByTitle(word);
         const getEventByDescription = await this.filterByDescription(word);
         const getEventByAuthor = await this.filterByAuthor(word);
+        const getEventByLocation = await this.filterByLocation(word);
         resolve({
           getEventByTitle,
           getEventByDescription,
           getEventByAuthor,
+          getEventByLocation
         });
       } catch (error) {
         reject(error);
@@ -199,6 +204,32 @@ class Event {
     }
   }
 
+  static async filterByLocation(word: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const query = `
+      SELECT * FROM events WHERE location LIKE ?`;
+
+      const data = await new Promise((resolve, reject) => {
+        db.query(query, [`%${word}%`], (error, result) => {
+          connection.closeConnection();
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.error("Error in filterByAuthor", error);
+      throw error;
+    }
+  }
+
   static async filterByAuthor(word: string) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -214,8 +245,9 @@ class Event {
       e.description,
       e.date,
       e.location,
-      e.details,
-      e.image
+      e.image,
+      e.music,
+      e.cost
       FROM events e 
       LEFT JOIN users u ON e.user_id = u.id
       WHERE 

@@ -7,8 +7,9 @@ type EventInputs = {
   description: string;
   date: Date;
   location: string;
-  details: string;
+  music: string;
   user_id: string;
+  cost: string;
   files: Express.Multer.File[];
 };
 
@@ -32,11 +33,11 @@ export const createEvent = async (
   next: NextFunction
 ) => {
   try {
-    const {id, title, description, date, location, details, user_id } = req.body;
+    const {id, title, description, date, location, user_id, music, cost } = req.body;
     const files: Express.Multer.File[] = Array.isArray(req.files)
       ? req.files
       : [];
-    const inputs: EventInputs = { id, title, description, date, location, details, user_id, files };
+    const inputs: EventInputs = { id, title, description, date, location, user_id, music, cost, files };
     await Event.createEvent(inputs);
     res
       .status(200)
