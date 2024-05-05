@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes";
 import postRoutes from "./routes/postRoutes";
 import eventRoutes from "./routes/eventRoutes";
 import commentRoutes from "./routes/commentRoutes";
+import categoryRoutes from "./routes/categoryRoutes";
 import path from "path";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(`${base_url}users`, userRoutes);
 app.use(`${base_url}posts`, postRoutes);
 app.use(`${base_url}events`, eventRoutes);
 app.use(`${base_url}comments`, commentRoutes);
+app.use(`${base_url}categories`, categoryRoutes);
 
 app.listen(process.env.DEV_PORT, () => {
   console.log(`Server is listening at http://localhost:${process.env.DEV_PORT}`);
