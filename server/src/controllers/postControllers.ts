@@ -84,25 +84,25 @@ export const deletePost = async (
   }
 };
 
-// export const updatePost = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { title, description, tags } = req.body;
-//     const postId = req.params.id;
-//     try {
-//       await Post.updatePost(title, description, postId, tags);
-//       res.status(200).json("Post has been updated!");
-//     } catch (error) {
-//       res.status(403).json("Your post wasn't updated");
-//     }
-//   } catch (error) {
-//     console.error("Error in updatePost controller:", error);
-//     res.status(500).json({ message: "Internal server error." });
-//   }
-// };
+export const updatePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { title, description} = req.body;
+    const {id} = req.params;
+    try {
+      await Post.updatePost({title, description, id});
+      res.status(200).json("Post has been updated!");
+    } catch (error) {
+      res.status(403).json("Your post wasn't updated");
+    }
+  } catch (error) {
+    console.error("Error in updatePost controller:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 export const getUsersPost = async (
   req: Request,

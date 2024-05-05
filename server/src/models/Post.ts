@@ -147,6 +147,35 @@ class Post {
     }
   }
 
+  static async updatePost({title, description, id} : {title: string, description: string, id: string}): Promise<any> {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const postQuery =
+        "UPDATE posts SET title = ?, description = ? WHERE id = ?;";
+      const postValues = [
+        title,
+        description,
+        id
+      ];
+
+      db.query(postQuery, postValues, async (error, result) => {
+        if (error) {
+          console.error("Error updating post:", error);
+          connection.closeConnection();
+          throw error;
+        } else {
+          return result;
+        }
+      });
+    } catch (error) {
+      console.error("Error updating post:", error);
+      connection.closeConnection();
+      throw error;
+    }
+  }
+
   static async addImages(postId: any, images: Express.Multer.File[]) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
