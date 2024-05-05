@@ -69,7 +69,7 @@ const SocialAccounts = () => {
             {user.social_media.map((account: Account) => (
               <div
                 key={account.id}
-                className="flex justify-between items-center text-2xl border border-custom-color2 rounded-lg p-2 mt-4"
+                className="flex justify-between items-center text-md border border-custom-color2 rounded-lg p-2 mt-4"
               >
                 <a
                   href={account.social_media}
