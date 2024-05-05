@@ -38,6 +38,45 @@ class Event {
     }
   }
 
+  static async getEventById(id: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    const query = `
+    SELECT 
+    u.id AS user_id,
+    u.username,
+    u.profile_picture,
+    e.id AS event_id,
+    e.title,
+    e.description,
+    e.date,
+    e.location,
+    e.image, 
+    e.music,
+    e.cost
+FROM events e 
+LEFT JOIN users u ON e.user_id = u.id 
+WHERE e.id = ?;
+`;
+
+    return new Promise((resolve, reject) => {
+      db.query(query, [id], (error, result) => {
+        if (error) {
+          reject(error);
+          connection.closeConnection();
+        } else {
+          if (result.length === 0) {
+            reject(new Error("Post does not exist"));
+            connection.closeConnection();
+          } else {
+            resolve(result);
+          }
+        }
+      });
+    });
+  }
+
   static async createEvent(inputs: EventInputs): Promise<any> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -56,15 +95,15 @@ class Event {
             if (existingResult.length > 0) {
               const updateEventQuery = `UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, cost = ? WHERE id = ?;`;
               const updateEventValues = [
+                inputs.id,
                 inputs.title,
                 inputs.description,
                 new Date(),
                 inputs.location,
                 inputs.user_id,
+                inputs.files[0].path,
                 inputs.music,
                 inputs.cost,
-                inputs.id,
-                // inputs.files,
               ];
 
               db.query(
@@ -81,7 +120,7 @@ class Event {
                 }
               );
             } else {
-              const createEventQuery = `INSERT INTO events (id, title, description, date, location, user_id, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+              const createEventQuery = `INSERT INTO events (id, title, description, date, location, user_id, files, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
               const createEventValues = [
                 inputs.id,
                 inputs.title,
@@ -89,9 +128,9 @@ class Event {
                 new Date(),
                 inputs.location,
                 inputs.user_id,
+                
                 inputs.music,
                 inputs.cost,
-                // inputs.files,
               ];
 
               db.query(
@@ -146,7 +185,7 @@ class Event {
           getEventByTitle,
           getEventByDescription,
           getEventByAuthor,
-          getEventByLocation
+          getEventByLocation,
         });
       } catch (error) {
         reject(error);
