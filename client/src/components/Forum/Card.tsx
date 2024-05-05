@@ -1,6 +1,7 @@
 import Comments from "./Comments";
 import UserAccount from "./UserAccount";
 import userProfile from "../../assets/cover1.jpg";
+import ImageSlider from "../ImageSlider";
 
 export interface BlogCardProps {
   posts: Paginated[] | null;
@@ -54,16 +55,7 @@ const Card: React.FC<Paginated> = ({
           </div>
         </div>
         <div className="mt-4">
-          {images && images.length > 0 && (
-            <img
-              src={`http://localhost:5000/${images[0]?.url?.replace(
-                /\\/g,
-                "/"
-              )}`}
-              alt="blogPicture"
-              className="w-full object-cover object-center h-64"
-            />
-          )}
+          <ImageSlider images={images} />
         </div>
         <div>
           <Comments />
