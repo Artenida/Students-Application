@@ -15,8 +15,8 @@ const ProfilePicture = () => {
   
   const userId = currentUser?.user?.id;
   const imagePath =
-    user && user.length > 0 && user[0]?.profile_picture
-      ? user[0].profile_picture.replace(/\\/g, "/")
+    user && user.profile_picture
+      ? user?.profile_picture.replace(/\\/g, "/")
       : "";
 
   useEffect(() => {
@@ -57,8 +57,7 @@ const ProfilePicture = () => {
                   src={
                     selectedImage ||
                     (user &&
-                      user.length > 0 &&
-                      user[0]?.profile_picture &&
+                      user?.profile_picture &&
                       `http://localhost:5000/${imagePath}`) ||
                     profile
                   }
