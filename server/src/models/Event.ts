@@ -222,7 +222,8 @@ GROUP BY e.id;
 
     try {
       if (category) {
-        const query = "INSERT INTO events_category (event_id, category_id) VALUES (?, ?)";
+        const query =
+          "INSERT INTO events_category (event_id, category_id) VALUES (?, ?)";
         await new Promise((resolve, reject) => {
           for (const cat of category) {
             db.query(query, [eventId, cat], (error, result) => {
@@ -269,11 +270,13 @@ GROUP BY e.id;
         const getEventByDescription = await this.filterByDescription(word);
         const getEventByAuthor = await this.filterByAuthor(word);
         const getEventByLocation = await this.filterByLocation(word);
+        const getEventByCategory = await this.filterByCategory(word);
         resolve({
           getEventByTitle,
           getEventByDescription,
           getEventByAuthor,
           getEventByLocation,
+          getEventByCategory
         });
       } catch (error) {
         reject(error);
@@ -394,6 +397,50 @@ GROUP BY e.id;
       return data;
     } catch (error) {
       console.error("Error in filterByAuthor", error);
+      throw error;
+    }
+  }
+
+  static async filterByCategory(word: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const query = `
+      SELECT 
+    u.id,
+    u.username,
+    u.profile_picture,
+    e.id,
+    e.title,
+    e.description,
+    e.date,
+    e.location,
+    e.image,
+    e.music,
+    e.cost,
+    GROUP_CONCAT(DISTINCT c.category) AS categories
+FROM events e 
+LEFT JOIN users u ON e.user_id = u.id
+LEFT JOIN events_category ec ON e.id = ec.event_id
+LEFT JOIN category c ON ec.category_id = c.id
+WHERE c.category LIKE ?
+GROUP BY e.id;`;
+
+      const data = await new Promise((resolve, reject) => {
+        db.query(query, [`%${word}%`], (error, result) => {
+          connection.closeConnection();
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.error("Error in filterByCategory", error);
       throw error;
     }
   }
