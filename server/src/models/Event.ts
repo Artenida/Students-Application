@@ -9,6 +9,7 @@ type EventInputs = {
   music: string;
   cost: string;
   user_id: string;
+  category: string[];
   files: Express.Multer.File[];
 };
 
@@ -18,7 +19,26 @@ class Event {
     const db = connection.getConnection();
 
     try {
-      const query = `SELECT * FROM events`;
+      const query = `SELECT 
+      e.id,
+      e.title,
+      e.description,
+      e.date,
+      e.location,
+      e.user_id,
+      e.image, 
+      e.music,
+      e.cost,
+      u.email,
+      u.profile_picture,
+      GROUP_CONCAT(DISTINCT ec.category_id) AS category_Id,
+      GROUP_CONCAT(DISTINCT c.category) AS categories
+  FROM events e
+  LEFT JOIN users u ON e.user_id = u.id
+  LEFT JOIN events_category ec ON e.id = ec.event_id
+  LEFT JOIN category c ON ec.category_id = c.id
+  GROUP BY e.id;
+  `;
 
       const data = await new Promise((resolve, reject) => {
         db.query(query, (error, result) => {
@@ -26,7 +46,9 @@ class Event {
           if (error) {
             reject(error);
           } else {
-            resolve(result);
+            // resolve(result);
+            const postsWithImagesAndTags = this.structureEventResult(result);
+            resolve(postsWithImagesAndTags);
           }
         });
       });
@@ -54,10 +76,15 @@ class Event {
     e.location,
     e.image, 
     e.music,
-    e.cost
+    e.cost,
+    GROUP_CONCAT(DISTINCT c.category) AS categories,
+    GROUP_CONCAT(DISTINCT ec.category_id) AS category_Id
 FROM events e 
 LEFT JOIN users u ON e.user_id = u.id 
-WHERE e.id = ?;
+LEFT JOIN events_category ec ON e.id = ec.event_id 
+LEFT JOIN category c ON ec.category_id = c.id
+WHERE e.id = ?
+GROUP BY e.id;
 `;
 
     return new Promise((resolve, reject) => {
@@ -70,10 +97,31 @@ WHERE e.id = ?;
             reject(new Error("Post does not exist"));
             connection.closeConnection();
           } else {
-            resolve(result);
+            // resolve(result);
+            const postsWithImagesAndTags = this.structureEventResult(result);
+            resolve(postsWithImagesAndTags);
           }
         }
       });
+    });
+  }
+
+  static structureEventResult(result: any[]) {
+    return result.map((event: any) => {
+      const categoryId = event.category_Id ? event.category_Id.split(",") : [];
+      const category = event.categories ? event.categories.split(",") : [];
+
+      const categories = categoryId.map(
+        (categoryId: string, index: number) => ({
+          id: categoryId,
+          name: category[index].trim(),
+        })
+      );
+
+      return {
+        ...event,
+        categories: categories,
+      };
     });
   }
 
@@ -128,7 +176,7 @@ WHERE e.id = ?;
                 new Date(),
                 inputs.location,
                 inputs.user_id,
-                
+                inputs.files[0].path,
                 inputs.music,
                 inputs.cost,
               ];
@@ -141,8 +189,19 @@ WHERE e.id = ?;
                     console.error("Error creating event:", createError);
                     connection.closeConnection();
                     throw createError;
-                  } else {
-                    return createResult;
+                  }
+                  // else {
+                  //   return createResult;
+                  // }
+                  const eventId = createResult.insertId;
+                  try {
+                    await Event.addCategory(eventId, inputs.category);
+                    connection.closeConnection();
+                    return { success: true, eventId };
+                  } catch (error) {
+                    console.log("Error adding category", error);
+                    connection.closeConnection();
+                    throw error;
                   }
                 }
               );
@@ -153,6 +212,35 @@ WHERE e.id = ?;
     } catch (error) {
       console.error("Error creating or updating event:", error);
       connection.closeConnection();
+      throw error;
+    }
+  }
+
+  static async addCategory(eventId: string, category: string[]) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      if (category) {
+        const query = "INSERT INTO events_category (event_id, category_id) VALUES (?, ?)";
+        await new Promise((resolve, reject) => {
+          for (const cat of category) {
+            db.query(query, [eventId, cat], (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
+            });
+          }
+        });
+      }
+
+      connection.closeConnection();
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error adding categories", error);
       throw error;
     }
   }

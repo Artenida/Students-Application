@@ -10,6 +10,7 @@ type EventInputs = {
   music: string;
   user_id: string;
   cost: string;
+  category: string[];
   files: Express.Multer.File[];
 };
 
@@ -33,7 +34,7 @@ export const getSingleEvent = async (
   next: NextFunction
 ) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const post = await Event.getEventById(id);
 
@@ -49,17 +50,30 @@ export const getSingleEvent = async (
     }
   }
 };
+
 export const createEvent = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const {id, title, description, date, location, user_id, music, cost } = req.body;
+    const { id, title, description, date, location, user_id, music, cost, category } =
+      req.body;
     const files: Express.Multer.File[] = Array.isArray(req.files)
       ? req.files
       : [];
-    const inputs: EventInputs = { id, title, description, date, location, user_id, files, music, cost };
+    const inputs: EventInputs = {
+      id,
+      title,
+      description,
+      date,
+      location,
+      user_id,
+      files,
+      music,
+      cost,
+      category
+    };
     await Event.createEvent(inputs);
     res
       .status(200)
@@ -81,8 +95,8 @@ export const deleteEvent = async (
 ) => {
   try {
     const postId = req.params.id;
-      await Event.deleteEventById(postId);
-      res.status(200).json("Event has been deleted!");
+    await Event.deleteEventById(postId);
+    res.status(200).json("Event has been deleted!");
   } catch (error) {
     next(error);
   }
@@ -97,7 +111,7 @@ export const searchEvent = async (
     const keyword = req.query.keyword as string;
     const data = await Event.searchEvent(keyword);
     res.status(200).json(data);
-  } catch(error) {
+  } catch (error) {
     res.status(500).json("Error getting events");
   }
 };
