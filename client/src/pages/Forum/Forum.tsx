@@ -97,29 +97,12 @@ const Forum = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 w-full pb-10">
-      <div>
-        <div className="bg-white shadow-md p-4 rounded-lg">
-          <Searchbar onChange={filter} />
-        </div>
-        <div className="flex">
-          <Sidebar />
-        </div>
-      </div>
-      <div className="">
-        {loading ? (
-          <div>
-            <Loading />
-          </div>
-        ) : retrieveError ? (
-          <div>Error: {retrieveError}</div>
-        ) : (
-          <div className="flex justify-between mt-4">
-            <div className="">
-              <div className="md:pl-44 mb-8">
-                <Banner />
-              </div>
-              {currentBlogs.map((blog) => (
+    <div>
+        <Searchbar onChange={filter} />
+
+        <div>
+          <Banner />
+          {currentBlogs.map((blog) => (
                 <Card
                   key={blog.id}
                   id={blog.id}
@@ -132,10 +115,9 @@ const Forum = () => {
                   user_id={blog.user_id}
                 />
               ))}
-            </div>
-            <div className="col-span-1 md:col-span-1 md:pr-4">
-              <div className="flex flex-col md:items-end">
-                {currentEvents?.map((event) => (
+        </div>
+        <div>
+        {currentEvents?.map((event) => (
                   <EventCard
                     key={event.id}
                     id={event.id}
@@ -148,21 +130,14 @@ const Forum = () => {
                     image={event.image}
                   />
                 ))}
-              </div>
-              <div className="mt-8">
-                <ExtraInfo />
-              </div>
-            </div>
-          </div>
-        )}
-
+        <ExtraInfo />
+        </div>
         {!searching && (
           <PaginationButtons
             pageCount={pageCount}
             onPageChange={handlePageClick}
           />
         )}
-      </div>
     </div>
   );
 };

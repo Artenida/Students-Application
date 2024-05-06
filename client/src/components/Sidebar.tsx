@@ -62,30 +62,30 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="sidebar bg-custom-color4 text-white">
-      <div className="top">
-        <div className="logo mt-2 ml-4">
+    <div className="bg-custom-color4 text-white py-4 fixed overflow-y-auto">
+      <div>
+        <div className="mt-2 sm:mx-2 md:mx-4">
           {currentUser.user.profile_picture ? (
             <img
               src={`http://localhost:5000/${imagePath}`}
               alt="post profile"
-              className="h-[50px] w-[50px] rounded-full"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-full"
             />
           ) : (
             <img
               src={profile}
               alt="Profile"
-              className="h-[50px] w-[50px] rounded-full"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-full"
             />
           )}
         </div>
-        <div className="menu">
-          <div className="flex flex-col items-center justify-center mt-8">
+        <div>
+          <div className="h-screen">
             {menu.map((item: SidebarRoutes, index: number) => (
               <NavLink key={index} to={item.path}>
-                <div className="flex flex-col justify-center items-center mt-8 p-2">
+                <div className="flex flex-col items-center mt-8 p-2">
                   {item.icon}
-                  {item.name}
+                  <span className="hidden md:block">{item.name}</span>
                 </div>
               </NavLink>
             ))}

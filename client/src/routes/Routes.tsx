@@ -9,6 +9,7 @@ import ChangePassword from "../pages/Auth/ChangePassword";
 import Contact from "../pages/Auth/Contact";
 import Events from "../pages/Events";
 import Writers from "../pages/Forum/Writers";
+import Sidebar from "../components/Sidebar";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -22,6 +23,7 @@ const AppRoutes = () => {
   return (
     <div className="App">
       <Router>
+        <Sidebar />
         <Routes>
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
