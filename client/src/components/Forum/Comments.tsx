@@ -3,13 +3,24 @@ import UserAccount from "./UserAccount";
 import profile from "../../assets/userProfile.jpg";
 import FormInputsComponent from "../FormInputsComponent";
 import { IoSend } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getCommentsForPost } from "../../api/commentThunk";
+import { selectComment } from "../../redux/forum/commentSlice";
 
-const Comments = () => {
+const Comments = ({postId} : {postId: string}) => {
+  const dispatch = useAppDispatch();
+  const {allComments} = useAppSelector(selectComment);
   const name = "Artenida";
   const bio = "Testing bio";
   const userId = "1";
   const [showDeleteOption, setShowDeleteOption] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCommentsForPost(postId))
+  }, [dispatch, postId])
+
+  console.log(allComments)
 
   const handleCommentClick = () => {
     setShowDeleteOption(!showDeleteOption);

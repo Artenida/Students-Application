@@ -13,9 +13,9 @@ export const addComments = async (
   next: NextFunction
 ) => {
   try {
-    const { user_id, comment_text } = req.body;
+    const { userId, comment_text } = req.body;
     const { postId } = req.params;
-    await Comment.addComments(postId, user_id, comment_text);
+    await Comment.addComments(postId, userId, comment_text);
     res
       .status(200)
       .json({ success: true, message: "Comment added successfully" });
@@ -35,8 +35,8 @@ export const deleteComments = async (
   next: NextFunction
 ) => {
   try {
-    const {id} = req.params;
-      await Comment.deleteCommentsById(id);
+    const {commentId} = req.params;
+      await Comment.deleteCommentsById(commentId);
       res.status(200).json("Comment has been deleted!");
   } catch (error) {
     next(error);

@@ -89,7 +89,7 @@ const Card: React.FC<Paginated> = ({
           <FaRegCommentDots className="text-2xl" />
           <h2 className="text-lg">Comment</h2>
         </div>
-        {showComment && <Comments />}
+        {showComment && <Comments postId = {id}/>}
       </div>
     </div>
   );
