@@ -6,6 +6,7 @@ import {
   filterPosts,
   getMyPosts,
   getSinglePost,
+  getWritersPosts,
   retrieveAllPosts,
   retrievePaginatedPosts,
   updatePost,
@@ -53,7 +54,7 @@ interface Authors {
 interface PostState {
   currentPost: [] | null;
   searchedPost: [] | null;
-  bloggerPosts: [];
+  writersPosts: [];
   filterSearch: string | null;
   paginatedPost: PaginatedPosts | null;
   currentAuthor: Authors[];
@@ -74,7 +75,7 @@ interface PostState {
 const initialState: PostState = {
   currentPost: [],
   searchedPost: [],
-  bloggerPosts: [],
+  writersPosts: [],
   filterSearch: null,
   paginatedPost: null,
   currentAuthor: [],
@@ -207,6 +208,20 @@ const postSlice = createSlice({
       })
       .addCase(filterPosts.rejected, (state, action) => {
         state.filterSearch = action.payload as string;
+      })
+
+      .addCase(getWritersPosts.pending, (state) => {
+        state.loading = true;
+        state.retrieveError = null;
+      })
+      .addCase(getWritersPosts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.writersPosts = action.payload;
+        state.retrieveError = null;
+      })
+      .addCase(getWritersPosts.rejected, (state, action) => {
+        state.loading = false;
+        state.retrieveError = action.payload as string;
       })
   },
 });

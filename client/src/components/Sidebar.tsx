@@ -22,6 +22,7 @@ const Sidebar = () => {
   const imagePath = currentUser?.user?.profile_picture
     ? currentUser?.user?.profile_picture.replace(/\\/g, "/")
     : "";
+  const userId = currentUser.user.id;
 
   const menu: SidebarRoutes[] = [
     {
@@ -50,7 +51,7 @@ const Sidebar = () => {
       name: "Board",
     },
     {
-      path: "/account",
+      path: `/writers/${userId}`,
       icon: <MdAccountCircle />,
       name: "My space",
     },

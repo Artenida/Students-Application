@@ -82,8 +82,7 @@ const PersonalInfo = () => {
           onChange={handleInputChange}
           errorMessage={formDataErrors.username}
         />
-        {isLoggedIn ?
-         (<FormInputsComponent
+        <FormInputsComponent
           id="email"
           placeholder="Your email"
           type="email"
@@ -91,10 +90,7 @@ const PersonalInfo = () => {
           value={data.email}
           onChange={handleInputChange}
           errorMessage={formDataErrors.email}
-        />) : 
-        " "
-        }
-        
+        />        
         <FormInputsComponent
           id="bio"
           placeholder="Your bio"

@@ -403,6 +403,8 @@ class Post {
     u.id AS user_id,
     u.username,
     u.profile_picture,
+    u.bio,
+    u.email,
     p.id,
     p.title,
     p.description,
@@ -415,7 +417,7 @@ FROM
 WHERE 
     u.id = ? 
 GROUP BY 
-    u.id, u.username, u.profile_picture, p.id, p.title, p.description, p.createdAt;`;
+    u.id, u.username, u.profile_picture, u.bio, u.email, p.id, p.title, p.description, p.createdAt;`;
 
     try {
       return new Promise((resolve, reject) => {

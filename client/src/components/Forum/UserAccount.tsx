@@ -5,6 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
 import { selectPost } from "../../redux/forum/postSlice";
+import { Link } from "react-router-dom";
 
 interface AuthorProps {
   authorName: string;
@@ -41,6 +42,7 @@ const UserAccount: React.FC<AuthorProps> = ({
   return (
     <div className="flex justify-between flex-nowrap items-center relative">
       <div className="flex items-center gap-x-2">
+      <Link key={userId} to={`/writers/${userId}`}>
         {profile_picture ? (
           <img
             src={`http://localhost:5000/${imagePath}`}
@@ -60,6 +62,7 @@ const UserAccount: React.FC<AuthorProps> = ({
           </h4>
           <h3 className="text-gray-500 text-sm">{formattedDate}</h3>
         </div>
+        </Link>
       </div>
       {currentUser?.user?.id === userId && (
         <div className="relative">

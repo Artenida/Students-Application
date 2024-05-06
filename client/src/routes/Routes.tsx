@@ -7,6 +7,8 @@ import Account from "../pages/Auth/Account";
 import Forum from "../pages/Forum/Forum";
 import ChangePassword from "../pages/Auth/ChangePassword";
 import Contact from "../pages/Auth/Contact";
+import Events from "../pages/Events";
+import Writers from "../pages/Forum/Writers";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -25,8 +27,9 @@ const AppRoutes = () => {
             <Route key={index} path={route.path} element={route.element} />
           ))}
           <Route element={<PrivateRoutes />}>
-            <Route element={<Account />} path="/account" />
+            <Route element={<Writers />} path="/writers/:userId" />
             <Route element={<Forum />} path="/forum" />
+            <Route element={<Events />} path="/events" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />
           </Route>

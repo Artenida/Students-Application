@@ -13,9 +13,6 @@ export interface Image {
 const ImageSlider: React.FC<ImageSliderProps> = ({images}) => {
   const [current, setCurrent] = useState(0);
   const length = images.length;
-  console.log(images, 'images')
-  console.log(length, 'length')
-  console.log(current, 'current')
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
