@@ -10,8 +10,9 @@ import { Link } from "react-router-dom";
 interface AuthorProps {
   authorName: string;
   profile_picture: string | undefined;
-  createdAt: Date;
+  createdAt?: Date;
   userId: string;
+  bio?: string;
 }
 
 const UserAccount: React.FC<AuthorProps> = ({
@@ -19,11 +20,11 @@ const UserAccount: React.FC<AuthorProps> = ({
   profile_picture,
   createdAt,
   userId,
+  bio,
 }) => {
   const formattedDate = moment(createdAt).format("MMMM Do YYYY");
   const imagePath = profile_picture ? profile_picture.replace(/\\/g, "/") : "";
   const { currentUser } = useAppSelector(selectUser);
-  const { currentPost } = useAppSelector(selectPost);
   const [showOptions, setShowOptions] = useState(false);
 
   const toggleOptions = () => {
@@ -60,7 +61,8 @@ const UserAccount: React.FC<AuthorProps> = ({
           <h4 className="font-bold italic text-custom-color3 text-sm">
             {authorName}
           </h4>
-          <h3 className="text-gray-500 text-sm">{formattedDate}</h3>
+          <h3 className="text-gray-500 text-sm">{createdAt && formattedDate}</h3>
+          <h3 className="text-gray-500 text-sm">{bio}</h3>
         </div>
         </Link>
       </div>

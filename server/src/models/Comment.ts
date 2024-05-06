@@ -57,7 +57,16 @@ class Comments {
   static async getPostComments(postId: string) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
-    const query = `SELECT * FROM comments WHERE post_id = ?`;
+    const query = `
+    SELECT 
+    c.comment_text,
+    c.date_created,
+    u.profile_picture,
+    u.username,
+    u.bio
+    FROM comments c 
+    LEFT JOIN users u ON c.user_id = u.id
+    WHERE post_id = ?`;
 
     try {
       return new Promise((resolve, reject) => {

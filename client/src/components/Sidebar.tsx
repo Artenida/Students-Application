@@ -28,11 +28,6 @@ const Sidebar = () => {
 
   const menu: SidebarRoutes[] = [
     {
-      path: "/",
-      icon: <IoHome />,
-      name: "Home",
-    },
-    {
       path: "/forum",
       icon: <IoIosPeople />,
       name: "Forum",

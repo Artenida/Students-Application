@@ -98,46 +98,54 @@ const Forum = () => {
 
   return (
     <div>
+      <div>
         <Searchbar onChange={filter} />
+      </div>
+
+      <div className="flex-col gap-4 md:flex">
+        <div className="ml-32">
+          <div className="">
+            <Banner />
+          </div>
+          {currentBlogs.map((blog) => (
+            <Card
+              key={blog.id}
+              id={blog.id}
+              username={blog.username}
+              createdAt={blog.createdAt}
+              title={blog.title}
+              description={blog.description}
+              profile_picture={blog.profile_picture}
+              images={blog.images}
+              user_id={blog.user_id}
+            />
+          ))}
+        </div>
 
         <div>
-          <Banner />
-          {currentBlogs.map((blog) => (
-                <Card
-                  key={blog.id}
-                  id={blog.id}
-                  username={blog.username}
-                  createdAt={blog.createdAt}
-                  title={blog.title}
-                  description={blog.description}
-                  profile_picture={blog.profile_picture}
-                  images={blog.images}
-                  user_id={blog.user_id}
-                />
-              ))}
+          {currentEvents?.map((event) => (
+            <EventCard
+              key={event.id}
+              id={event.id}
+              title={event.title}
+              description={event.description}
+              date={event.date}
+              location={event.location}
+              details={event.details}
+              user_id={event.user_id}
+              image={event.image}
+            />
+          ))}
+          <ExtraInfo />
         </div>
-        <div>
-        {currentEvents?.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    description={event.description}
-                    date={event.date}
-                    location={event.location}
-                    details={event.details}
-                    user_id={event.user_id}
-                    image={event.image}
-                  />
-                ))}
-        <ExtraInfo />
-        </div>
-        {!searching && (
-          <PaginationButtons
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-          />
-        )}
+      </div>
+
+      {!searching && (
+        <PaginationButtons
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+        />
+      )}
     </div>
   );
 };
