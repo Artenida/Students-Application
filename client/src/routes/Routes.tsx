@@ -10,6 +10,8 @@ import Contact from "../pages/Auth/Contact";
 import Events from "../pages/Events";
 import Writers from "../pages/Forum/Writers";
 import Sidebar from "../components/Sidebar";
+import { useAppSelector } from "../redux/hooks";
+import { selectUser } from "../redux/user/userSlice";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -20,10 +22,13 @@ const routes = [
 ];
 
 const AppRoutes = () => {
+  const {isLoggedIn} = useAppSelector(selectUser);
+
   return (
     <div className="App">
       <Router>
-        <Sidebar />
+        {isLoggedIn ? <Sidebar />
+        : ""}
         <Routes>
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />

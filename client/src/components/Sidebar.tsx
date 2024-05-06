@@ -1,5 +1,5 @@
-import { useAppSelector } from "../redux/hooks";
-import { selectUser } from "../redux/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { selectUser, signOutSuccess } from "../redux/user/userSlice";
 import profile from "../assets/userProfile.jpg";
 import { IoHome } from "react-icons/io5";
 import { IoIosPeople } from "react-icons/io";
@@ -7,7 +7,7 @@ import { FaVideo } from "react-icons/fa6";
 import { MdAccountCircle } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { ReactNode } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { IoIosChatbubbles } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa6";
 
@@ -18,6 +18,8 @@ export type SidebarRoutes = {
 };
 
 const Sidebar = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { currentUser } = useAppSelector(selectUser);
   const imagePath = currentUser?.user?.profile_picture
     ? currentUser?.user?.profile_picture.replace(/\\/g, "/")
@@ -54,18 +56,19 @@ const Sidebar = () => {
       path: `/writers/${userId}`,
       icon: <MdAccountCircle />,
       name: "My space",
-    },
-    {
-      path: "logout",
-      icon: <RiLogoutBoxLine />,
-      name: "Logout",
-    },
+    }
   ];
+
+  const handleSignOut = () => {
+    dispatch(signOutSuccess());
+    navigate("/");
+  };
+
   return (
     <div className="bg-custom-color4 text-white py-4 fixed overflow-y-auto">
       <div>
         <div className="mt-2 sm:mx-2 md:mx-4">
-          {currentUser.user.profile_picture ? (
+          { currentUser && currentUser.user && currentUser?.user?.profile_picture ? (
             <img
               src={`http://localhost:5000/${imagePath}`}
               alt="post profile"
@@ -89,6 +92,14 @@ const Sidebar = () => {
                 </div>
               </NavLink>
             ))}
+            <div className="flex flex-col items-center mt-8 p-2 cursor-pointer">
+              <RiLogoutBoxLine
+                onClick={() => {
+                  handleSignOut();
+                }}
+              />
+              Logout
+            </div>
           </div>
         </div>
       </div>
