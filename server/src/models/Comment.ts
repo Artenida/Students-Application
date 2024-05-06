@@ -59,6 +59,7 @@ class Comments {
     const db = connection.getConnection();
     const query = `
     SELECT 
+    c.id,
     c.comment_text,
     c.date_created,
     u.profile_picture,
