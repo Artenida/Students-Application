@@ -184,7 +184,7 @@ class Post {
   static async addImages(postId: any, images: Express.Multer.File[]) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
-    const query = "INSERT INTO images (post_id, image) VALUES (?, ?)";
+    const query = "INSERT INTO images (post_id, image_url) VALUES (?, ?)";
 
     try {
       await Promise.all(
