@@ -37,7 +37,8 @@ class Event {
   LEFT JOIN users u ON e.user_id = u.id
   LEFT JOIN events_category ec ON e.id = ec.event_id
   LEFT JOIN category c ON ec.category_id = c.id
-  GROUP BY e.id;
+  GROUP BY e.id
+  ORDER BY e.date DESC;
   `;
 
       const data = await new Promise((resolve, reject) => {

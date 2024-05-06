@@ -21,19 +21,20 @@ class Post {
 
     try {
       const query = `
-            SELECT 
-                p.id,
-                p.title,
-                p.description,
-                p.createdAt,
-                p.user_id,
-                u.username, 
-                u.profile_picture,
-                GROUP_CONCAT(DISTINCT i.image_url) AS images
-            FROM posts p 
-            LEFT JOIN users u ON p.user_id = u.id
-            LEFT JOIN images i ON p.id = i.post_id
-            GROUP BY p.id;
+      SELECT 
+      p.id,
+      p.title,
+      p.description,
+      p.createdAt,
+      p.user_id,
+      u.username, 
+      u.profile_picture,
+      GROUP_CONCAT(DISTINCT i.image_url) AS images
+  FROM posts p 
+  LEFT JOIN users u ON p.user_id = u.id
+  LEFT JOIN images i ON p.id = i.post_id
+  GROUP BY p.id
+  ORDER BY p.createdAt DESC;
         `;
 
       const data = await new Promise<PostInterface[]>((resolve, reject) => {
@@ -147,18 +148,22 @@ class Post {
     }
   }
 
-  static async updatePost({title, description, id} : {title: string, description: string, id: string}): Promise<any> {
+  static async updatePost({
+    title,
+    description,
+    id,
+  }: {
+    title: string;
+    description: string;
+    id: string;
+  }): Promise<any> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
     try {
       const postQuery =
         "UPDATE posts SET title = ?, description = ? WHERE id = ?;";
-      const postValues = [
-        title,
-        description,
-        id
-      ];
+      const postValues = [title, description, id];
 
       db.query(postQuery, postValues, async (error, result) => {
         if (error) {
