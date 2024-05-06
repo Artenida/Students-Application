@@ -4,7 +4,6 @@ import {
   createPost,
   deletePost,
   filterPosts,
-  getMyPosts,
   getSinglePost,
   getWritersPosts,
   retrieveAllPosts,
@@ -67,7 +66,6 @@ interface PostState {
   updateError: string | null;
   deleteSuccessful: string | null;
   isUpdated: boolean;
-  myPost: [];
   postNr: number | null;
   postDetails: PostDetails[];
 }
@@ -89,7 +87,6 @@ const initialState: PostState = {
   successfulUpdate: false,
   isUpdated: false,
   postNr: null,
-  myPost: [],
   postDetails: [],
 };
 
@@ -127,19 +124,6 @@ const postSlice = createSlice({
         state.retrieveError = action.payload as string;
         state.loading = false;
         state.postDetails = initialState.postDetails;
-      })
-
-      .addCase(getMyPosts.pending, (state) => {
-        state.loading = true;
-        state.retrieveError = null;
-      })
-      .addCase(getMyPosts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.myPost = action.payload;
-      })
-      .addCase(getMyPosts.rejected, (state, action) => {
-        state.loading = false;
-        state.retrieveError = action.payload as string;
       })
 
       .addCase(deletePost.pending, (state) => {

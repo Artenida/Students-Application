@@ -104,21 +104,6 @@ export const updatePost = async (
   }
 };
 
-// export const getUsersPost = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const {userId} = req.params;
-//     const userPosts = await Post.getUsersPost(userId);
-//     res.status(200).json(userPosts);
-//   } catch (error) {
-//     console.error("Error in getUsersPost", error);
-//     next(error);
-//   }
-// };
-
 export const getPaginatedPosts = async (
   req: Request,
   res: Response,

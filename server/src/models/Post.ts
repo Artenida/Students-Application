@@ -222,45 +222,6 @@ class Post {
     });
   }
 
-//   static async getUsersPost(userId: string) {
-//     const connection = createDatabaseConnection();
-//     const db = connection.getConnection();
-//     const query = `SELECT 
-//     u.id AS user_id,
-//     u.username,
-//     u.profile_picture,
-//     p.id,
-//     p.title,
-//     p.description,
-//     p.createdAt AS createdAt,
-//     GROUP_CONCAT(DISTINCT i.image_url) AS images
-// FROM users u 
-// INNER JOIN posts p ON u.id = p.user_id
-// LEFT JOIN images i ON p.id = i.post_id
-// WHERE u.id = ?
-// GROUP BY p.id, u.id, u.username, u.profile_picture, p.title, p.description, p.createdAt;
-// `;
-//     const values = [userId];
-
-//     try {
-//       return new Promise((resolve, reject) => {
-//         db.query(query, values, (error, result) => {
-//           connection.closeConnection();
-//           if (error) {
-//             reject(error);
-//           } else {
-//             const postsWithImagesAndTags = this.structurePostResult(result);
-//             resolve(postsWithImagesAndTags);
-//           }
-//         });
-//       });
-//     } catch (error) {
-//       console.error("Error in getUsersPost", error);
-//       connection.closeConnection();
-//       throw error;
-//     }
-//   }
-
   static async searchPost(word: string) {
     return new Promise(async (resolve, reject) => {
       try {

@@ -40,34 +40,6 @@ export const getSinglePost = createAsyncThunk(
   }
 );
 
-export const getMyPosts = createAsyncThunk(
-  "api/posts/user",
-  async ({ userId }: UserEndpointType, { rejectWithValue, getState }) => {
-    try {
-      const state: RootState = getState() as RootState;
-      const token: string = state.user.token ?? "";
-
-      const response = await createAPI(`api/posts/user/${userId}`, {
-        method: "GET",
-        token: token,
-      })();
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error fetching data:", errorData.message);
-        return rejectWithValue(errorData.message);
-      }
-
-      const data = await response.json();
-
-      return data;
-    } catch (error: any) {
-      console.error("Error:", error.message);
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 export const deletePost = createAsyncThunk(
   "api/posts/delete",
   async (postId: string, { rejectWithValue, getState }) => {
