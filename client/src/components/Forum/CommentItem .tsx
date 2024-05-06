@@ -20,7 +20,7 @@ const CommentItem = ({ comment } : {comment: any}) => {
     <div className="mt-4 rounded-xl border-gray-100">
       <div className="flex w-auto gap-4 mt-8">
         <div>
-          <UserAccount authorName={comment.username} profile_picture={comment.profile_picture || profile} bio={comment.bio} userId={comment.user_id} />
+          <UserAccount postId={comment.id} authorName={comment.username} profile_picture={comment.profile_picture || profile} bio={comment.bio} userId={comment.user_id} />
         </div>
         <div onClick={handleCommentClick} className="relative cursor-pointer">
           <h2>{comment.comment_text}</h2>
