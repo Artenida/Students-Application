@@ -38,14 +38,14 @@ export const deleteComment = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
   "api/comments/addComment",
-  async (createComment: CreateCommentTypes, { getState, rejectWithValue }) => {
+  async (body: CreateCommentTypes, {getState, rejectWithValue}) => {
     try {
       const state: RootState = getState() as RootState;
       const token = state.user.token ?? "";
-      const response = await createAPI(`api/comments/addComment/${createComment.postId}`, {
-        method: "POST",
-        token: token,
-      })(createComment);
+
+      const response = await createAPI(`api/comments/addComment/${body.postId}`, {
+        method: "POST"
+      })(body);
 
       if (!response.ok) {
         const errorData = await response.json();

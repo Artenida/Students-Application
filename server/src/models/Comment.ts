@@ -62,6 +62,7 @@ class Comments {
     c.id,
     c.comment_text,
     c.date_created,
+    u.id AS user_id,
     u.profile_picture,
     u.username,
     u.bio

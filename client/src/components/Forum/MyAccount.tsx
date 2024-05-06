@@ -23,9 +23,15 @@ const MyAccount = ({
     <div className="flex flex-col md:flex-row -z-50">
       <div className="mx-auto flex flex-col gap-4 px-12 pt-12 w-full">
         <div className="flex flex-col sm:flex-row gap-3 p-4 border-2 rounded-xl border-custom-color2">
-          <div className="flex justify-end text-xl text-gray-400 hover:text-gray-600 cursor-pointer">
-            <Link key={user_id} to={`/editAccount`}><FaEdit /></Link>
-          </div>
+          {currentUser?.user?.id === user_id ? (
+            <div className="flex justify-end text-xl text-gray-400 hover:text-gray-600 cursor-pointer">
+              <Link key={user_id} to={`/editAccount`}>
+                <FaEdit />
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
           <div>
             <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full border-4">
               <label>
