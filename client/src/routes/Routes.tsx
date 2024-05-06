@@ -32,6 +32,7 @@ const AppRoutes = () => {
             <Route element={<Events />} path="/events" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />
+            <Route element={<Account />} path="/editAccount" />
           </Route>
         </Routes>
       </Router>
