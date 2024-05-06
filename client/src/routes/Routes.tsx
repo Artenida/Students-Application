@@ -13,6 +13,7 @@ import Sidebar from "../components/Sidebar";
 import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/user/userSlice";
 import CreatePost from "../pages/Forum/CreatePost";
+import UpdatePost from "../pages/Forum/UpdatePost";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -38,6 +39,7 @@ const AppRoutes = () => {
             <Route element={<Writers />} path="/writers/:userId" />
             <Route element={<Forum />} path="/forum" />
             <Route element={<CreatePost />} path="/createPost" />
+            <Route element={<UpdatePost />} path="/updatePost/:postId" />
             <Route element={<Events />} path="/events" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />

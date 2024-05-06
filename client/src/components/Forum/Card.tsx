@@ -53,6 +53,7 @@ const Card: React.FC<Paginated> = ({
         <div className="flex flex-col">
           <div className="mb-4 md:mb-0 md:mr-4 md:flex-shrink-0">
             <UserAccount
+              postId={id}
               authorName={username}
               profile_picture={profile_picture}
               createdAt={createdAt}

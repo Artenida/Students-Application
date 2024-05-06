@@ -12,6 +12,7 @@ interface AuthorProps {
   profile_picture: string | undefined;
   createdAt?: Date;
   userId: string;
+  postId?: string;
   bio?: string;
 }
 
@@ -20,6 +21,7 @@ const UserAccount: React.FC<AuthorProps> = ({
   profile_picture,
   createdAt,
   userId,
+  postId,
   bio,
 }) => {
   const formattedDate = moment(createdAt).format("MMMM Do YYYY");
@@ -31,14 +33,14 @@ const UserAccount: React.FC<AuthorProps> = ({
     setShowOptions(!showOptions);
   };
 
-  const handleOptionSelect = (option: string) => {
-    setShowOptions(false);
-    if (option === "edit") {
-      console.log("Edit")
-    } else if (option === "delete") {
-      console.log("Delete")
-    }
-  };
+  // const handleOptionSelect = (option: string) => {
+  //   setShowOptions(false);
+  //   if (option === "edit") {
+  //     console.log("Edit")
+  //   } else if (option === "delete") {
+  //     console.log("Delete")
+  //   }
+  // };
 
   return (
     <div className="flex justify-between flex-nowrap items-center relative">
@@ -73,18 +75,22 @@ const UserAccount: React.FC<AuthorProps> = ({
           </div>
           {showOptions && (
             <div className="absolute w-32 right-0 mt-2 bg-white shadow-lg rounded-md py-1">
-              <div
+              <Link to={`/updatePost/${postId}`}><div
                 className="cursor-pointer px-2 py-2 hover:bg-gray-100"
-                onClick={() => handleOptionSelect("edit")}
+                // onClick={() => handleOptionSelect("edit")}
               >
                 Edit Post
               </div>
+              </Link>
+              <Link to={`/updatePost/${postId}`}>
               <div
                 className="cursor-pointer px-2 py-2 hover:bg-gray-100"
-                onClick={() => handleOptionSelect("delete")}
+                // onClick={() => handleOptionSelect("delete")}
               >
                 Delete Post
               </div>
+              </Link>
+              
             </div>
           )}
         </div>

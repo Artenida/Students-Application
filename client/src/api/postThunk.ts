@@ -96,13 +96,12 @@ export const createPost = createAsyncThunk(
 );
 
 export const updatePost = createAsyncThunk(
-  "api/posts/update",
+  "api/posts/updatePost",
   async (
     input: {
       postId: string;
       title: string;
       description: string;
-      tags: string[];
     },
     { rejectWithValue, getState }
   ) => {
@@ -110,7 +109,7 @@ export const updatePost = createAsyncThunk(
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/posts/update/${input.postId}`, {
+      const response = await createAPI(`api/posts/updatePost/${input.postId}`, {
         method: "PUT",
         token: token,
       })(input);
