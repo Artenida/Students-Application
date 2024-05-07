@@ -52,6 +52,7 @@ const UpdatePost = () => {
       dispatch(updatePost(data));
     }
   };
+  console.log(data)
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFormChanged(true);
@@ -62,9 +63,10 @@ const UpdatePost = () => {
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    setIsFormChanged(true);
     const { value } = event.target;
     setData({ ...data, description: value });
-  };
+  };  
 
   return (
     <div className="flex justify-center pt-48">
@@ -96,7 +98,6 @@ const UpdatePost = () => {
             placeholder="Description"
             name="file"
             value={data.description}
-            // updateValue={(value) => setData({ ...data, title: value })}
             onChange={handleDescriptionChange}
             className="border border-custom-color2 rounded-md p-2 resize-none h-40"
             rows={5}
