@@ -18,8 +18,8 @@ const CreatePost = () => {
   const { createError } = useAppSelector(selectPost);
   const { currentUser } = useAppSelector(selectUser);
   const userId = currentUser?.user?.id;
-  const { errors, hasError, validateForm, displayErrors } = useValidateBlogForm();
-  const [success, setSuccess] = useState(false);
+  const { errors, hasError, validateForm, displayErrors } =
+    useValidateBlogForm();
 
   const [data, setData] = useState<CreatePost>({
     title: "",
@@ -51,7 +51,7 @@ const CreatePost = () => {
       for (let i = 0; i < data.files.length; i++) {
         formData.append("file", data.files[i]);
       }
-      dispatch(createPost(formData)).then(() => setSuccess(true));
+      dispatch(createPost(formData));
     }
   }, [hasError]);
 
@@ -67,85 +67,73 @@ const CreatePost = () => {
     setData({ ...data, title: value });
   };
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { value } = event.target;
     setData({ ...data, description: value });
   };
 
   return (
-    <div className="flex flex-col md:flex-row -z-50">
-      <div className="border-r-4 border-opacity-50 my-12 ml-4 border-custom-color2 h-[900px]"></div>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col gap-8">
-          <div
-            className="flex justify-between items-start gap-8"
-            onSubmit={handleSubmit}
+    <div className="flex justify-center pt-48">
+      <div className="flex bg-custom-color1 py-12 px-4 rounded-xl">
+        <div
+          className="flex flex-col justify-center w-[800px] px-12"
+          onSubmit={handleSubmit}
+        >
+          <div className="mb-4">
+            <input
+              type="file"
+              id="file"
+              name="file"
+              multiple
+              required
+              onChange={handleFileChange}
+            />
+          </div>
+          <span
+            className={`text-sm text-red-600 pl-1 pt-1 ${
+              errors.files ? "block" : "hidden"
+            } h-4`}
           >
-            <div className="w-2/3 flex flex-col">
-              <input
-                type="file"
-                id="file"
-                name="file"
-                multiple
-                required
-                onChange={handleFileChange}
-              />
-              <span
-                className={`text-sm text-red-600 pl-1 pt-1 ${
-                  errors.files ? "block" : "hidden"
-                } h-4`}
-              >
-                {errors.files}
-              </span>
-              <FormInputsComponent
-                label="Title"
-                id="title"
-                type="text"
-                placeholder="Title"
-                name="file"
-                errorMessage={errors.title}
-                updateValue={(value) => setData({ ...data, title: value })}
-                onChange={handleTitleChange}
-              />
-              <label
-                htmlFor="description"
-                className="block mb-2 mt-12 pl-1 font-semibold"
-              >
-                Description
-              </label>
-              <FormInputsComponent
-                label="Description"
-                id="description"
-                type="text"
-                placeholder="Description"
-                name="file"
-                errorMessage={errors.title}
-                updateValue={(value) => setData({ ...data, description: value })}
-                onChange={handleDescriptionChange}
-              />
-              <span
-                className={`text-sm text-red-600 pl-1 pt-8 ${
-                  errors.description ? "block" : "hidden"
-                } h-4`}
-              >
-                {errors.description}
-              </span>
+            {errors.files}
+          </span>
+          <FormInputsComponent
+            label="Title"
+            id="title"
+            type="text"
+            placeholder="Title"
+            name="file"
+            errorMessage={errors.title}
+            updateValue={(value) => setData({ ...data, title: value })}
+            onChange={handleTitleChange}
+          />
 
-              {success && (
-                <div className="bg-green-200 py-2 px-6 text-green-500 mt-12">
-                  Post is published
-                </div>
-              )}
+          <label
+            htmlFor="description"
+            className="block mb-2 mt-4 pl-1 font-semibold text-custom-color3"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            placeholder="Description"
+            name="file"
+            value={data.description}
+            onChange={handleDescriptionChange}
+            className="border border-custom-color2 rounded-md p-2 resize-none h-40"
+            rows={5}
+          />
+          <span
+            className={`text-sm text-red-600 pl-1 pt-8 ${
+              errors.description ? "block" : "hidden"
+            } h-4`}
+          >
+            {errors.description}
+          </span>
 
-              {createError && (
-                <div className="bg-red-200 py-2 px-6 text-red-500 mt-12">
-                  {createError}
-                </div>
-              )}
-              <div className="mt-8">
-                <MediumButton onClick={handleSubmit}>Publish</MediumButton>
-              </div>
-            </div>
+          <div className="mt-8">
+            <MediumButton onClick={handleSubmit}>Publish</MediumButton>
           </div>
         </div>
       </div>

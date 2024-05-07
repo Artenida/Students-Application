@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { MdOutlineKeyboardArrowLeft , MdOutlineKeyboardArrowRight  } from "react-icons/md";
-import "./ImageSlider.css"
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
+import "./ImageSlider.css";
 
 type ImageSliderProps = {
   images: Image[];
@@ -10,7 +13,7 @@ export interface Image {
   url: string;
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({images}) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   const [current, setCurrent] = useState(0);
   const length = images.length;
 
@@ -28,8 +31,21 @@ const ImageSlider: React.FC<ImageSliderProps> = ({images}) => {
 
   return (
     <section className="slider-page">
-      <MdOutlineKeyboardArrowLeft  className="left-arrow" onClick={prevSlide} />
-      <MdOutlineKeyboardArrowRight  className="right-arrow" onClick={nextSlide} />
+      {images.length > 1 ? (
+        <>
+          <MdOutlineKeyboardArrowLeft
+            className="left-arrow"
+            onClick={prevSlide}
+          />
+          <MdOutlineKeyboardArrowRight
+            className="right-arrow"
+            onClick={nextSlide}
+          />
+        </>
+      ) : (
+        ""
+      )}
+
       {images?.map((img, index) => {
         return (
           <div
@@ -39,13 +55,10 @@ const ImageSlider: React.FC<ImageSliderProps> = ({images}) => {
             {index === current && (
               <div className="image-wrapper">
                 <img
-              src={`http://localhost:5000/${img.url?.replace(
-                /\\/g,
-                "/"
-              )}`}
-              alt="blogPicture"
-              className="w-full object-cover object-center h-64"
-            />
+                  src={`http://localhost:5000/${img.url?.replace(/\\/g, "/")}`}
+                  alt="blogPicture"
+                  className="w-full object-cover object-center h-64"
+                />
               </div>
             )}
           </div>

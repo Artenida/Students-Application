@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectUser, signOutSuccess } from "../redux/user/userSlice";
 import profile from "../assets/userProfile.jpg";
-import { IoHome } from "react-icons/io5";
 import { IoIosPeople } from "react-icons/io";
 import { FaVideo } from "react-icons/fa6";
 import { MdAccountCircle } from "react-icons/md";
@@ -10,6 +9,8 @@ import { ReactNode } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoIosChatbubbles } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa6";
+import { MdAddBox } from "react-icons/md";
+import { IoMdNotifications } from "react-icons/io";
 
 export type SidebarRoutes = {
   path: string;
@@ -33,14 +34,24 @@ const Sidebar = () => {
       name: "Forum",
     },
     {
+      path: "/createPost",
+      icon: <MdAddBox />,
+      name: "Share post",
+    },
+    {
       path: "/events",
       icon: <FaVideo />,
       name: "Events",
     },
     {
+      path: "/shareNotification",
+      icon: <IoMdNotifications />,
+      name: "Share event",
+    },
+    {
       path: "/chat",
       icon: <IoIosChatbubbles />,
-      name: "Char",
+      name: "Chat",
     },
     {
       path: "/board",
@@ -62,7 +73,7 @@ const Sidebar = () => {
   return (
     <div className="bg-custom-color4 text-white py-4 fixed overflow-y-auto">
       <div>
-        <div className="mt-2 sm:mx-2 md:mx-4">
+        <div className="mt-2 mx-3 md:mx-6">
           { currentUser && currentUser.user && currentUser?.user?.profile_picture ? (
             <img
               src={`http://localhost:5000/${imagePath}`}
