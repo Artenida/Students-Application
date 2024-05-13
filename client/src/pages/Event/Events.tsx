@@ -4,8 +4,8 @@ import Searchbar from "../../components/Searchbar"
 
 const Events = () => {
     return (
-        <div className=" flex flex-col pl-[70px]">
-            <div className="flex h-[300px]">
+        <div className=" flex flex-col pl-[70px] md:pl-[100px]">
+            <div className="flex h-[300px] -z-10">
                 <Banner />
                 {/* <Searchbar onChange={} /> */}
             </div>
