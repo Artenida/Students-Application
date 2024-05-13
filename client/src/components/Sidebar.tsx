@@ -54,11 +54,6 @@ const Sidebar = () => {
       name: "Chat",
     },
     {
-      path: "/board",
-      icon: <FaClipboardList />,
-      name: "Board",
-    },
-    {
       path: `/writers/${userId}`,
       icon: <MdAccountCircle />,
       name: "My space",

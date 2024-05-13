@@ -7,7 +7,7 @@ import Account from "../pages/Auth/Account";
 import Forum from "../pages/Forum/Forum";
 import ChangePassword from "../pages/Auth/ChangePassword";
 import Contact from "../pages/Auth/Contact";
-import Events from "../pages/Events";
+import Events from "../pages/Event/Events";
 import Writers from "../pages/Forum/Writers";
 import Sidebar from "../components/Sidebar";
 import { useAppSelector } from "../redux/hooks";
