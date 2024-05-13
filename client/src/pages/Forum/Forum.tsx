@@ -128,12 +128,11 @@ const Forum = () => {
               key={event.id}
               id={event.id}
               title={event.title}
-              description={event.description}
               date={event.date}
               location={event.location}
-              details={event.details}
               user_id={event.user_id}
-              image={event.image}
+              profile_picture={event.profile_picture}
+              music={event.music}
             />
           ))}
           <ExtraInfo />

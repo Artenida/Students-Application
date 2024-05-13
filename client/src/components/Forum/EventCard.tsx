@@ -6,21 +6,18 @@ import { IoLocation } from "react-icons/io5";
 export interface EventType {
   id: string;
   title: string;
-  description: string;
   date: Date;
   location: string;
-  details: string;
   user_id: string;
-  image: string;
+  profile_picture: string;
+  music: string;
 }
 
 const EventCard: React.FC<EventType> = ({
   title,
-  description,
   date,
   location,
-  details,
-  image,
+  profile_picture,
 }) => {
   const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
 
@@ -28,9 +25,9 @@ const EventCard: React.FC<EventType> = ({
     <div className="bg-white shadow-md rounded-lg py-2 mt-2 flex">
       <div className="flex flex-row px-4 gap-4">
         <div className="w-full sm:w-24">
-          {image ? (
+          {profile_picture ? (
             <img
-              src={`http://localhost:5000/${image?.replace(/\\/g, "/")}`}
+              src={`http://localhost:5000/${profile_picture?.replace(/\\/g, "/")}`}
               alt="eventPicture"
               className="w-full object-cover object-center h-24 sm:h-22 rounded-lg"
             />

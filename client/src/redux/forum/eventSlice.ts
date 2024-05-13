@@ -3,14 +3,17 @@ import type { RootState } from "../../redux/store";
 import { deleteEvent, retrieveAllEvents, createEvent } from "../../api/eventThunk";
 
 export interface EventType {
-    id: string;
-    title: string;
-    description: string;
-    date: Date;
-    location: string;
-    details: string;
-    user_id: string;
-    image: string;
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+  location: string;
+  user_id: string;
+  image: string;
+  profile_picture: string;
+  music: string;
+  cost: string;
+  email: string;
   }
 interface PostState {
   currentEvents: EventType[];
