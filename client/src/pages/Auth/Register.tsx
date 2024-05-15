@@ -10,6 +10,7 @@ import {
   validateRegisterForm,
   validateConfirmPassword, // Import validateConfirmPassword
 } from "../../utils/validateUser";
+import { Alert } from "@mui/material";
 
 interface FormData {
   username: string;
@@ -37,7 +38,11 @@ const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [message, setMessage] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
+  const handleClick = () => {
+    setIsClicked(true);
+  };
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/forum");
@@ -70,7 +75,7 @@ const Register = () => {
 
     const errors = Object.values(formDataErrors).some((error) => error !== "");
 
-    if (!errors) {
+    if (!errors && isClicked) {
       setMessage(false);
       const resultAction = await dispatch(
         registerUser({ username, email, password, confirmPassword })
@@ -86,13 +91,14 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
-      <form
-        action=""
-        className="bg-custom-color1 w-full max-w-md p-4 rounded-xl"
-        onSubmit={handleSubmit}
-      >
-        <img src={home} alt="WELCOME" className="mx-auto rounded-xl" />
+    <div className="flex flex-col md:flex-row items-center h-screen p-2 gap-12 md:pr-16">
+      <div className="md:w-1/2 md:order-1">
+        <img
+          src={home}
+          alt="WELCOME"
+          className="rounded-xl"
+          height={300}
+        />
         <div className="text-center pt-4 text-custom-color3">
           <h2 className="font-bold text-[20px]">Welcome Onboard</h2>
           <h6 className="mt-2">
@@ -100,7 +106,17 @@ const Register = () => {
             placeat.
           </h6>
         </div>
-        <div className="flex justify-between flex-col mt-7">
+      </div>
+
+      <form
+        action=""
+        className="w-full md:w-2/3 lg:w-1/2 md:mr-0 md:ml-12 px-8 rounded-xl md:order-2"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex justify-between flex-col mt-7 gap-4">
+          <h1 className="text-4xl text-custom-color4 font-bold mb-5">
+            Register
+          </h1>
           <FormInputsComponent
             id={"username"}
             label={"Username"}
@@ -133,24 +149,25 @@ const Register = () => {
             errorMessage={formDataErrors.confirmPassword}
           />
         </div>
+        <div className="flex gap-1 text-sm mt-4 ml-2">
+          <input type="checkbox" onClick={handleClick} />I have read
+          <Link to={"/terms"}>
+            <h3 className="text-custom-color3">Terms and Conditions</h3>
+          </Link>
+        </div>
         <div className="mt-5">
           <MediumButton children={"Register"} />
         </div>
-        <div className="text-custom-color3 mt-3 text-center">
+        <div className="mt-3 text-center">
           <Link to={"/login"}>
             Already have an account?
-            <span className="text-custom-color3 font-semibold">  Sign In</span>
+            <span className="text-custom-color3 font-semibold"> Sign In</span>
           </Link>
         </div>
         {registerError && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
-            {JSON.stringify(registerError)}
-          </div>
-        )}
-        {message && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
-            "Fix errors before register!"
-          </div>
+          <Alert severity="error" className="mt-4">
+            Error on register.
+          </Alert>
         )}
       </form>
     </div>

@@ -2,16 +2,10 @@ import { useEffect, useState } from "react";
 import { MediumButton } from "../../components/ButtonComponent";
 import { getSinglePost, updatePost } from "../../api/postThunk";
 import { useParams } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPost } from "../../redux/forum/postSlice";
 import { useValidateUpdate } from "../../utils/validateUpdate";
 import FormInputsComponent from "../../components/FormInputsComponent";
-
-interface Tag {
-  id: number;
-  name: string;
-}
 
 const UpdatePost = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +46,6 @@ const UpdatePost = () => {
       dispatch(updatePost(data));
     }
   };
-  console.log(data)
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFormChanged(true);

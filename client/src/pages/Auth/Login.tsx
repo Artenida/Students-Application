@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MediumButton } from "../../components/ButtonComponent";
 import home from "../../assets/home.png";
 import FormInputsComponent from "../../components/FormInputsComponent";
@@ -7,12 +7,12 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { loginUser } from "../../api/userThunk";
 import { selectUser } from "../../redux/user/userSlice";
 import { validateLoginForm } from "../../utils/validateUser";
+import { Alert } from "@mui/material";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn, loading, loginError } = useAppSelector(selectUser);
   const navigate = useNavigate();
-  const [message, setMessage] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -37,24 +37,24 @@ const Login = () => {
     }
   }, [isLoggedIn]);
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const errors = Object.values(formDataErrors).some((error) => error !== "");
 
     event.preventDefault();
-    if(!errors) {
-      setMessage(false);
+    if (!errors) {
       dispatch(loginUser(formData));
     } else {
-      setMessage(true);
     }
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
-      <form action="" className="bg-custom-color1 w-full max-w-md p-4 rounded-xl" onSubmit={handleSubmit}>
-        <img src={home} alt="WELCOME" className="mx-auto rounded-xl" />
+    <div className="flex flex-col md:flex-row items-center h-screen p-4 gap-12 md:pr-16">
+      <div className="md:w-1/2">
+        <img
+          src={home}
+          alt="WELCOME"
+          className="rounded-xl"
+        />
         <div className="text-center mt-4 text-custom-color3">
           <h2 className="font-bold text-[20px]">Welcome Back!</h2>
           <h6 className="mt-2">
@@ -62,7 +62,15 @@ const Login = () => {
             placeat.
           </h6>
         </div>
-        <div className="flex justify-between flex-col mt-7">
+      </div>
+
+      <form
+        action=""
+        className="w-full md:w-2/3 lg:w-1/2 md:mr-0 md:ml-12 p-8 rounded-xl"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex justify-between flex-col gap-4">
+          <h1 className="text-4xl text-custom-color4 font-bold mb-5">Login</h1>
           <FormInputsComponent
             id={"username"}
             type={"text"}
@@ -81,30 +89,29 @@ const Login = () => {
             errorMessage={formDataErrors.password}
             onChange={handleChange}
           />
-          <Link to={"/forgotPassword"}>
-            <h3 className="text-center text-custom-color2 font-semibold">
-              Forgot Password?
-            </h3>
-          </Link>
         </div>
         <div className="mt-5">
-            <MediumButton children={"Login"}/>
+          <MediumButton children={"Login"} />
         </div>
-        <div className="text-center text-custom-color3 mt-3">
-          <Link to={"/register"}>
-            Don't have an account?
-            <span className="text-custom-color3 font-semibold">  Sign Up</span>
-          </Link>
+        <div className="flex flex-col md:flex-row justify-between text-center items-center mt-4">
+          <div>
+            <Link to={"/forgotPassword"}>
+              <h3 className="text-sm text-center pt-2 text-custom-color3 font-semibold">
+                Forgot Password?
+              </h3>
+            </Link>
+          </div>
+          <div className="text-sm mt-3">
+            <Link to={"/register"}>
+              Don't have an account?
+              <span className="text-custom-color3 font-semibold"> Sign Up</span>
+            </Link>
+          </div>
         </div>
         {loginError && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
-            {JSON.stringify(loginError)}
-          </div>
-        )}
-         {message && (
-          <div className="mt-3 bg-red-200 py-2 px-6 text-red-500 rounded-lg">
-            "Fix errors before login!"
-          </div>
+          <Alert severity="error" className="mt-4">
+            Error on login.
+          </Alert>
         )}
       </form>
     </div>

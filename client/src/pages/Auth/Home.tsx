@@ -18,11 +18,6 @@ const Home = () => {
     },
     {
       image: home,
-      title: "Security Page",
-      description: "At EduConnect, we prioritize your privacy and security.",
-    },
-    {
-      image: home,
       title: "Collaborate and Conquer Together",
       description:
         "Join group discussions, share insights, and learn from each other's experiences to achieve mutual success.",

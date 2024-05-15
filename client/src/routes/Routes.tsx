@@ -14,11 +14,13 @@ import { useAppSelector } from "../redux/hooks";
 import { selectUser } from "../redux/user/userSlice";
 import CreatePost from "../pages/Forum/CreatePost";
 import UpdatePost from "../pages/Forum/UpdatePost";
+import TermsAndConditions from "../pages/Auth/TermsAndConditions";
 
 const routes = [
   { path: "/", element: <Home /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
+  { path: "/terms", element: <TermsAndConditions /> },
   // { path: "/forum", element: <Forum /> },
   { path: "*", element: <Home /> },
 ];
