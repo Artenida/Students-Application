@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPost } from "../../redux/forum/postSlice";
 import { useValidateUpdate } from "../../utils/validateUpdate";
 import FormInputsComponent from "../../components/FormInputsComponent";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const UpdatePost = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +19,7 @@ const UpdatePost = () => {
 
   useEffect(() => {
     dispatch(getSinglePost(postId));
-  }, [dispatch, postId])
+  }, [dispatch, postId]);
 
   const [data, setData] = useState({
     postId: postId ?? "",
@@ -53,21 +55,23 @@ const UpdatePost = () => {
     setData({ ...data, title: value });
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  // const handleDescriptionChange = (
+  //   event: React.ChangeEvent<HTMLTextAreaElement>
+  // ) => {
+  //   setIsFormChanged(true);
+  //   const { value } = event.target;
+  //   setData({ ...data, description: value });
+  // };
+
+  const handleDescriptionChange = (value: string) => {
     setIsFormChanged(true);
-    const { value } = event.target;
     setData({ ...data, description: value });
-  };  
+  };
 
   return (
-    <div className="flex justify-center pt-48">
-      <div className="flex bg-custom-color1 py-12 px-4 rounded-xl">
-        <div
-          className="flex flex-col justify-center w-[800px] px-12"
-          onSubmit={handleSubmit}
-        >
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-3xl px-5 py-12 pl-20">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <FormInputsComponent
             label="Title"
             id="title"
@@ -86,27 +90,17 @@ const UpdatePost = () => {
           >
             Description
           </label>
-          <textarea
-            id="description"
-            placeholder="Description"
-            name="file"
+          <ReactQuill
+            theme="snow"
+            style={{ height: "300px" }}
+            className="mb-4"
             value={data.description}
             onChange={handleDescriptionChange}
-            className="border border-custom-color2 rounded-md p-2 resize-none h-40"
-            rows={5}
           />
-          <span
-            className={`text-sm text-red-600 pl-1 pt-8 ${
-              errors.description ? "block" : "hidden"
-            } h-4`}
-          >
-            {errors.description}
-          </span>
-
-          <div className="mt-8">
+          <div className="pt-12">
             <MediumButton onClick={handleSubmit}>Save changes</MediumButton>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
