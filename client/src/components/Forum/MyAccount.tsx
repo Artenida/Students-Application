@@ -1,8 +1,10 @@
 import { FaEdit } from "react-icons/fa";
 import profile from "../../assets/userProfile.jpg";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { getUser } from "../../api/userThunk";
 
 const MyAccount = ({
   username,
@@ -17,14 +19,20 @@ const MyAccount = ({
   profile_picture: string;
   user_id: string;
 }) => {
-  const { currentUser } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const { currentUser, user } = useAppSelector(selectUser);
+  const userID = currentUser?.user?.id;
+
+  useEffect(() => {
+    dispatch(getUser(userID));
+  }, [dispatch, userID]);
 
   return (
     <div className="flex flex-col md:flex-row -z-50">
       <div className="mx-auto flex flex-col gap-4 px-12 pt-12 w-full">
-        <div className="flex flex-col sm:flex-row gap-3 p-4 border-2 rounded-xl border-custom-color2">
-          {currentUser?.user?.id === user_id ? (
-            <div className="flex justify-end text-xl text-gray-400 hover:text-gray-600 cursor-pointer">
+        <div className="ml-48">
+          {user?.id === user_id ? (
+            <div className="">
               <Link key={user_id} to={`/editAccount`}>
                 <FaEdit />
               </Link>

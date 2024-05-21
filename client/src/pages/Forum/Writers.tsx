@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { getWritersPosts } from "../../api/postThunk";
 import Card from "../../components/Forum/Card";
 import MyAccount from "../../components/Forum/MyAccount";
+import { getUser } from "../../api/userThunk";
+import { selectUser } from "../../redux/user/userSlice";
 
 export interface WritersType {
     id: string;
@@ -32,7 +34,6 @@ const Writers = () => {
       dispatch(getWritersPosts(userId));
     }, [dispatch, userId]);
 
-  console.log(writersPosts)
 
   const typedPosts = writersPosts as WritersType[];
 

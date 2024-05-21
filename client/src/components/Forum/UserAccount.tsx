@@ -8,6 +8,7 @@ import { selectPost } from "../../redux/forum/postSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost, getSinglePost } from "../../api/postThunk";
 import { Dialog } from "../Dialog";
+import { getUser } from "../../api/userThunk";
 
 interface AuthorProps {
   authorName: string;
@@ -34,6 +35,12 @@ const UserAccount: React.FC<AuthorProps> = ({
   const [showOptions, setShowOptions] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const {user} = useAppSelector(selectUser);
+  const userID = currentUser?.user?.id;
+
+  useEffect(() => {
+    dispatch(getUser(userID));
+  }, [dispatch, userID])
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -88,7 +95,7 @@ const UserAccount: React.FC<AuthorProps> = ({
           </div>
         </Link>
       </div>
-      {currentUser?.user?.id === userId && (
+      {user?.id === userId && (
         <div className="relative">
           <div className="mr-2 cursor-pointer" onClick={toggleOptions}>
             <BsThreeDots className="text-xl" />
