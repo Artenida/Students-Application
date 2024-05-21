@@ -28,9 +28,9 @@ const MyAccount = ({
   }, [dispatch, userID]);
 
   return (
-    <div className="flex flex-col md:flex-row -z-50">
+    <div className="flex flex-col md:flex-row -z-50 ml-48">
       <div className="mx-auto flex flex-col gap-4 px-12 pt-12 w-full">
-        <div className="ml-48">
+        <div className="">
           {user?.id === user_id ? (
             <div className="">
               <Link key={user_id} to={`/editAccount`}>

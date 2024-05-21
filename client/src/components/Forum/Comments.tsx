@@ -20,8 +20,10 @@ const Comments = ({ postId }: {postId: string}) => {
 
   const handleCreateComment = () => {
     if(comment_text.trim() !== "") {
-      dispatch(createComment({postId, userId, comment_text}));
-      setCommentText("");
+      dispatch(createComment({postId, userId, comment_text})).then(() => {
+        setCommentText("");
+        dispatch(getCommentsForPost(postId));
+      });
     }
   }
 
@@ -29,7 +31,7 @@ const Comments = ({ postId }: {postId: string}) => {
     <>
       {allComments ? allComments?.map((comment, index) => (
         <CommentItem key={index} comment={comment} />
-      )) : "No comments for this post"}
+      )) : <h2>"Be the first to post"</h2> }
 
       <div className="my-4 flex gap-4 items-center">
         <div className="w-[700px]">
