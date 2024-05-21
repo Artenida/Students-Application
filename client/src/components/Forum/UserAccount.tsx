@@ -4,7 +4,6 @@ import profile from "../../assets/userProfile.jpg";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
-import { selectPost } from "../../redux/forum/postSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost, getSinglePost } from "../../api/postThunk";
 import { Dialog } from "../Dialog";
