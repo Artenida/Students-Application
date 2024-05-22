@@ -57,7 +57,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
                 <img
                   src={`http://localhost:5000/${img.url?.replace(/\\/g, "/")}`}
                   alt="blogPicture"
-                  className="w-full object-cover object-center h-64"
+                  className="object-cover h-64 w-full"
                 />
               </div>
             )}

@@ -4,6 +4,7 @@ import userProfile from "../../assets/cover1.jpg";
 import ImageSlider from "../ImageSlider";
 import { useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa6";
+import "./ImageSlider.css";
 
 export interface BlogCardProps {
   posts: Paginated[] | null;

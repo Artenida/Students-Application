@@ -21,14 +21,14 @@ const Searchbar: React.FC<SearchbarProps> = ({ onChange }) => {
   };
 
   return (
-    <div className="flex justify-center items-center md:space-x-4">
-      <form action="" className="relative">
+    <div className="flex justify-center items-center bg-white shadow-md p-4 md:space-x-4">
+      <form action="" className="relative ml-16">
         <input
           type="text"
           placeholder="Search"
           className={`md:w-[800px] w-full sm:w-80 py-2 px-2 rounded-md bg-transparent border ${
             isFocused
-              ? "border-custom-color3 text-custom-color3"
+              ? "border-custom-color3"
               : "border-custom-color3"
           } focus:outline-none`}
           onFocus={handleFocus}

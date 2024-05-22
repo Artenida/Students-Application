@@ -102,8 +102,8 @@ const Forum = () => {
         <Searchbar onChange={filter} />
       </div>
 
-      <div className="flex-col gap-4 md:flex">
-        <div className="ml-32">
+      <div className="gap-4 md:flex">
+        <div className="px-10 ml-14 md:pr-16 md:ml-20 lg:ml-24 lg:w-2/3 xl:w-3/4">
           <div className="">
             <Banner />
           </div>
@@ -122,8 +122,8 @@ const Forum = () => {
           ))}
         </div>
 
-        <div>
-          {currentEvents?.map((event) => (
+        <div className="ml-14 pl-10 md:ml-0 md:pl-0 md:w-full lg:w-1/3 xl:w-1/4 mr-12">
+          {currentEvents?.slice(0, 3).map((event) => (
             <EventCard
               key={event.id}
               id={event.id}
@@ -133,9 +133,9 @@ const Forum = () => {
               user_id={event.user_id}
               profile_picture={event.profile_picture}
               music={event.music}
+              cost={event.cost}
             />
-          ))}
-          <ExtraInfo />
+          ))} 
         </div>
       </div>
 
