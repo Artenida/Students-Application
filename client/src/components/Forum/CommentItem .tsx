@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import UserAccount from "./UserAccount";
 import profile from "../../assets/userProfile.jpg";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteComment, getCommentsForPost } from "../../api/commentThunk";

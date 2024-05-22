@@ -8,14 +8,11 @@ import {
 } from "../../api/postThunk";
 import { selectPost } from "../../redux/forum/postSlice";
 import PaginationButtons from "../../components/Forum/PaginationButtons";
-import Loading from "../../components/Loading";
 import EventCard from "../../components/Forum/EventCard";
 import { retrieveAllEvents } from "../../api/eventThunk";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import Banner from "../../components/Forum/Banner";
 import Searchbar from "../../components/Searchbar";
-import ExtraInfo from "../../components/Forum/ExtraInfo";
-import Sidebar from "../../components/Sidebar";
 
 export interface EventType {
   id: string;
