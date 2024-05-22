@@ -30,7 +30,7 @@ const EventCard: React.FC<EventType> = ({
   return (
     <div className="bg-white shadow-md rounded-lg py-2 mt-3">
       <div className="flex flex-row px-4 gap-4">
-        <div className="sm:w-24">
+        <div className="sm:w-24 mt-6">
           {profile_picture ? (
             <img
               src={`http://localhost:5000/${profile_picture?.replace(
