@@ -11,6 +11,7 @@ import { IoIosChatbubbles } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa6";
 import { MdAddBox } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
+import logo from "../assets/logo1.png"
 
 export type SidebarRoutes = {
   path: string;

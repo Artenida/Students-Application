@@ -67,11 +67,11 @@ const EventCard: React.FC<EventType> = ({
               <h2>Entry fee: </h2>
               <h2>${cost}</h2>
             </div>
-            <Link to={`/events`}>
+            {/* <Link to={`/events`}>
               <span className="flex justify-end cursor-pointer hover:text-gray-500">
                 Learn more
               </span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

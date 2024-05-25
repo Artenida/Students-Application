@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-
 interface SearchbarProps {
   onChange: (searchValue: string) => void;
 }
@@ -21,7 +20,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ onChange }) => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-white shadow-md p-4 md:space-x-4">
+    <div className="flex justify-center fixed w-full z-50 items-center bg-white shadow-md p-5 md:space-x-32 ml-[100px]">
       <form action="" className="relative ml-16">
         <input
           type="text"
