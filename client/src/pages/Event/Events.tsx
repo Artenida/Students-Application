@@ -28,6 +28,7 @@ const Events = () => {
   const { currentEvents } = useAppSelector(selectEvent);
   const { categories } = useAppSelector(selectCategories);
   const [events, setEvents] = useState<EventType[]>();
+  const [keyword, setKeyword] = useState("New");
 
   useEffect(() => {
     dispatch(retrieveAllCategories());
@@ -43,14 +44,36 @@ const Events = () => {
     }
   }, [currentEvents]);
 
+  useEffect(() => {
+    dispatch(filterEvents({ keyword: keyword }));
+  }, [dispatch, keyword]);
+
+  const filter = (searchValue: string) => {
+    setKeyword(searchValue);
+     
+    if (!currentEvents) return;
+  
+    const filteredPosts = currentEvents.filter((event) => {
+      const costString = event.cost.toString().toLowerCase();
+  
+      return (
+        costString.includes(searchValue.toLowerCase()) ||
+        event.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchValue.toLowerCase()) ||
+        event.music.toLowerCase().includes(searchValue.toLowerCase()) ||
+        event.location.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    });
+  
+    setEvents(filteredPosts);
+  };
+  
+
   const handleCategoryClick = (id: number, category: string) => {
-    console.log("Category ID:", id);
-    console.log("Category Name:", category);
     dispatch(filterEvents({ keyword: category }))
       .then((response: any) => {
         const filteredEvents = response.payload.getEventByCategory;
         setEvents(filteredEvents);
-        console.log(filteredEvents);
       })
       .catch((error: any) => {
         console.error("Error filtering events:", error);
@@ -58,8 +81,11 @@ const Events = () => {
   };
 
   return (
-    <div className="flex flex-col pl-[70px] md:pl-[100px] pt-32">
-      <div className="flex justify-center gap-4 flex-wrap">
+    <div className="flex flex-col pl-[70px] md:pl-[100px]">
+      <div className="mr-16">
+        <Searchbar onChange={filter} />
+      </div>
+      <div className="flex justify-center gap-4 flex-wrap mt-4">
         {categories &&
           categories?.map((item) => (
             <Categories
@@ -70,30 +96,31 @@ const Events = () => {
             />
           ))}
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 w-full mt-12 gap-4 md:px-24 sm:px-4 px-4">
-        {(events && events?.length <=0) ? (
-          <>
-            {events?.map((event) => (
-              <Card
-                key={event.id}
-                id={event.id}
-                title={event.title}
-                description={event.description}
-                date={event.date}
-                location={event.location}
-                user_id={event.user_id}
-                profile_picture={event.profile_picture}
-                music={event.music}
-                cost={event.cost}
-                email={event.email}
-                image={event.image}
-              />
-            ))}
-          </>
-        ) : (
+      
+      {events && events?.length > 0 ? (
+        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 w-full mt-12 gap-4 md:px-24 sm:px-4 px-4">
+          {events?.map((event) => (
+            <Card
+              key={event?.id}
+              id={event?.id}
+              title={event?.title}
+              description={event?.description}
+              date={event?.date}
+              location={event?.location}
+              user_id={event?.user_id}
+              profile_picture={event?.profile_picture}
+              music={event?.music}
+              cost={event?.cost}
+              email={event?.email}
+              image={event?.image}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center">
           <EmptyComponent />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

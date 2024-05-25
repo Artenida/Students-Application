@@ -29,10 +29,19 @@ const Card: React.FC<EventType> = ({
   music,
   profile_picture,
   email,
+  cost
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
   const formattedDay = moment(date).format("Do");
+  const clampStyle: React.CSSProperties = {
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical' as 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    WebkitLineClamp: 2,
+    maxHeight: '3em',
+  };
 
   return (
     <div>
@@ -70,10 +79,13 @@ const Card: React.FC<EventType> = ({
                 <IoMdMusicalNote />
                 <h2>{music}</h2>
               </div>
+              <div className="flex justify-between items-center text-center">
               <h2 className="font-bold text-lg md:text-xl lg:text-2xl mb-2">
                 {title}
               </h2>
-              <p className="text-sm md:text-base lg:text-lg">{description}</p>
+                <h1 className="text-custom-color3 font-semibold text-2xl mb-2 bg-gray-100 shadow-sm py-1 px-3 rounded-md">${cost}</h1>
+              </div>
+              <p className="text-sm md:text-base lg:text-lg" style={clampStyle}>{description}</p>
               <div className="flex justify-end relative">
                 <div
                   onMouseEnter={() => setIsHovered(true)}
