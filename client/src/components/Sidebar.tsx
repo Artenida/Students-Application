@@ -6,7 +6,7 @@ import { FaVideo } from "react-icons/fa6";
 import { MdAccountCircle } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { ReactNode } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IoIosChatbubbles } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa6";
 import { MdAddBox } from "react-icons/md";
@@ -69,7 +69,8 @@ const Sidebar = () => {
   return (
     <div className="bg-custom-color4 text-white py-4 fixed overflow-y-auto">
       <div>
-        <div className="mt-2 mx-3 md:mx-6">
+        <div className="mt-24 mx-3 md:mx-6">
+          <Link to={`/writers/${userId}`}>
           { currentUser && currentUser.user && currentUser?.user?.profile_picture ? (
             <img
               src={`http://localhost:5000/${imagePath}`}
@@ -83,6 +84,7 @@ const Sidebar = () => {
               className="h-10 w-10 md:h-12 md:w-12 rounded-full"
             />
           )}
+          </Link>
         </div>
         <div>
           <div className="h-screen">

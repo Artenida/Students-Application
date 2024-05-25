@@ -29,10 +29,10 @@ export const updateUser = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { username, email, subject, bio, profile_picture } = req.body;
+    const { username, email, fields, bio, profile_picture } = req.body;
     const { id } = req.params;
 
-    const userUpdateResult = await User.updateUser(id, username, email, bio, subject);
+    const userUpdateResult = await User.updateUser(id, username, email, bio, fields);
     // const universityUpdateResult = await User.updateUniversity(id, subject);
 
     if (userUpdateResult.success) {
@@ -44,7 +44,7 @@ export const updateUser = async (
           email,
           bio,
           profile_picture,
-          subject,
+          fields,
         },
       });
     } else {
@@ -58,55 +58,55 @@ export const updateUser = async (
   }
 };
 
-export const addSocialMediaAccounts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { social_media } = req.body;
-    const { id } = req.params;
+// export const addSocialMediaAccounts = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ): Promise<void> => {
+//   try {
+//     const { social_media } = req.body;
+//     const { id } = req.params;
 
-    const success = await User.addSocialMediaAccounts(id, social_media);
+//     const success = await User.addSocialMediaAccounts(id, social_media);
 
-    if (success) {
-      res.status(200).json({
-        message: "Social media accounts added successfully",
-        user: {
-          id,
-          social_media,
-        },
-      });
-    } else {
-      res.status(400).json({
-        message: "Failed to add social media accounts",
-      });
-    }
-  } catch (error) {
-    console.error("Error adding social media accounts:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
+//     if (success) {
+//       res.status(200).json({
+//         message: "Social media accounts added successfully",
+//         user: {
+//           id,
+//           social_media,
+//         },
+//       });
+//     } else {
+//       res.status(400).json({
+//         message: "Failed to add social media accounts",
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error adding social media accounts:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 
-export const deleteSocialMediaAccounts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const { id } = req.params;
-    // const { social_media } = req.body;
+// export const deleteSocialMediaAccounts = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ): Promise<void> => {
+//   try {
+//     const { id } = req.params;
+//     // const { social_media } = req.body;
 
-    const isDeleted = await User.deleteSocialMediaAccounts(id);
-    if (!isDeleted) {
-      return next(res.status(400).json({ message: "Account not found" }));
-    }
-    res.status(200).json({ message: "Account deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting account:", error);
-    return next(res.status(500).json({ message: "Error deleting account:" }));
-  }
-};
+//     const isDeleted = await User.deleteSocialMediaAccounts(id);
+//     if (!isDeleted) {
+//       return next(res.status(400).json({ message: "Account not found" }));
+//     }
+//     res.status(200).json({ message: "Account deleted successfully" });
+//   } catch (error) {
+//     console.error("Error deleting account:", error);
+//     return next(res.status(500).json({ message: "Error deleting account:" }));
+//   }
+// };
 
 export const updateProfilePicture = async (req: Request, res: Response) => {
   const { userId } = req.body;

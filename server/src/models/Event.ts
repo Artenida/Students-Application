@@ -269,13 +269,15 @@ GROUP BY e.id;
       try {
         const getEventByTitle = await this.filterByTitle(word);
         const getEventByDescription = await this.filterByDescription(word);
-        const getEventByAuthor = await this.filterByAuthor(word);
+        const getEventByMusic = await this.filterByMusic(word);
+        const getEventByCost = await this.filterByCost(word);
         const getEventByLocation = await this.filterByLocation(word);
         const getEventByCategory = await this.filterByCategory(word);
         resolve({
           getEventByTitle,
           getEventByDescription,
-          getEventByAuthor,
+          getEventByMusic,
+          getEventByCost,
           getEventByLocation,
           getEventByCategory
         });
@@ -310,6 +312,56 @@ GROUP BY e.id;
     }
   }
 
+  static async filterByMusic(word: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const query = `SELECT * FROM events WHERE music LIKE ?`;
+
+      const data = await new Promise((resolve, reject) => {
+        db.query(query, [`%${word}%`], (error, result) => {
+          connection.closeConnection();
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.error("Error in filterByMusic", error);
+      throw error;
+    }
+  }
+
+  static async filterByCost(word: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const query = `SELECT * FROM events WHERE cost LIKE ?`;
+
+      const data = await new Promise((resolve, reject) => {
+        db.query(query, [`%${word}%`], (error, result) => {
+          connection.closeConnection();
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.error("Error in filterByCost", error);
+      throw error;
+    }
+  }
+  
   static async filterByDescription(word: string) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -342,47 +394,6 @@ GROUP BY e.id;
     try {
       const query = `
       SELECT * FROM events WHERE location LIKE ?`;
-
-      const data = await new Promise((resolve, reject) => {
-        db.query(query, [`%${word}%`], (error, result) => {
-          connection.closeConnection();
-          if (error) {
-            reject(error);
-          } else {
-            resolve(result);
-          }
-        });
-      });
-
-      return data;
-    } catch (error) {
-      console.error("Error in filterByAuthor", error);
-      throw error;
-    }
-  }
-
-  static async filterByAuthor(word: string) {
-    const connection = createDatabaseConnection();
-    const db = connection.getConnection();
-
-    try {
-      const query = `
-      SELECT 
-      u.id,
-      u.username,
-      u.profile_picture,
-      e.id,
-      e.title,
-      e.description,
-      e.date,
-      e.location,
-      e.image,
-      e.music,
-      e.cost
-      FROM events e 
-      LEFT JOIN users u ON e.user_id = u.id
-      WHERE 
-      u.username LIKE ?`;
 
       const data = await new Promise((resolve, reject) => {
         db.query(query, [`%${word}%`], (error, result) => {

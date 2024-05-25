@@ -1,6 +1,5 @@
 import createDatabaseConnection from "../config";
 import bcrypt from "bcrypt";
-import { deleteSocialMediaAccounts } from "../controllers/userControllers";
 import { Query } from "mysql";
 
 interface UserData {
@@ -26,10 +25,9 @@ export class User {
     const db = connection.getConnection();
 
     try {
-      const checkQuery = `SELECT u.*, s.social_media
-      FROM users u
-      LEFT JOIN socials s ON u.id = s.user_id
-      WHERE u.username = ?;
+      const checkQuery = `SELECT *
+      FROM users 
+      WHERE username = ?;
       `;
       const data = await new Promise<UserData[]>((resolve, reject) => {
         db.query(checkQuery, [username], (error, data) => {
@@ -77,7 +75,7 @@ export class User {
     try {
       const userData = await new Promise<any>((resolve, reject) => {
         db.query(
-          `SELECT * FROM users WHERE id = ?`,
+          `SELECT username, email, bio, profile_picture, fields FROM users WHERE id = ?`,
           [id],
           (error, userResult) => {
             if (error) {
@@ -89,21 +87,21 @@ export class User {
         );
       });
 
-      const socialMediaData = await new Promise<any[]>((resolve, reject) => {
-        db.query(
-          `SELECT id, social_media FROM socials WHERE user_id = ?`,
-          [id],
-          (error, socialResult) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(socialResult);
-            }
-          }
-        );
-      });
+      // const socialMediaData = await new Promise<any[]>((resolve, reject) => {
+      //   db.query(
+      //     `SELECT id, social_media FROM socials WHERE user_id = ?`,
+      //     [id],
+      //     (error, socialResult) => {
+      //       if (error) {
+      //         reject(error);
+      //       } else {
+      //         resolve(socialResult);
+      //       }
+      //     }
+      //   );
+      // });
 
-      userData.social_media = socialMediaData;
+      // userData.social_media = socialMediaData;
 
       connection.closeConnection();
 
@@ -160,55 +158,55 @@ export class User {
     }
   }
 
-  static async addSocialMediaAccounts(userID: string, social_media: string) {
-    const connection = createDatabaseConnection();
-    const db = connection.getConnection();
+  // static async addSocialMediaAccounts(userID: string, social_media: string) {
+  //   const connection = createDatabaseConnection();
+  //   const db = connection.getConnection();
 
-    try {
-      const insertQuery =
-        "INSERT INTO socials (user_id, social_media) VALUES (?, ?)";
-      const values = [userID, social_media];
+  //   try {
+  //     const insertQuery =
+  //       "INSERT INTO socials (user_id, social_media) VALUES (?, ?)";
+  //     const values = [userID, social_media];
 
-      await db.query(insertQuery, values);
-      connection.closeConnection();
+  //     await db.query(insertQuery, values);
+  //     connection.closeConnection();
 
-      return true;
-    } catch (error) {
-      connection.closeConnection();
-      throw error;
-    }
-  }
+  //     return true;
+  //   } catch (error) {
+  //     connection.closeConnection();
+  //     throw error;
+  //   }
+  // }
 
-  static async deleteSocialMediaAccounts(id: string): Promise<boolean> {
-    const connection = createDatabaseConnection();
-    const db = connection.getConnection();
+  // static async deleteSocialMediaAccounts(id: string): Promise<boolean> {
+  //   const connection = createDatabaseConnection();
+  //   const db = connection.getConnection();
 
-    try {
-      const query = `DELETE FROM socials WHERE  id = ?;`;
-      const result: DeleteResult = await new Promise((resolve, reject) => {
-        db.query(query, [id], (error, result) => {
-          if (error) {
-            console.error("Error deleting account:", error);
-            connection.closeConnection();
-            reject(error);
-          } else {
-            resolve(result);
-          }
-        });
-      });
+  //   try {
+  //     const query = `DELETE FROM socials WHERE  id = ?;`;
+  //     const result: DeleteResult = await new Promise((resolve, reject) => {
+  //       db.query(query, [id], (error, result) => {
+  //         if (error) {
+  //           console.error("Error deleting account:", error);
+  //           connection.closeConnection();
+  //           reject(error);
+  //         } else {
+  //           resolve(result);
+  //         }
+  //       });
+  //     });
 
-      connection.closeConnection();
+  //     connection.closeConnection();
 
-      if (result && result.affectedRows === 0) {
-        return false;
-      }
+  //     if (result && result.affectedRows === 0) {
+  //       return false;
+  //     }
 
-      return true;
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      throw error;
-    }
-  }
+  //     return true;
+  //   } catch (error) {
+  //     console.error("Error deleting account:", error);
+  //     throw error;
+  //   }
+  // }
 
   static async updateProfilePicture(userId: string, file: Express.Multer.File) {
     const connection = createDatabaseConnection();

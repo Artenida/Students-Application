@@ -3,6 +3,7 @@ import userReducer from './user/userSlice'
 import postReducer from './forum/postSlice'
 import commentsReducer from './forum/commentSlice'
 import eventReducer from './forum/eventSlice'
+import categoriesReducer from './forum/categoriesSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist';
 import { persistStore } from 'redux-persist'
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     post: postReducer,
     comments: commentsReducer,
     event: eventReducer,
+    categories: categoriesReducer,
 });
 
 const persistConfig = {

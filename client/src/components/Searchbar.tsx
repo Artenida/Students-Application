@@ -20,7 +20,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ onChange }) => {
   };
 
   return (
-    <div className="flex justify-center fixed w-full z-50 items-center bg-white shadow-md p-5 md:space-x-32 ml-[100px]">
+    <div className="flex justify-center w-full items-center bg-white shadow-sm pb-5 md:space-x-32 sm:ml-0 pt-28">
       <form action="" className="relative ml-16">
         <input
           type="text"

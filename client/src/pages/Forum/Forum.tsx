@@ -99,7 +99,7 @@ const Forum = () => {
         <Searchbar onChange={filter} />
       </div>
 
-      <div className="gap-4 md:flex md:px-20 pt-[100px]">
+      <div className="gap-4 md:flex md:px-20">
         <div className="px-10 ml-14 md:pr-16 md:ml-20 lg:ml-24 lg:w-2/3 xl:w-3/4">
           <div>
             <Banner />

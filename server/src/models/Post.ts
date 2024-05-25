@@ -371,6 +371,7 @@ class Post {
     u.profile_picture,
     u.bio,
     u.email,
+    u.fields,
     p.id,
     p.title,
     p.description,

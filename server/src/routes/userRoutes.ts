@@ -4,8 +4,8 @@ import {
   updateUser,
   deleteUser,
   updateProfilePicture,
-  addSocialMediaAccounts,
-  deleteSocialMediaAccounts,
+  // addSocialMediaAccounts,
+  // deleteSocialMediaAccounts,
   // changePassword,
 } from "../controllers/userControllers";
 import { verifyToken } from "../middleware/verifyToken";
@@ -27,10 +27,10 @@ const upload = multer({ storage: storage });
 // router.use(verifyToken);
 router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);
-router.post("/addAccount/:id", addSocialMediaAccounts);
-router.delete("/deleteAccounts/:id", deleteSocialMediaAccounts);
+// router.post("/addAccount/:id", addSocialMediaAccounts);
+// router.delete("/deleteAccounts/:id", deleteSocialMediaAccounts);
 // router.put("/changePassword/:id", changePassword);
-router.delete("/delete/:userId", deleteUser);
+router.delete("/delete/:id", deleteUser);
 router.put("/updatePicture", upload.single("files"), updateProfilePicture);
 
 export default router;

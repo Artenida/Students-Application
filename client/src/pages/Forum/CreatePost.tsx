@@ -71,7 +71,7 @@ const CreatePost = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-3xl px-5 py-12 pl-20">
+      <div className="w-full max-w-3xl px-5 py-28 pl-20">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
             <label htmlFor="file" className="cursor-pointer">

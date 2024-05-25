@@ -40,7 +40,7 @@ const Writers = () => {
   const { username, bio, email, profile_picture, user_id } = typedPosts?.[0] || {};
 
     return (
-      <div>
+      <div className="pt-24">
         <MyAccount username={username} bio={bio} email={email} profile_picture={profile_picture} user_id={user_id}/>
         <div className="relative max-w-7xl mx-auto flex-1">
           {writersPosts.length > 0 && writersPosts.map((writer: WritersType, index: number) => (

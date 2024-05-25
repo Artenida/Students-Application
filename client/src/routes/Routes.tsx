@@ -15,6 +15,7 @@ import { selectUser } from "../redux/user/userSlice";
 import CreatePost from "../pages/Forum/CreatePost";
 import UpdatePost from "../pages/Forum/UpdatePost";
 import TermsAndConditions from "../pages/Auth/TermsAndConditions";
+import Navbar from "../components/Navbar";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -33,6 +34,7 @@ const AppRoutes = () => {
       <Router>
         {isLoggedIn ? <Sidebar />
         : ""}
+        <Navbar />
         <Routes>
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
