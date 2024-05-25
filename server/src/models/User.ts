@@ -75,7 +75,7 @@ export class User {
     try {
       const userData = await new Promise<any>((resolve, reject) => {
         db.query(
-          `SELECT username, email, bio, profile_picture, fields FROM users WHERE id = ?`,
+          `SELECT id, username, email, bio, profile_picture, fields FROM users WHERE id = ?`,
           [id],
           (error, userResult) => {
             if (error) {
