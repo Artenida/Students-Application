@@ -48,7 +48,7 @@ const Home = () => {
   })
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div>
       <HomeCardComponent
         image={cards[currentCardIndex]?.image}
         title={cards[currentCardIndex]?.title}

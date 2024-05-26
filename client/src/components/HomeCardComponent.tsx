@@ -24,22 +24,22 @@ const HomeCardComponent: React.FC<HomeCard> = ({
   isLastCard,
 }) => {
   return (
-    <div className="flex flex-col items-center p-4 bg-custom-color1 h-screen w-[400px] rounded-xl">
+    <div className="flex flex-col items-center bg-custom-color1 pt-28 rounded-xl">
       <div>
-        <img src={image} alt="WELCOME" className="rounded-xl" />
+        <img src={image} alt="WELCOME" className="rounded-xl w-auto h-[350px]"/>
       </div>
       <div className="text-center mt-16 text-custom-color3">
         <h2 className="font-bold text-[30px]">{title}</h2>
         <h3 className="mt-2">{description}</h3>
       </div>
       {isLastCard && (
-        <div className="mt-8">
+        <div className="mt-6">
           <Link to={"/login"}>
             <LargeButton children={"Get started"} />
           </Link>
         </div>
       )}
-      <div className="flex justify-between mt-auto w-full text-custom-color3 font-semibold text-[20px] cursor-pointer">
+      <div className="flex justify-between mt-auto w-full text-custom-color3 font-semibold text-[20px] cursor-pointer pt-12 pb-28 px-32">
         <div className="flex items-center">
           {showPrevious && (
             <div className="flex items-center mr-auto" onClick={onPrevious}>

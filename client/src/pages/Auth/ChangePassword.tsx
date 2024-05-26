@@ -22,7 +22,7 @@ const ChangePassword = () => {
           </h6>
         </div>
 
-        <div className="mt-8">
+        <div className="flex justify-between flex-col gap-5 mt-8">
           <FormInputsComponent
             id="currentPassword"
             placeholder="Current password"

@@ -4,9 +4,9 @@ import FormInputsComponent from "../../components/FormInputsComponent";
 
 const Contact = () => {
   return (
-    <div className="m-4 md:mx-28 grid grid-cols-1 md:grid-cols-2 gap-6 border border-custom-color2 p-4 rounded-xl">
+    <div className="mx-8 md:mx-28 grid grid-cols-1 md:grid-cols-2 gap-6 pt-32 pl-16">
       <div className="flex justify-center items-center">
-        <img src={image} alt="Cover" className="w-[380px] h-[380px]"/>
+        <img src={image} alt="Cover" className="w-[200px] md:w-[380px] h-[200px] md:h-[380px]"/>
       </div>
       <div className="flex justify-center gap-4 flex-col">
         <div>
@@ -16,7 +16,7 @@ const Contact = () => {
             and we'll respond within 24 hours
           </h5>
         </div>
-        <div>
+        <div className="flex justify-between flex-col gap-4">
           <FormInputsComponent
             id="username"
             label="Username"
