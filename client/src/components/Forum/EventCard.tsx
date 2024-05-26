@@ -28,6 +28,7 @@ const EventCard: React.FC<EventType> = ({
   const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
 
   return (
+    <Link to={`/events/${id}`}>
     <div className="bg-white shadow-md rounded-lg py-2 mt-3">
       <div className="flex flex-row px-4 gap-4">
         <div className="sm:w-24 mt-6">
@@ -76,6 +77,7 @@ const EventCard: React.FC<EventType> = ({
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
