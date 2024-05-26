@@ -42,7 +42,7 @@ const Writers = () => {
     return (
       <div className="pt-24">
         <MyAccount username={username} bio={bio} email={email} profile_picture={profile_picture} user_id={user_id}/>
-        <div className="relative max-w-7xl mx-auto flex-1">
+        <div className="relative max-w-7xl -z-50 ml-24 mr-8 md:ml-auto flex-1">
           {writersPosts.length > 0 && writersPosts.map((writer: WritersType, index: number) => (
           <Card username={writer.username} createdAt={writer.createdAt} 
             title={writer.title} 

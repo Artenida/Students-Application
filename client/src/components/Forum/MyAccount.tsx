@@ -28,46 +28,41 @@ const MyAccount = ({
   }, [dispatch, userID]);
   
   return (
-    <div className="flex flex-col md:flex-row -z-50 ml-48">
-      <div className="mx-auto flex flex-col gap-4 px-12 pt-12 w-full">
-        <div className="">
-          {user?.id === user_id ? (
-            <div className="">
-              <Link key={user_id} to={`/editAccount`}>
-                <FaEdit />
-              </Link>
-            </div>
-          ) : (
-            ""
-          )}
-          <div>
-            <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full border-4">
-              <label>
-                <img
-                  src={`http://localhost:5000/${profile_picture}` || profile}
-                  alt="Profile"
-                  className="rounded-full w-32 h-32"
-                />
-              </label>
-            </div>
+    <div className="flex flex-col justify-center md:flex-row -z-50 ml-24 mt-8">
+    <div className="flex flex-col relative gap-4 pt-12 w-full md:pl-48">
+      <div className="relative">
+        {user?.id === user_id ? (
+          <div className="absolute top-0 right-0 mt-2 mr-2">
+            <Link key={user_id} to={`/editAccount`}>
+              <FaEdit />
+            </Link>
           </div>
-
-          <div className="p-4">
-            <h2 className="text-xl text-custom-color3 font-bold ml-2">
-              {username}
-            </h2>
-            {currentUser?.user?.id === user_id && (
-              <div className="pt-2">
-                <span className="ml-2 text-lg text-custom-color3">{email}</span>
-              </div>
-            )}
-            <div className="">
-              <span className="ml-2 text-custom-color3">{bio}</span>
-            </div>
+        ) : null}
+        <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full border-4">
+          <label>
+            <img
+              src={`http://localhost:5000/${profile_picture}` || profile}
+              alt="Profile"
+              className="rounded-full w-32 h-32"
+            />
+          </label>
+        </div>
+      </div>
+      <div className="p-4">
+        <h2 className="text-xl text-custom-color3 font-bold ml-2">
+          {username}
+        </h2>
+        {currentUser?.user?.id === user_id && (
+          <div className="pt-2">
+            <span className="ml-2 text-lg text-custom-color3">{email}</span>
           </div>
+        )}
+        <div>
+          <span className="ml-2 text-custom-color3">{bio}</span>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
