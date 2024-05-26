@@ -21,6 +21,7 @@ export interface EventType {
 }
 
 const Card: React.FC<EventType> = ({
+  id,
   title,
   description,
   image,
@@ -65,6 +66,7 @@ const Card: React.FC<EventType> = ({
               {formattedDay}
             </span>
           </div>
+          <Link to={`/events/${id}`}>
           <div className="cursor-pointer absolute left-0 right-0 bottom-2 flex flex-col justify-end">
             <div className="bg-white rounded-lg p-4 border border-custom-color4 mx-2">
               <div className="flex items-center gap-2 text-custom-color3">
@@ -117,6 +119,7 @@ const Card: React.FC<EventType> = ({
               </div>
             </div>
           </div>
+          </Link>
         </div>
       </div>
     </div>

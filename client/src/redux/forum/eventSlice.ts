@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { deleteEvent, retrieveAllEvents, createEvent } from "../../api/eventThunk";
+import { deleteEvent, retrieveAllEvents, createEvent, getSingleEvent } from "../../api/eventThunk";
 
 export interface EventType {
   id: string;
@@ -22,6 +22,23 @@ interface PostState {
   deleteError: string | null;
   createError: string | null;
   successful: boolean;
+  eventDetails: EventDetails[];
+}
+interface Categories {
+  id: number;
+  category: string;
+}
+interface EventDetails {
+  user_id: string;
+  username: string;
+  profile_picture: string;
+  post_id: string;
+  title: string;
+  description: string;
+  image: string;
+  createdAt: Date;
+  categories: Categories[];
+  categoryId: string;
 }
 
 const initialState: PostState = {
@@ -31,6 +48,7 @@ const initialState: PostState = {
   createError: null,
   loading: false,
   successful: false,
+  eventDetails: [],
 };
 
 const eventSlice = createSlice({
@@ -52,6 +70,21 @@ const eventSlice = createSlice({
       .addCase(retrieveAllEvents.rejected, (state, action) => {
         state.loading = false;
         state.retrieveError = action.payload as string;
+      })
+
+      .addCase(getSingleEvent.pending, (state) => {
+        state.retrieveError = null;
+        state.loading = true;
+      })
+      .addCase(getSingleEvent.fulfilled, (state, action) => {
+        state.retrieveError = null;
+        state.loading = false;
+        state.eventDetails = action.payload.data;
+      })
+      .addCase(getSingleEvent.rejected, (state, action) => {
+        state.retrieveError = action.payload as string;
+        state.loading = false;
+        state.eventDetails = initialState.eventDetails;
       })
 
       .addCase(deleteEvent.pending, (state) => {

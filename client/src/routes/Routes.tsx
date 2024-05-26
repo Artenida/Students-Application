@@ -16,6 +16,7 @@ import CreatePost from "../pages/Forum/CreatePost";
 import UpdatePost from "../pages/Forum/UpdatePost";
 import TermsAndConditions from "../pages/Auth/TermsAndConditions";
 import Navbar from "../components/Navbar";
+import EventDetails from "../pages/Event/EventDetails";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -45,6 +46,7 @@ const AppRoutes = () => {
             <Route element={<CreatePost />} path="/createPost" />
             <Route element={<UpdatePost />} path="/updatePost/:postId" />
             <Route element={<Events />} path="/events" />
+            <Route element={<EventDetails />} path="/events/:id" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />
             <Route element={<Account />} path="/editAccount" />

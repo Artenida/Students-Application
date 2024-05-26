@@ -17,6 +17,24 @@ export const retrieveAllEvents = createAsyncThunk(
   }
 );
 
+export const getSingleEvent = createAsyncThunk(
+  "api/events/getSingleEvent",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await createAPI(`api/events/getSingleEvent/${id}`, {
+        method: "GET",
+      })();
+      if (!response.ok) {
+        throw new Error("Failed to retrieve single event");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const createEvent = createAsyncThunk(
   "api/events/createEvent",
   async (formData: FormData, { getState, rejectWithValue }) => {
