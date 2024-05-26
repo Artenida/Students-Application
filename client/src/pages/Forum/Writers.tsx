@@ -41,20 +41,31 @@ const Writers = () => {
 
     return (
       <div className="pt-24">
-        <MyAccount username={username} bio={bio} email={email} profile_picture={profile_picture} user_id={user_id}/>
-        <div className="relative max-w-7xl -z-50 ml-24 mr-8 md:ml-auto flex-1">
+      <div className="w-full flex flex-col justify-center items-center">
+        <MyAccount
+          username={username}
+          bio={bio}
+          email={email}
+          profile_picture={profile_picture}
+          user_id={user_id}
+        />
+        <div className="-z-50 mt-12 ml-24 sm:mr-8 md:mr-0 md:ml-0">
           {writersPosts.length > 0 && writersPosts.map((writer: WritersType, index: number) => (
-          <Card username={writer.username} createdAt={writer.createdAt} 
-            title={writer.title} 
-            description={writer.description}
-            images={writer.images}
-            id={writer.id}
-            profile_picture={writer.profile_picture}
-            user_id={writer.user_id}
+            <Card
+              key={writer.id}
+              username={writer.username}
+              createdAt={writer.createdAt}
+              title={writer.title}
+              description={writer.description}
+              images={writer.images}
+              id={writer.id}
+              profile_picture={writer.profile_picture}
+              user_id={writer.user_id}
             />
           ))}
         </div>
       </div>
+    </div>
     );
 };
 

@@ -28,11 +28,11 @@ const MyAccount = ({
   }, [dispatch, userID]);
   
   return (
-    <div className="flex flex-col justify-center md:flex-row -z-50 ml-24 mt-8">
-    <div className="flex flex-col relative gap-4 pt-12 w-full md:pl-48">
+    <div className="flex flex-col md:flex-row ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8 bg-white shadow-md rounded-lg">
+    <div className="flex flex-col relative gap-4 pt-12 w-full">
       <div className="relative">
         {user?.id === user_id ? (
-          <div className="absolute top-0 right-0 mt-2 mr-2">
+          <div className="absolute top-0 -right-32 mt-2 mr-2 cursor-pointer text-3xl">
             <Link key={user_id} to={`/editAccount`}>
               <FaEdit />
             </Link>

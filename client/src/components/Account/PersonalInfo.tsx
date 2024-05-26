@@ -15,7 +15,8 @@ interface FormData {
 
 const PersonalInfo = () => {
   const dispatch = useAppDispatch();
-  const { currentUser, updateError, token, isLoggedIn } = useAppSelector(selectUser);
+  const { currentUser, updateError, token, isLoggedIn } =
+    useAppSelector(selectUser);
   const [message, setMessage] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -71,8 +72,10 @@ const PersonalInfo = () => {
 
   return (
     <div>
-      <h2 className="mt-4 font-bold text-[20px] text-custom-color3">Personal Info</h2>
-      <div className="mt-8">
+      <h2 className="mt-4 font-bold text-[20px] text-custom-color3">
+        Personal Info
+      </h2>
+      <div className="flex justify-between flex-col gap-4 mt-8">
         <FormInputsComponent
           id="username"
           placeholder="Your username"
@@ -90,7 +93,7 @@ const PersonalInfo = () => {
           value={data.email}
           onChange={handleInputChange}
           errorMessage={formDataErrors.email}
-        />        
+        />
         <FormInputsComponent
           id="bio"
           placeholder="Your bio"
@@ -100,8 +103,19 @@ const PersonalInfo = () => {
           onChange={handleInputChange}
           errorMessage={formDataErrors.bio}
         />
+        <FormInputsComponent
+          id="fields"
+          placeholder="Your education / job"
+          type="text"
+          label="Your education / job"
+          value={data.fields}
+          onChange={handleInputChange}
+          errorMessage={formDataErrors.fields}
+        />
       </div>
-      <MediumButton children={"Save"} onClick={handleUpdate}/>
+      <div className="mt-4">
+        <MediumButton children={"Save"} onClick={handleUpdate} />
+      </div>
     </div>
   );
 };
