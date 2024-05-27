@@ -29,50 +29,38 @@ const EventDetails = () => {
     return <Loading />;
   }
 
-  //   if (retrieveError) {
-  //     return (
-  //       <Error
-  //         message1={"404"}
-  //         message2={"Oooops"!}
-  //         message3={"Page Not Found"}
-  //         message4={"This page doesn't exist or was removed"}
-  //         message5={"We suggest you go back to home!"}
-  //       />
-  //     );
-  //   }
-
   return (
     <div>
-      <div className="pt-32 flex justify-center flex-col pl-12 pb-16">
-        <div className="xs:px-8 sm:px-16 px-32 w-full flex justify-center">
+      <div className="pt-32 flex justify-center flex-col px-8 md:px-24 lg:px-32 xl:px-32 pb-16">
+        <div className="w-full flex justify-center">
           <Banner image={eventDetails[0]?.image} />
         </div>
-        <article className="flex justify-between gap-12 xs:px-24 sm:px-32 px-48 mt-12">
-          <div className="">
-            <h1 className="text-5xl font-roboto">
+        <article className="flex flex-col md:flex-row justify-between gap-12 mt-12 px-24 md:px-48 lg:px-32 xl:px-32 pb-16">
+          <div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-roboto">
               {eventDetails && eventDetails[0]?.title}
             </h1>
-            <div className="mt-4 text-2xl">
+            <div className="mt-4 text-lg sm:text-xl md:text-2xl">
               <p>{eventDetails && eventDetails[0]?.description}</p>
             </div>
             <div className="mt-8 flex flex-col gap-4">
-              <div className="flex items-center gap-3 text-lg">
+              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
                 <IoMdMusicalNote className="text-custom-color3" />
                 <h2>{eventDetails[0]?.music}</h2>
               </div>
-              <div className="flex items-center gap-3 text-lg">
+              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
                 <FaCalendar className="text-custom-color3" />
                 <h2>{formattedDateTime}</h2>
               </div>
-              <div className="flex items-center gap-3 text-lg">
+              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
                 <IoLocation className="text-custom-color3" />
                 <h2>{eventDetails[0]?.location}</h2>
               </div>
             </div>
           </div>
 
-          <div className="mt-12">
-            <h2 className="text-xl font-bold">Categories</h2>
+          <div className="mt-12 md:mt-0">
+            <h2 className="text-lg sm:text-xl font-bold">Categories</h2>
             {eventDetails && eventDetails[0]?.categories.length > 0 ? (
               <div className="mt-4">
                 {eventDetails[0]?.categories.map((category: any) => (
