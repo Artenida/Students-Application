@@ -12,12 +12,6 @@ const Home = () => {
   const cards = [
     {
       image: home,
-      title: "Welcome to EduConnect",
-      description:
-        "Get ready to explore a world of opportunities tailored just for you!",
-    },
-    {
-      image: home,
       title: "Collaborate and Conquer Together",
       description:
         "Join group discussions, share insights, and learn from each other's experiences to achieve mutual success.",

@@ -39,6 +39,8 @@ interface EventDetails {
   createdAt: Date;
   categories: Categories[];
   categoryId: string;
+  location: string;
+  music: string;
 }
 
 const initialState: PostState = {
