@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MediumButton } from "../../components/ButtonComponent";
 import { getSinglePost, updatePost } from "../../api/postThunk";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPost } from "../../redux/forum/postSlice";
 import { useValidateUpdate } from "../../utils/validateUpdate";
@@ -11,6 +11,7 @@ import "react-quill/dist/quill.snow.css";
 
 const UpdatePost = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { updateError } = useAppSelector(selectPost);
   const { postId } = useParams();
   const { errors, hasError, validateForm, displayErrors } = useValidateUpdate();
@@ -45,7 +46,8 @@ const UpdatePost = () => {
       return;
     }
     if (isFormChanged) {
-      dispatch(updatePost(data));
+      dispatch(updatePost(data))
+      navigate('/forum');
     }
   };
 
