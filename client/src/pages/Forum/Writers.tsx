@@ -19,6 +19,7 @@ export interface WritersType {
     description: string;
     createdAt: Date;
     user_id: string;
+    fields: string;
   }
   
   export interface Image {
@@ -37,7 +38,7 @@ const Writers = () => {
 
   const typedPosts = writersPosts as WritersType[];
 
-  const { username, bio, email, profile_picture, user_id } = typedPosts?.[0] || {};
+  const { username, bio, email, profile_picture, user_id, fields } = typedPosts?.[0] || {};
 
     return (
       <div className="pt-24">
@@ -48,6 +49,7 @@ const Writers = () => {
           email={email}
           profile_picture={profile_picture}
           user_id={user_id}
+          fields={fields}
         />
         <div className="-z-50 mt-12 ml-24 sm:mr-8 md:mr-0 md:ml-0">
           {writersPosts.length > 0 && writersPosts.map((writer: WritersType, index: number) => (

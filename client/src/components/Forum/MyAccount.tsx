@@ -8,12 +8,14 @@ import { getUser } from "../../api/userThunk";
 
 const MyAccount = ({
   username,
+  fields,
   email,
   bio,
   profile_picture,
   user_id,
 }: {
   username: string;
+  fields: string;
   email: string;
   bio: string;
   profile_picture: string;
@@ -26,43 +28,41 @@ const MyAccount = ({
   useEffect(() => {
     dispatch(getUser(userID));
   }, [dispatch, userID]);
-  
+
   return (
-    <div className="flex flex-col md:flex-row ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8 bg-white shadow-md rounded-lg">
-    <div className="flex flex-col relative gap-4 pt-12 w-full">
-      <div className="relative">
-        {user?.id === user_id ? (
-          <div className="absolute top-0 -right-32 mt-2 mr-2 cursor-pointer text-3xl">
-            <Link key={user_id} to={`/editAccount`}>
-              <FaEdit />
-            </Link>
-          </div>
-        ) : null}
-        <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full border-4">
-          <label>
-            <img
-              src={`http://localhost:5000/${profile_picture}` || profile}
-              alt="Profile"
-              className="rounded-full w-32 h-32"
-            />
-          </label>
+    <div className="flex ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8">
+      <div className="flex gap-4 relative pt-12 w-full">
+        <div className="relative">
+          <Link key={user_id} to={`/editAccount`}>
+            <div className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full border-4">
+              <label>
+                <img
+                  src={`http://localhost:5000/${profile_picture}` || profile}
+                  alt="Profile"
+                  className="rounded-full w-32 h-32 cursor-pointer"
+                />
+              </label>
+            </div>
+          </Link>
         </div>
-      </div>
-      <div className="p-4">
-        <h2 className="text-xl text-custom-color3 font-bold ml-2">
-          {username}
-        </h2>
-        {currentUser?.user?.id === user_id && (
-          <div className="pt-2">
-            <span className="ml-2 text-lg text-custom-color3">{email}</span>
+        <Link key={user_id} to={`/editAccount`}>
+          <div className="p-4">
+            <h2 className="text-2xl text-custom-color3 font-bold ml-2">
+              {username}
+            </h2>
+            <h2 className="text-xl text-custom-color3 ml-2 mt-1">{fields}</h2>
+            {currentUser?.user?.id === user_id && (
+              <div className="pt-2">
+                <span className="ml-2 text-lg text-custom-color3">{email}</span>
+              </div>
+            )}
+            <div>
+              <span className="ml-2 text-custom-color3">{bio}</span>
+            </div>
           </div>
-        )}
-        <div>
-          <span className="ml-2 text-custom-color3">{bio}</span>
-        </div>
+        </Link>
       </div>
     </div>
-  </div>
   );
 };
 
