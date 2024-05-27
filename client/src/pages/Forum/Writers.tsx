@@ -51,7 +51,7 @@ const Writers = () => {
           user_id={user_id}
           fields={fields}
         />
-        <div className="-z-50 mt-12 ml-24 sm:mr-8 md:mr-0 md:ml-0">
+        <div className="mt-12 ml-24 mr-8 sm:mr-8 md:mr-0 md:ml-0">
           {writersPosts.length > 0 && writersPosts.map((writer: WritersType, index: number) => (
             <Card
               key={writer.id}
