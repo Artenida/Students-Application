@@ -69,6 +69,7 @@ class Event {
     SELECT 
     u.id AS user_id,
     u.username,
+    u.email,
     u.profile_picture,
     e.id AS event_id,
     e.title,

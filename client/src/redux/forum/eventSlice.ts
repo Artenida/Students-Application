@@ -32,6 +32,7 @@ interface EventDetails {
   user_id: string;
   username: string;
   profile_picture: string;
+  email: string;
   post_id: string;
   title: string;
   description: string;

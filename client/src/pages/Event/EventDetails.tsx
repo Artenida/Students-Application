@@ -10,6 +10,7 @@ import { IoLocation } from "react-icons/io5";
 import { FaCalendar } from "react-icons/fa6";
 import { IoMdMusicalNote } from "react-icons/io";
 import { RiH2 } from "react-icons/ri";
+import { MdAlternateEmail } from "react-icons/md";
 
 const EventDetails = () => {
   const dispatch = useAppDispatch();
@@ -44,17 +45,21 @@ const EventDetails = () => {
               <p>{eventDetails && eventDetails[0]?.description}</p>
             </div>
             <div className="mt-8 flex flex-col gap-4">
-              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
+              <div className="flex items-center gap-3 text-base md:text-xl">
                 <IoMdMusicalNote className="text-custom-color3" />
                 <h2>{eventDetails[0]?.music}</h2>
               </div>
-              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
+              <div className="flex items-center gap-3 text-base md:text-xl">
                 <FaCalendar className="text-custom-color3" />
                 <h2>{formattedDateTime}</h2>
               </div>
-              <div className="flex items-center gap-3 text-base sm:text-lg md:text-xl">
+              <div className="flex items-center gap-3 text-base md:text-xl">
                 <IoLocation className="text-custom-color3" />
                 <h2>{eventDetails[0]?.location}</h2>
+              </div>
+              <div className="flex items-center gap-3 text-base md:text-xl">
+                <MdAlternateEmail className="text-custom-color3" />
+                <h2>Contact for more: <span className="text-custom-color3 cursor-pointer">{eventDetails[0]?.email}</span></h2>
               </div>
             </div>
           </div>
