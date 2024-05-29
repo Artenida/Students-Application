@@ -88,7 +88,7 @@ export const SideLinks = () => {
   };
 
   return (
-    <div className="px-12 bg-white shadow-md h-screen fixed pt-12">
+    <div className="px-12 bg-white shadow-md h-screen fixed pt-12 ml-16">
       <h2 className="text-xl font-semibold text-custom-color3">
         Profile Management
       </h2>

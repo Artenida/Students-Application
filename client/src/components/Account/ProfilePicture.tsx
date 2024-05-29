@@ -45,7 +45,7 @@ const ProfilePicture = () => {
   };
 
     return (
-        <div className="h-[300px] rounded-xl">
+        <div className="h-[300px] rounded-xl -z-50">
         <div className="bg-custom-color1 h-[300px] rounded-xl relative">
             <img
               src={cover}

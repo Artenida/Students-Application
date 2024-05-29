@@ -17,6 +17,7 @@ import UpdatePost from "../pages/Forum/UpdatePost";
 import TermsAndConditions from "../pages/Auth/TermsAndConditions";
 import Navbar from "../components/Navbar";
 import EventDetails from "../pages/Event/EventDetails";
+import About from "../pages/Forum/About";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -43,6 +44,7 @@ const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<Writers />} path="/writers/:userId" />
             <Route element={<Forum />} path="/forum" />
+            <Route element={<About />} path="/about" />
             <Route element={<CreatePost />} path="/createPost" />
             <Route element={<UpdatePost />} path="/updatePost/:postId" />
             <Route element={<Events />} path="/events" />
