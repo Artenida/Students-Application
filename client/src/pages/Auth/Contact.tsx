@@ -1,6 +1,6 @@
 import image from "../../assets/home2.jpg";
-import { MediumButton } from "../../components/ButtonComponent";
-import FormInputsComponent from "../../components/FormInputsComponent";
+import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
+import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 
 const Contact = () => {
   return (

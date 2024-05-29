@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
-import { MediumButton } from "../ButtonComponent";
-import FormInputsComponent from "../FormInputsComponent";
+import { MediumButton } from "../Helpful Components/ButtonComponent";
+import FormInputsComponent from "../Helpful Components/FormInputsComponent";
 import { validateUpdateForm } from "../../utils/validateUser";
 import { updateUser } from "../../api/userThunk";
 

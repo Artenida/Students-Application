@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import FormInputsComponent from "../../components/FormInputsComponent";
-import { MediumButton } from "../../components/ButtonComponent";
+import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
+import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
 import home from "../../assets/home.png";
 import { registerUser } from "../../api/userThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";

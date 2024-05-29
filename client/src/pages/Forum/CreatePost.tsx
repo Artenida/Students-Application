@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { MediumButton } from "../../components/ButtonComponent";
+import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
 import { createPost } from "../../api/postThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPost } from "../../redux/forum/postSlice";
 import { selectUser } from "../../redux/user/userSlice";
 import { useValidateBlogForm } from "../../utils/validatePost";
-import FormInputsComponent from "../../components/FormInputsComponent";
+import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import cover from "../../assets/share_image.jpg";

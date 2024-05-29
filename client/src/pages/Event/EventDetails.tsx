@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import { useEffect } from "react";
-import Loading from "../../components/Loading";
+import Loading from "../../components/Helpful Components/Loading";
 import { getSingleEvent } from "../../api/eventThunk";
 import moment from "moment";
 import Banner from "../../components/Events/Banner";

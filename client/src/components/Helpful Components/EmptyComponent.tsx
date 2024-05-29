@@ -1,4 +1,4 @@
-import empty from "../assets/empty1.jpg"
+import empty from "../../assets/empty1.jpg"
 
 const EmptyComponent = () => {
     return (

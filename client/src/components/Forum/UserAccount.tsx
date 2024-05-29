@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost, getSinglePost } from "../../api/postThunk";
-import { Dialog } from "../Dialog";
+import { Dialog } from "../Helpful Components/Dialog";
 import { getUser } from "../../api/userThunk";
 
 interface AuthorProps {

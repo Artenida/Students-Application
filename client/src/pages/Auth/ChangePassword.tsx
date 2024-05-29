@@ -1,5 +1,5 @@
-import { MediumButton } from "../../components/ButtonComponent";
-import FormInputsComponent from "../../components/FormInputsComponent";
+import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
+import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 import { FaLock } from "react-icons/fa";
 
 const ChangePassword = () => {

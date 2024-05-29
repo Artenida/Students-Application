@@ -1,6 +1,6 @@
 import Comments from "./Comments";
 import UserAccount from "./UserAccount";
-import ImageSlider from "../ImageSlider";
+import ImageSlider from "../Helpful Components/ImageSlider";
 import { useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa6";
 import "./ImageSlider.css";

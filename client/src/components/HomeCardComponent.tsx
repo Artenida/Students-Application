@@ -1,5 +1,5 @@
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
-import { LargeButton } from "./ButtonComponent";
+import { LargeButton } from "./Helpful Components/ButtonComponent";
 import { Link } from "react-router-dom";
 
 interface HomeCard {

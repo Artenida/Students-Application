@@ -1,5 +1,5 @@
 import profile from "../../assets/home.png";
-import { SmallButton } from "../ButtonComponent"
+import { SmallButton } from "../Helpful Components/ButtonComponent"
 import cover from "../../assets/cover3.jpg"
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";

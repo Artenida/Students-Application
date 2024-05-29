@@ -8,7 +8,7 @@ import { filterEvents, retrieveAllEvents } from "../../api/eventThunk";
 import Categories from "../../components/Events/Categories";
 import { retrieveAllCategories } from "../../api/categoriesThunk";
 import { selectCategories } from "../../redux/forum/categoriesSlice";
-import EmptyComponent from "../../components/EmptyComponent";
+import EmptyComponent from "../../components/Helpful Components/EmptyComponent";
 export interface EventType {
   id: string;
   title: string;

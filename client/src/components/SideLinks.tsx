@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { deleteUser } from "../api/userThunk";
 import { useState } from "react";
-import { Dialog } from "./Dialog";
+import { Dialog } from "./Helpful Components/Dialog";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectUser, signOutSuccess } from "../redux/user/userSlice";
 import { FaEnvelope, FaFileContract, FaNewspaper, FaPenAlt, FaRegCalendarCheck, FaSignOutAlt, FaUnlockAlt } from "react-icons/fa";

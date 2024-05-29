@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createComment, getCommentsForPost } from "../../api/commentThunk";
 import { selectComment } from "../../redux/forum/commentSlice";
 import CommentItem from "./CommentItem ";
-import FormInputsComponent from "../FormInputsComponent";
+import FormInputsComponent from "../Helpful Components/FormInputsComponent";
 import { IoSend } from "react-icons/io5";
 import { selectUser } from "../../redux/user/userSlice";
 

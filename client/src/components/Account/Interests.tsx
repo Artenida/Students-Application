@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LuDelete } from "react-icons/lu";
-import { SmallButton } from "../ButtonComponent";
+import { SmallButton } from "../Helpful Components/ButtonComponent";
 
 interface Interest {
   id: string;
