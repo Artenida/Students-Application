@@ -22,13 +22,13 @@ export const Dialog: React.FC<DialogProps> = ({
         <h3 className="text-xl mb-4">{message}</h3>
         <div className="flex justify-center space-x-8">
           <button
-            className="bg-custom-color3 text-custom-color2 rounded-lg hover:bg-blue-900 focus:outline-none focus:bg-red-700 transition duration-300 px-6 py-3 cursor-pointer"
+            className="bg-custom-color1 text-custom-color4 font-semibold rounded-lg hover:bg-blue-900 hover:text-custom-color1 hover:font-semibold focus:outline-none focus:bg-red-700 transition duration-300 px-6 py-3 cursor-pointer"
             onClick={onConfirm}
           >
             Yes
           </button>
           <button
-            className="bg-custom-color2 text-custom-color3 rounded-lg hover:bg-blue-900 focus:outline-none focus:bg-blue-700 transition duration-300 px-6 py-3 cursor-pointer"
+            className="bg-custom-color2 text-custom-color4 font-semibold rounded-lg hover:bg-blue-900 hover:text-custom-color1 focus:outline-none focus:bg-blue-700 transition duration-300 px-6 py-3 cursor-pointer"
             onClick={onCancel}
           >
             No

@@ -1,16 +1,70 @@
-import { Menus } from "../constants/constants";
 import { NavLink, useNavigate } from "react-router-dom";
 import { deleteUser } from "../api/userThunk";
 import { useState } from "react";
 import { Dialog } from "./Dialog";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectUser, signOutSuccess } from "../redux/user/userSlice";
+import { FaEnvelope, FaFileContract, FaNewspaper, FaPenAlt, FaRegCalendarCheck, FaSignOutAlt, FaUnlockAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 export const SideLinks = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { currentUser } = useAppSelector(selectUser);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const userId = currentUser.user.id;
+
+  const ProfileManagement = [
+    {
+      title: "My posts",
+      icon: <FaNewspaper />,
+      path: `/writers/${userId}`,
+    },
+    {
+      title: "My events",
+      icon: <FaRegCalendarCheck />,
+      path: `/myEvents`,
+    },
+    // {
+    //   title: "Edit Profile",
+    //   icon: <FaPenAlt />,
+    //   path: `/editAccount`,
+    // },
+    {
+      title: "Change Password",
+      icon: <FaUnlockAlt />,
+      path: `/changePassword`,
+    },
+  ];
+
+  const AccountManagement = [
+    {
+      title: "Sign out",
+      icon: <FaSignOutAlt />,
+      path: "/signout",
+    },
+    {
+      title: "Delete account",
+      icon: <MdDelete />,
+      path: "/delete",
+    },
+  ];
+
+  const Information = [
+    {
+      title: "Terms and Conditions",
+      icon: <FaFileContract />,
+      path: "/terms",
+    },
+  ];
+
+  const Support = [
+    {
+      title: "Contact Support",
+      icon: <FaEnvelope />,
+      path: "/contact",
+    },
+  ];
 
   const handleDeleteAccount = () => {
     setIsDeleteDialogOpen(true);
@@ -30,44 +84,81 @@ export const SideLinks = () => {
 
   const handleSignOut = () => {
     dispatch(signOutSuccess());
-    navigate("/");
+    navigate("/login");
   };
 
   return (
-    <div>
-      {Menus.map((menu: any, index: number) => (
+    <div className="px-12 bg-white shadow-md h-screen fixed pt-12">
+      <h2 className="text-xl font-semibold text-custom-color3">
+        Profile Management
+      </h2>
+      {ProfileManagement?.map((menu: any, index: number) => (
         <div key={index}>
-          {menu.title === "Sign out" || menu.title === "Delete account" ? (
-            <div
-              onClick={
-                menu.title === "Sign out" ? handleSignOut : handleDeleteAccount
-              }
-              className="text-red-600 text-lg flex items-center gap-x-4
-                  cursor-pointer p-4 hover:bg-custom-color2 rounded-md mt-2"
-            >
-              <span className="text-2xl block float-left">{menu.icon}</span>
-              <span
-                className={`text-base font-medium flex-1 duration-200 `}
-              >
-                {menu.title}
-              </span>
-            </div>
-          ) : (
-            <NavLink
-              to={menu.path}
-              className="text-custom-color3 text-lg flex items-center gap-x-4
-                  cursor-pointer p-4 hover:bg-custom-color2 rounded-md mt-2"
-            >
-              <span className="text-2xl block float-left">{menu.icon}</span>
-              <span
-                className={`text-base font-medium flex-1 duration-200`}
-              >
-                {menu.title}
-              </span>
-            </NavLink>
-          )}
+          <NavLink
+            to={menu.path}
+            className="flex items-center gap-x-4
+            cursor-pointer p-3 hover:bg-custom-color1 rounded-md mt-2"
+          >
+            <span className="block float-left">{menu.icon}</span>
+            <span className={`text-base font-medium flex-1 duration-200`}>
+              {menu.title}
+            </span>
+          </NavLink>
         </div>
       ))}
+
+      <h2 className="text-xl font-semibold text-custom-color3 mt-6">
+        Account Management
+      </h2>
+      {AccountManagement?.map((menu: any, index: number) => (
+        <div key={index}>
+          <NavLink
+            to={menu.path}
+            className="flex items-center gap-x-4
+            cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
+          >
+            <span className="block float-left">{menu.icon}</span>
+            <span className={`text-base font-medium flex-1 duration-200`}>
+              {menu.title}
+            </span>
+          </NavLink>
+        </div>
+      ))}
+
+      <h2 className="text-xl font-semibold text-custom-color3 mt-6">
+        Information
+      </h2>
+      {Information?.map((menu: any, index: number) => (
+        <div key={index}>
+          <NavLink
+            to={menu.path}
+            className="flex items-center gap-x-4
+            cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
+          >
+            <span className="block float-left">{menu.icon}</span>
+            <span className={`text-base font-medium flex-1 duration-200`}>
+              {menu.title}
+            </span>
+          </NavLink>
+        </div>
+      ))}
+
+      <h2 className="text-xl font-semibold text-custom-color3 mt-6">Support</h2>
+      {Support?.map((menu: any, index: number) => (
+        <div key={index}>
+          <NavLink
+            to={menu.path}
+            className="flex items-center gap-x-4
+            cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
+          >
+            <span className="block float-left">{menu.icon}</span>
+            <span className={`text-base font-medium flex-1 duration-200`}>
+              {menu.title}
+            </span>
+          </NavLink>
+        </div>
+      ))}
+
       <Dialog
         isOpen={isDeleteDialogOpen}
         message="Are you sure you want to delete your account?"

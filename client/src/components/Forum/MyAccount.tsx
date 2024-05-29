@@ -38,12 +38,12 @@ const MyAccount = ({
   }
   return (
     <div
-      className="flex ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8"
+      className="flex ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8 cursor-pointer"
       onClick={handleProfileClick}
     >
       <div className="flex gap-4 relative pt-12 w-full">
         <div className="relative">
-          <div className="w-32 h-32 self-center shadow-md overflow-hidden rounded-full border-4 cursor-pointer">
+          <div className="w-32 h-32 self-center shadow-md overflow-hidden rounded-full border-4">
             <img
               src={`http://localhost:5000/${profile_picture}` || profile}
               alt="Profile"

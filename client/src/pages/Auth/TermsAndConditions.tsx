@@ -1,6 +1,6 @@
 const TermsAndConditions = () => {
     return (
-      <div className="bg-gray-100 h-screen">
+      <div className="bg-gray-100 h-screen pt-16">
         <div className="flex justify-center px-32 pt-24">
           <div className="bg-white p-10 w-[700px] rounded-r-xl">
             <h1 className="text-xl">Terms and Conditions</h1>
