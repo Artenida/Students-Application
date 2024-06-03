@@ -4,7 +4,7 @@ import UserSidebar from "../../components/UserSidebar";
 
 const Account = () => {
   return (
-    <div className="pt-16 pb-12 mx-4 md:mx-28 z-50 flex flex-col md:flex-row gap-8">
+    <div className="pt-16 pb-12 mx-4 md:mx-28 z-50 flex flex-col md:flex-row gap-8 max-w-7xl">
       <div className="md:w-80">
         <UserSidebar />
       </div>
