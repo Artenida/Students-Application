@@ -18,6 +18,8 @@ import TermsAndConditions from "../pages/Auth/TermsAndConditions";
 import Navbar from "../components/Navbar";
 import EventDetails from "../pages/Event/EventDetails";
 import About from "../pages/Forum/About";
+import CreateEvent from "../pages/Event/CreateEvent";
+import UpdateEvent from "../pages/Event/UpdateEvent";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -49,6 +51,8 @@ const AppRoutes = () => {
             <Route element={<UpdatePost />} path="/updatePost/:postId" />
             <Route element={<Events />} path="/events" />
             <Route element={<EventDetails />} path="/events/:id" />
+            <Route element={<CreateEvent />} path="/createEvent" />
+            <Route element={<UpdateEvent />} path="/updateEvent/:eventId" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />
             <Route element={<Account />} path="/editAccount" />

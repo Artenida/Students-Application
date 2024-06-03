@@ -45,7 +45,7 @@ const Sidebar = () => {
       name: "Events",
     },
     {
-      path: "/shareNotification",
+      path: "/createEvent",
       icon: <IoMdNotifications />,
       name: "Share event",
     },
