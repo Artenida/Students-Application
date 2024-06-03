@@ -1,7 +1,6 @@
 import createDatabaseConnection from "../config";
 
 type EventInputs = {
-  id: string;
   title: string;
   description: string;
   date: Date;
@@ -99,9 +98,10 @@ GROUP BY e.id;
           //   reject(new Error("Event does not exist"));
           //   connection.closeConnection();
           // } else {
-            // resolve(result);
-            const postsWithImagesAndCategories = this.structureEventResult(result);
-            resolve(postsWithImagesAndCategories);
+          // resolve(result);
+          const postsWithImagesAndCategories =
+            this.structureEventResult(result);
+          resolve(postsWithImagesAndCategories);
           // }
         }
       });
@@ -132,86 +132,116 @@ GROUP BY e.id;
     const db = connection.getConnection();
 
     try {
-      const existingEventQuery = `SELECT * FROM events WHERE id = ?`;
+      const createEventQuery = `INSERT INTO events (title, description, date, location, user_id, image, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+      const createEventValues = [
+        inputs.title,
+        inputs.description,
+        new Date(),
+        inputs.location,
+        inputs.user_id,
+        inputs.files[0].path,
+        inputs.music,
+        inputs.cost,
+      ];
+
       db.query(
-        existingEventQuery,
-        [inputs.id],
-        async (error, existingResult) => {
-          if (error) {
-            console.error("Error checking existing event:", error);
+        createEventQuery,
+        createEventValues,
+        async (createError, createResult) => {
+          if (createError) {
+            console.error("Error creating event:", createError);
+            connection.closeConnection();
+            throw createError;
+          }
+          const eventId = createResult.insertId;
+          try {
+            await Event.addCategory(eventId, inputs.category);
+            connection.closeConnection();
+            return { success: true, eventId };
+          } catch (error) {
+            console.log("Error adding category", error);
             connection.closeConnection();
             throw error;
-          } else {
-            if (existingResult.length > 0) {
-              const updateEventQuery = `UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, cost = ? WHERE id = ?;`;
-              const updateEventValues = [
-                inputs.id,
-                inputs.title,
-                inputs.description,
-                new Date(),
-                inputs.location,
-                inputs.user_id,
-                inputs.files[0].path,
-                inputs.music,
-                inputs.cost,
-              ];
-
-              db.query(
-                updateEventQuery,
-                updateEventValues,
-                async (updateError, updateResult) => {
-                  if (updateError) {
-                    console.error("Error updating event:", updateError);
-                    connection.closeConnection();
-                    throw updateError;
-                  } else {
-                    return updateResult;
-                  }
-                }
-              );
-            } else {
-              const createEventQuery = `INSERT INTO events (title, description, date, location, user_id, image, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-              const createEventValues = [
-                inputs.title,
-                inputs.description,
-                new Date(),
-                inputs.location,
-                inputs.user_id,
-                inputs.files[0].path,
-                inputs.music,
-                inputs.cost,
-              ];
-
-              db.query(
-                createEventQuery,
-                createEventValues,
-                async (createError, createResult) => {
-                  if (createError) {
-                    console.error("Error creating event:", createError);
-                    connection.closeConnection();
-                    throw createError;
-                  }
-                  // else {
-                  //   return createResult;
-                  // }
-                  const eventId = createResult.insertId;
-                  try {
-                    await Event.addCategory(eventId, inputs.category);
-                    connection.closeConnection();
-                    return { success: true, eventId };
-                  } catch (error) {
-                    console.log("Error adding category", error);
-                    connection.closeConnection();
-                    throw error;
-                  }
-                }
-              );
-            }
           }
         }
       );
     } catch (error) {
       console.error("Error creating or updating event:", error);
+      connection.closeConnection();
+      throw error;
+    }
+  }
+
+  static async updatePost({
+    id,
+    title,
+    description,
+    date,
+    location,
+    user_id,
+    music,
+    cost,
+    category,
+  }: {
+    title: string;
+    description: string;
+    id: string;
+    date: Date;
+    location: string;
+    user_id: string;
+    music: string;
+    cost: string;
+    category: string[];
+  }): Promise<any> {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const updateQuery =
+        "UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, cost = ? WHERE id = ?;";
+      const updateValues = [
+        title,
+        description,
+        date,
+        location,
+        user_id,
+        music,
+        cost,
+        id,
+      ];
+
+      db.query(updateQuery, updateValues, async (error, result) => {
+        try {
+          if (category.length > 0) {
+            await Event.deleteCategory(id);
+            await Event.addCategory(id, category);
+          } else {
+            const existingTagsQuery =
+              "SELECT category_id FROM events_category WHERE event_id = ?";
+            db.query(existingTagsQuery, [id], async (error, result) => {
+              if (error) {
+                console.error("Error fetching existing categories:", error);
+                connection.closeConnection();
+                throw error;
+              }
+              const existingTags: string[] = result.map(
+                (row: any) => row.tag_id
+              );
+              if (existingTags.length > 0) {
+                await Event.addCategory(id, existingTags);
+              }
+            });
+          }
+
+          connection.closeConnection();
+          return { success: true, id };
+        } catch (error) {
+          console.error("Error adding categories:", error);
+          throw error;
+        }
+      });
+    } catch (error) {
+      console.error("Error in updateEvent:", error);
       connection.closeConnection();
       throw error;
     }
@@ -247,6 +277,22 @@ GROUP BY e.id;
     }
   }
 
+  static async deleteCategory(eventId: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    const query = "DELETE FROM events_category WHERE event_id = ?";
+    return new Promise((resolve, reject) => {
+      db.query(query, [eventId], (error, _) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(true);
+      });
+    });
+  }
+
   static async deleteEventById(eventId: string): Promise<any> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -279,7 +325,7 @@ GROUP BY e.id;
           getEventByMusic,
           getEventByCost,
           getEventByLocation,
-          getEventByCategory
+          getEventByCategory,
         });
       } catch (error) {
         reject(error);
@@ -361,7 +407,7 @@ GROUP BY e.id;
       throw error;
     }
   }
-  
+
   static async filterByDescription(word: string) {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();

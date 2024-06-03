@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import Event from "../models/Event";
 
 type EventInputs = {
-  id: string;
   title: string;
   description: string;
   date: Date;
@@ -13,6 +12,18 @@ type EventInputs = {
   category: string[];
   files: Express.Multer.File[];
 };
+
+type UpdateEvent = {
+  title: string;
+    description: string;
+    id: string;
+    date: Date;
+    location: string;
+    user_id: string;
+    music: string;
+    cost: string;
+    category: string[];
+}
 
 export const allEvents = async (
   req: Request,
@@ -57,13 +68,20 @@ export const createEvent = async (
   next: NextFunction
 ) => {
   try {
-    const { id, title, description, date, location, user_id, music, cost, category } =
-      req.body;
+    const {
+      title,
+      description,
+      date,
+      location,
+      user_id,
+      music,
+      cost,
+      category,
+    } = req.body;
     const files: Express.Multer.File[] = Array.isArray(req.files)
       ? req.files
       : [];
     const inputs: EventInputs = {
-      id,
       title,
       description,
       date,
@@ -72,7 +90,7 @@ export const createEvent = async (
       files,
       music,
       cost,
-      category
+      category,
     };
     await Event.createEvent(inputs);
     res
@@ -85,6 +103,46 @@ export const createEvent = async (
     } else {
       res.status(500).json({ error: "An error ocurred" });
     }
+  }
+};
+
+export const updateEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      title,
+      description,
+      date,
+      location,
+      user_id,
+      music,
+      cost,
+      category,
+    } = req.body;
+    const { id } = req.params;
+    try {
+      const inputs: UpdateEvent = {
+        id,
+        title,
+        description,
+        date,
+        location,
+        user_id,
+        music,
+        cost,
+        category,
+      };
+      await Event.updatePost(inputs);
+      res.status(200).json("Post has been updated!");
+    } catch (error) {
+      res.status(403).json("Your post wasn't updated");
+    }
+  } catch (error) {
+    console.error("Error in updatePost controller:", error);
+    res.status(500).json({ message: "Internal server error." });
   }
 };
 
