@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectPost } from "../../redux/forum/postSlice";
@@ -49,7 +49,8 @@ const CreateEvent = () => {
     categories: [] as string[],
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     validateForm({
       title: data.title,
       description: data.description,
@@ -265,7 +266,7 @@ const CreateEvent = () => {
           </span>
 
           <div className="pt-12">
-            <MediumButton onClick={handleSubmit}>Post</MediumButton>
+            <MediumButton>Post</MediumButton>
           </div>
         </form>
       </div>
