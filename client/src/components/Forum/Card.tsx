@@ -4,7 +4,7 @@ import ImageSlider from "../Helpful Components/ImageSlider";
 import { useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa6";
 import "./ImageSlider.css";
-
+import DOMPurify from "dompurify";
 export interface BlogCardProps {
   posts: Paginated[] | null;
 }
@@ -36,6 +36,10 @@ const Card: React.FC<Paginated> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const shouldShowReadMore = description.length > 300;
+  // const sanitizedHTML = shouldShowReadMore ? DOMPurify.sanitize(shouldShowReadMore) : "";
+  const sanitizedDescription = description
+    ? DOMPurify.sanitize(description)
+    : "";
 
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
@@ -63,11 +67,21 @@ const Card: React.FC<Paginated> = ({
           <div className="flex flex-col mt-2">
             <h2 className="font-semibold">{title}</h2>
             <p className="mt-2">
-              {isExpanded
-                ? description
-                : shouldShowReadMore
-                ? description.substring(0, 300) + "..."
-                : description}
+              {isExpanded ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                />
+              ) : (
+                <div>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: `${sanitizedDescription.substring(0, 300)}${
+                        shouldShowReadMore ? "..." : ""
+                      }`,
+                    }}
+                  />
+                </div>
+              )}
             </p>
             {shouldShowReadMore && (
               <span
@@ -90,7 +104,7 @@ const Card: React.FC<Paginated> = ({
           <FaRegCommentDots className="text-2xl" />
           <h2 className="text-lg">Comment</h2>
         </div>
-        {showComment && <Comments postId = {id}/>}
+        {showComment && <Comments postId={id} />}
       </div>
     </div>
   );
