@@ -19,7 +19,7 @@ export const retrieveAllEvents = createAsyncThunk(
 
 export const getSingleEvent = createAsyncThunk(
   "api/events/getSingleEvent",
-  async (id: string, { rejectWithValue }) => {
+  async (id: string | undefined, { rejectWithValue }) => {
     try {
       const response = await createAPI(`api/events/getSingleEvent/${id}`, {
         method: "GET",

@@ -16,14 +16,12 @@ const EventDetails = () => {
   const dispatch = useAppDispatch();
   const { eventDetails, retrieveError, loading } = useAppSelector(selectEvent);
   const { id } = useParams();
-  const formattedDateTime = moment(eventDetails[0]?.createdAt).format(
+  const formattedDateTime = moment(eventDetails[0]?.date).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
 
   useEffect(() => {
-    dispatch(getSingleEvent(id ?? "")).then(() => {
-      console.log(eventDetails);
-    });
+    dispatch(getSingleEvent(id ?? ""))
   }, [dispatch, id]);
 
   if (loading) {

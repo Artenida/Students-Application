@@ -52,7 +52,7 @@ const AppRoutes = () => {
             <Route element={<Events />} path="/events" />
             <Route element={<EventDetails />} path="/events/:id" />
             <Route element={<CreateEvent />} path="/createEvent" />
-            <Route element={<UpdateEvent />} path="/updateEvent/:eventId" />
+            <Route element={<UpdateEvent />} path="/updateEvent/:id" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Contact />} path="/contact" />
             <Route element={<Account />} path="/editAccount" />

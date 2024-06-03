@@ -8,6 +8,10 @@ import { useValidateUpdate } from "../../utils/validateUpdate";
 import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { selectEvent } from "../../redux/forum/eventSlice";
+import { createEvent } from "@testing-library/react";
+import { useValidateEventsForm } from "../../utils/validateEvent";
+import { getSingleEvent } from "../../api/eventThunk";
 
 type CreateEvent = {
   title: string;
@@ -19,35 +23,39 @@ const CreateEvent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { updateError } = useAppSelector(selectPost);
-  const { eventId } = useParams();
-  const { errors, hasError, validateForm, displayErrors } = useValidateUpdate();
-  const { postDetails } = useAppSelector(selectPost);
+  const { id } = useParams();
+  const { errors, hasError, validateForm, displayErrors } = useValidateEventsForm();
+    const { eventDetails } = useAppSelector(selectEvent);
   const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {
-    dispatch(getSinglePost(eventId));
-  }, [dispatch, eventId]);
+    dispatch(getSingleEvent(id));
+  }, [dispatch, id]);
 
   const [data, setData] = useState({
-    eventId: eventId ?? "",
-    // date: "",
-    // music: "",
-    // location: "",
-    // price: "",
+    eventId: id ?? "",
+    // date: Date,
+    music: "",
+    location: "",
+    price: "",
     title: "",
     description: "",
   });
 
   useEffect(() => {
-    if (postDetails && postDetails.length > 0) {
-      const postData = postDetails[0];
+    if (eventDetails && eventDetails.length > 0) {
+      const eventData = eventDetails[0];
       setData({
-        eventId: eventId ?? "",
-        title: postData.title,
-        description: postData.description,
+        eventId: id ?? "",
+        // date: eventData.date,
+        title: eventData.title,
+        music: eventData.music,
+        location: eventData.location,
+        price: eventData.cost,
+        description: eventData.description,
       });
     }
-  }, [postDetails, eventId]);
+  }, [eventDetails, id]);
 
   const handleSubmit = () => {
     validateForm(data);
@@ -56,8 +64,8 @@ const CreateEvent = () => {
       return;
     }
     if (isFormChanged) {
-    //   dispatch(updatePost(data));
-      navigate("/forum");
+      // dispatch(createEvent(data));
+      navigate("/events");
     }
   };
 
@@ -66,24 +74,21 @@ const CreateEvent = () => {
     const { value } = event.target;
     setData({ ...data, title: value });
   };
-//   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setIsFormChanged(true);
-//     const { value } = event.target;
-//     setData({ ...data, title: value });
-//   };
-//   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setIsFormChanged(true);
-//     const { value } = event.target;
-//     setData({ ...data, title: value });
-//   };
 
-  // const handleDescriptionChange = (
-  //   event: React.ChangeEvent<HTMLTextAreaElement>
-  // ) => {
-  //   setIsFormChanged(true);
-  //   const { value } = event.target;
-  //   setData({ ...data, description: value });
-  // };
+  const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, location: value });
+  };
+
+  const handleMusicChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, music: value });
+  };
+
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, price: value });
+  };
 
   const handleDescriptionChange = (value: string) => {
     setIsFormChanged(true);
@@ -105,7 +110,7 @@ const CreateEvent = () => {
                 type="date"
                 placeholder="Date"
                 name="date"
-                // value={data.title}
+                // value={data.date}
                 // errorMessage={errors.title}
                 // updateValue={(value) => setData({ ...data, title: value })}
                 // onChange={handleTitleChange}
@@ -118,10 +123,10 @@ const CreateEvent = () => {
                 type="text"
                 placeholder="Location"
                 name="location"
-                // value={data.title}
-                // errorMessage={errors.title}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTitleChange}
+                value={data.location}
+                errorMessage={errors.location}
+                updateValue={(value) => setData({ ...data, location: value })}
+                onChange={handleLocationChange}
               />
             </div>
           </div>
@@ -134,10 +139,9 @@ const CreateEvent = () => {
                 type="text"
                 placeholder="Music"
                 name="music"
-                // value={data.title}
-                // errorMessage={errors.title}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTitleChange}
+                value={data.music}
+                updateValue={(value) => setData({ ...data, music: value })}
+                onChange={handleMusicChange}
               />
               <span className={`text-sm text-gray-400 pl-1 pt-8 h-4`}>
                 Might leave empty
@@ -151,10 +155,9 @@ const CreateEvent = () => {
                 type="text"
                 placeholder="Price"
                 name="cost"
-                // value={data.title}
-                // errorMessage={errors.title}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTitleChange}
+                value={data.price}
+                updateValue={(value) => setData({ ...data, price: value })}
+                onChange={handlePriceChange}
               />
               <span className={`text-sm text-gray-400 pl-1 pt-8 h-4`}>
                 Might leave empty

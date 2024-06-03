@@ -95,14 +95,14 @@ GROUP BY e.id;
           reject(error);
           connection.closeConnection();
         } else {
-          if (result.length === 0) {
-            reject(new Error("Post does not exist"));
-            connection.closeConnection();
-          } else {
+          // if (result.length === 0) {
+          //   reject(new Error("Event does not exist"));
+          //   connection.closeConnection();
+          // } else {
             // resolve(result);
-            const postsWithImagesAndTags = this.structureEventResult(result);
-            resolve(postsWithImagesAndTags);
-          }
+            const postsWithImagesAndCategories = this.structureEventResult(result);
+            resolve(postsWithImagesAndCategories);
+          // }
         }
       });
     });
@@ -170,9 +170,8 @@ GROUP BY e.id;
                 }
               );
             } else {
-              const createEventQuery = `INSERT INTO events (id, title, description, date, location, user_id, files, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+              const createEventQuery = `INSERT INTO events (title, description, date, location, user_id, image, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
               const createEventValues = [
-                inputs.id,
                 inputs.title,
                 inputs.description,
                 new Date(),

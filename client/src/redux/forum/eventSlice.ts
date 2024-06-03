@@ -33,15 +33,15 @@ interface EventDetails {
   username: string;
   profile_picture: string;
   email: string;
-  post_id: string;
   title: string;
   description: string;
   image: string;
-  createdAt: Date;
+  date: Date;
   categories: Categories[];
   categoryId: string;
   location: string;
   music: string;
+  cost: string;
 }
 
 const initialState: PostState = {
