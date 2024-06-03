@@ -78,7 +78,7 @@ const CreateEvent = () => {
         formData.append("file", data.files[i]);
       }
       dispatch(createEvent(formData));
-      // navigate("/events");
+      navigate("/events");
     }
   }, [hasError]);
 
