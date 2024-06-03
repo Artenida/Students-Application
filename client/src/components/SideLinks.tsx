@@ -4,8 +4,17 @@ import { useState } from "react";
 import { Dialog } from "./Helpful Components/Dialog";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectUser, signOutSuccess } from "../redux/user/userSlice";
-import { FaEnvelope, FaFileContract, FaNewspaper, FaPenAlt, FaRegCalendarCheck, FaSignOutAlt, FaUnlockAlt } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaFileContract,
+  FaNewspaper,
+  FaPenAlt,
+  FaRegCalendarCheck,
+  FaSignOutAlt,
+  FaUnlockAlt,
+} from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 export const SideLinks = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +34,6 @@ export const SideLinks = () => {
       icon: <FaRegCalendarCheck />,
       path: `/myEvents`,
     },
-    // {
-    //   title: "Edit Profile",
-    //   icon: <FaPenAlt />,
-    //   path: `/editAccount`,
-    // },
     {
       title: "Change Password",
       icon: <FaUnlockAlt />,
@@ -38,11 +42,6 @@ export const SideLinks = () => {
   ];
 
   const AccountManagement = [
-    {
-      title: "Sign out",
-      icon: <FaSignOutAlt />,
-      path: "/signout",
-    },
     {
       title: "Delete account",
       icon: <MdDelete />,
@@ -110,6 +109,21 @@ export const SideLinks = () => {
       <h2 className="text-xl font-semibold text-custom-color3 mt-6">
         Account Management
       </h2>
+      <div
+        className="flex items-center gap-x-4
+            cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
+      >
+        <span className="block float-left">
+          <FaSignOutAlt
+            onClick={() => {
+              handleSignOut();
+            }}
+          />
+        </span>
+        <span className={`text-base font-medium flex-1 duration-200`}>
+          Sign out
+        </span>
+      </div>
       {AccountManagement?.map((menu: any, index: number) => (
         <div key={index}>
           <NavLink
