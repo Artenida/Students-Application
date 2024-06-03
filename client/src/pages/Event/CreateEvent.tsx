@@ -10,6 +10,12 @@ import cover from "../../assets/share_image.jpg";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../../api/eventThunk";
 import { useValidateEventsForm } from "../../utils/validateEvent";
+import { selectCategories } from "../../redux/forum/categoriesSlice";
+
+interface Categories {
+  id: number;
+  category: string;
+}
 
 type CreateEvent = {
   title: string;
@@ -18,6 +24,7 @@ type CreateEvent = {
   price: string;
   description: string;
   files: FileList | [];
+  categories: string[];
 };
 
 const CreateEvent = () => {
@@ -27,7 +34,10 @@ const CreateEvent = () => {
   const { currentUser } = useAppSelector(selectUser);
   const userId = currentUser?.user?.id;
   const { errors, hasError, validateForm, displayErrors } =
-  useValidateEventsForm();
+    useValidateEventsForm();
+  const [selectedImage, setSelectedImage] = useState<string | undefined>();
+  const { categories, loading, retrieveError } =
+    useAppSelector(selectCategories);
 
   const [data, setData] = useState<CreateEvent>({
     title: "",
@@ -36,13 +46,14 @@ const CreateEvent = () => {
     price: "",
     description: "",
     files: [],
+    categories: [] as string[],
   });
 
   const handleSubmit = () => {
     validateForm({
       title: data.title,
       description: data.description,
-      location: data.location
+      location: data.location,
     });
     displayErrors({
       title: data.title,
@@ -60,19 +71,31 @@ const CreateEvent = () => {
       formData.append("music", data.music);
       formData.append("cost", data.price);
       formData.append("user_id", userId || "");
+      for (let category of data.categories) {
+        formData.append("category", category);
+      }
       for (let i = 0; i < data.files.length; i++) {
         formData.append("file", data.files[i]);
       }
       dispatch(createEvent(formData));
-      navigate("/events");
+      // navigate("/events");
     }
   }, [hasError]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
+    const selectedFile = event.target.files?.[0];
     if (files) {
       setData({ ...data, files: files });
     }
+    if (selectedFile) setSelectedImage(URL.createObjectURL(selectedFile));
+  };
+
+  const handleCategoryChange = (categoryId: string) => {
+    const updatedCategories = data.categories.includes(categoryId)
+      ? data.categories.filter((id) => id !== categoryId)
+      : [...data.categories, categoryId];
+    setData({ ...data, categories: updatedCategories });
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +120,7 @@ const CreateEvent = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-3xl px-5 py-28 pl-20">
+      <div className="w-full max-w-4xl px-5 py-28 pl-20">
         <form onSubmit={handleSubmit} className="space-y-4">
           <h2 className="flex text-2xl text-custom-color3 pb-4 justify-center font-semibold">
             What's your event about?
@@ -105,23 +128,36 @@ const CreateEvent = () => {
           <div className="mb-4">
             <label htmlFor="file" className="cursor-pointer">
               <img
-                src={cover}
-                alt="cover"
+                src={selectedImage || cover}
+                alt="Profile"
                 className="top-16 w-[80px] h-[80px] rounded-full border border-custom-color3"
               />
               <input
                 type="file"
                 id="file"
-                name="file"
-                multiple
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer focus:outline-none focus:border-blue-500"
               />
-               <span className={`text-sm text-gray-400 pl-1 pt-8 h-4`}>
-                Attach any image if you want
-              </span>
             </label>
+          </div>
+
+          <div className="flex justify-between px-4 text-xl pt-4">
+            {categories?.map((category: Categories) => (
+              <ul>
+                <li key={category.id} className="mb-2">
+                  <input
+                    type="checkbox"
+                    id={`${category.id}`}
+                    className="mr-2"
+                    onChange={() => handleCategoryChange(String(category.id))}
+                  />
+                  <label htmlFor={`tag-${category.id}`}>
+                    {category.category}
+                  </label>
+                </li>
+              </ul>
+            ))}
           </div>
 
           <div className="flex gap-4 justify-between">
@@ -134,7 +170,19 @@ const CreateEvent = () => {
                 name="date"
                 // errorMessage={errors.date}
                 // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTitleChange}
+                // onChange={handleDateChange}
+              />
+            </div>
+            <div className="w-1/2">
+              <FormInputsComponent
+                label="Time"
+                id="time"
+                type="time"
+                placeholder="Time"
+                name="time"
+                // errorMessage={errors.time}
+                // updateValue={(value) => setData({ ...data, title: value })}
+                // onChange={handleTimeChange}
               />
             </div>
             <div className="w-1/2">
