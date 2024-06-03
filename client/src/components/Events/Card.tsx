@@ -7,6 +7,7 @@ import { IoMdMusicalNote } from "react-icons/io";
 import user from "../../assets/userProfile.jpg";
 import { useState } from "react";
 import banner1 from "../../assets/event1.jpg";
+import DOMPurify from "dompurify";
 
 export interface EventType {
   id: string;
@@ -37,6 +38,9 @@ const Card: React.FC<EventType> = ({
   const [isHovered, setIsHovered] = useState(false);
   const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
   const formattedDay = moment(date).format("Do");
+  const sanitizedDescription = description
+    ? DOMPurify.sanitize(description)
+    : "";
   const clampStyle: React.CSSProperties = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical" as "vertical",
@@ -98,7 +102,7 @@ const Card: React.FC<EventType> = ({
                   className="text-sm md:text-base lg:text-lg"
                   style={clampStyle}
                 >
-                  {description}
+              <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />{" "}
                 </p>
                 <div className="flex justify-end relative">
                   <div

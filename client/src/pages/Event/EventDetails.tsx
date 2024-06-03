@@ -9,8 +9,8 @@ import Banner from "../../components/Events/Banner";
 import { IoLocation } from "react-icons/io5";
 import { FaCalendar } from "react-icons/fa6";
 import { IoMdMusicalNote } from "react-icons/io";
-import { RiH2 } from "react-icons/ri";
 import { MdAlternateEmail } from "react-icons/md";
+import DOMPurify from "dompurify";
 
 const EventDetails = () => {
   const dispatch = useAppDispatch();
@@ -19,9 +19,12 @@ const EventDetails = () => {
   const formattedDateTime = moment(eventDetails[0]?.date).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
+  const sanitizedDescription = eventDetails[0]?.description
+    ? DOMPurify.sanitize(eventDetails[0]?.description)
+    : "";
 
   useEffect(() => {
-    dispatch(getSingleEvent(id ?? ""))
+    dispatch(getSingleEvent(id ?? ""));
   }, [dispatch, id]);
 
   if (loading) {
@@ -40,7 +43,7 @@ const EventDetails = () => {
               {eventDetails && eventDetails[0]?.title}
             </h1>
             <div className="mt-4 text-lg sm:text-xl md:text-2xl">
-              <p>{eventDetails && eventDetails[0]?.description}</p>
+              <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />{" "}
             </div>
             <div className="mt-8 flex flex-col gap-4">
               <div className="flex items-center gap-3 text-base md:text-xl">
@@ -57,7 +60,12 @@ const EventDetails = () => {
               </div>
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <MdAlternateEmail className="text-custom-color3" />
-                <h2>Contact for more: <span className="text-custom-color3 cursor-pointer">{eventDetails[0]?.email}</span></h2>
+                <h2>
+                  Contact for more:{" "}
+                  <span className="text-custom-color3 cursor-pointer">
+                    {eventDetails[0]?.email}
+                  </span>
+                </h2>
               </div>
             </div>
           </div>
