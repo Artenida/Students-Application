@@ -62,6 +62,46 @@ export const createEvent = createAsyncThunk(
   }
 );
 
+export const updateEvent = createAsyncThunk(
+  "api/events/updateEvent",
+  async (
+    input: {
+      id: string;
+      title: string;
+      description: string;
+      location: string;
+      user_id: string;
+      music: string;
+      cost: string;
+      categories: string[];
+    },
+    { rejectWithValue, getState }
+  ) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/events/updateEvent/${input.id}`, {
+        method: "PUT",
+        token: token,
+      })(input);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error fetching data:", errorData.message);
+        return rejectWithValue(errorData.message);
+      }
+
+      const data = await response.json();
+
+      return data;
+    } catch (error: any) {
+      console.error("Error:", error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const deleteEvent = createAsyncThunk(
   "api/events/deleteEvent",
   async (eventId: string, { rejectWithValue, getState }) => {
@@ -90,22 +130,26 @@ export const deleteEvent = createAsyncThunk(
   }
 );
 
-export const filterEvents = createAsyncThunk (
-    `posts/events/searchEvent`,
+export const filterEvents = createAsyncThunk(
+  `posts/events/searchEvent`,
   async ({ keyword }: { keyword: string }, { rejectWithValue, getState }) => {
     try {
-      const response = await createAPI(`api/events/searchEvent?keyword=${keyword}`, {
-        method: "GET",
-      })();
-  
+      const response = await createAPI(
+        `api/events/searchEvent?keyword=${keyword}`,
+        {
+          method: "GET",
+        }
+      )();
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch data');
+        throw new Error(errorData.message || "Failed to fetch data");
       }
-      
+
       const post = await response.json();
       return post;
     } catch (error: any) {
       return error.message;
     }
-  })
+  }
+);

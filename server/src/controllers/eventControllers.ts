@@ -22,7 +22,7 @@ type UpdateEvent = {
     user_id: string;
     music: string;
     cost: string;
-    category: string[];
+    categories: string[];
 }
 
 export const allEvents = async (
@@ -120,7 +120,7 @@ export const updateEvent = async (
       user_id,
       music,
       cost,
-      category,
+      categories,
     } = req.body;
     const { id } = req.params;
     try {
@@ -133,7 +133,7 @@ export const updateEvent = async (
         user_id,
         music,
         cost,
-        category,
+        categories,
       };
       await Event.updatePost(inputs);
       res.status(200).json("Post has been updated!");

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { deleteEvent, retrieveAllEvents, createEvent, getSingleEvent } from "../../api/eventThunk";
+import { deleteEvent, retrieveAllEvents, createEvent, getSingleEvent, updateEvent } from "../../api/eventThunk";
 
 export interface EventType {
   id: string;
@@ -21,8 +21,10 @@ interface PostState {
   retrieveError: string | null;
   deleteError: string | null;
   createError: string | null;
+  updateError: string | null;
   successful: boolean;
   eventDetails: EventDetails[];
+  successfulUpdate: boolean;
 }
 interface Categories {
   id: number;
@@ -49,9 +51,11 @@ const initialState: PostState = {
   retrieveError: null,
   deleteError: null,
   createError: null,
+  updateError: null,
   loading: false,
   successful: false,
   eventDetails: [],
+  successfulUpdate: false,
 };
 
 const eventSlice = createSlice({
@@ -116,6 +120,20 @@ const eventSlice = createSlice({
         state.loading = false;
         state.createError = action.payload as string;
         state.successful = false;
+      })
+
+      .addCase(updateEvent.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEvent.fulfilled, (state, action) => {
+        state.successfulUpdate = true;
+        state.updateError = null;
+        state.loading = false;
+      })
+      .addCase(updateEvent.rejected, (state, action) => {
+        state.successfulUpdate = false;
+        state.loading = false;
+        state.updateError = action.payload as string;
       })
   },
 });

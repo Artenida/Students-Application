@@ -181,7 +181,7 @@ GROUP BY e.id;
     user_id,
     music,
     cost,
-    category,
+    categories,
   }: {
     title: string;
     description: string;
@@ -191,7 +191,7 @@ GROUP BY e.id;
     user_id: string;
     music: string;
     cost: string;
-    category: string[];
+    categories: string[];
   }): Promise<any> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
@@ -212,9 +212,9 @@ GROUP BY e.id;
 
       db.query(updateQuery, updateValues, async (error, result) => {
         try {
-          if (category.length > 0) {
+          if (categories.length > 0) {
             await Event.deleteCategory(id);
-            await Event.addCategory(id, category);
+            await Event.addCategory(id, categories);
           } else {
             const existingTagsQuery =
               "SELECT category_id FROM events_category WHERE event_id = ?";

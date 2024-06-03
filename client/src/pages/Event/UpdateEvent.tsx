@@ -11,7 +11,15 @@ import "react-quill/dist/quill.snow.css";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import { createEvent } from "@testing-library/react";
 import { useValidateEventsForm } from "../../utils/validateEvent";
-import { getSingleEvent } from "../../api/eventThunk";
+import { getSingleEvent, updateEvent } from "../../api/eventThunk";
+import { selectUser } from "../../redux/user/userSlice";
+import { selectCategories } from "../../redux/forum/categoriesSlice";
+import { retrieveAllCategories } from "../../api/categoriesThunk";
+
+interface Categories {
+  id: number;
+  category: string;
+}
 
 type CreateEvent = {
   title: string;
@@ -19,40 +27,49 @@ type CreateEvent = {
   files: FileList | [];
 };
 
-const CreateEvent = () => {
+const UpdateEvent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { updateError } = useAppSelector(selectPost);
   const { id } = useParams();
-  const { errors, hasError, validateForm, displayErrors } = useValidateEventsForm();
-    const { eventDetails } = useAppSelector(selectEvent);
+  const { errors, hasError, validateForm, displayErrors } =
+    useValidateEventsForm();
+  const { eventDetails } = useAppSelector(selectEvent);
   const [isFormChanged, setIsFormChanged] = useState(false);
-
-  useEffect(() => {
-    dispatch(getSingleEvent(id));
-  }, [dispatch, id]);
+  const { categories, loading, retrieveError } = useAppSelector(selectCategories);
+  const {currentUser} = useAppSelector(selectUser);
+ 
 
   const [data, setData] = useState({
-    eventId: id ?? "",
-    // date: Date,
-    music: "",
-    location: "",
-    price: "",
+    id: id ?? "",
     title: "",
     description: "",
+    location: "",
+    user_id: "",
+    music: "",
+    cost: "",
+    categories: [] as string[],
   });
+
+  useEffect(() => {
+    categories?.length === 0 && dispatch(retrieveAllCategories());
+    dispatch(getSingleEvent(id));
+  }, [dispatch, id, categories]);
 
   useEffect(() => {
     if (eventDetails && eventDetails.length > 0) {
       const eventData = eventDetails[0];
       setData({
-        eventId: id ?? "",
+        id: id ?? "",
         // date: eventData.date,
         title: eventData.title,
-        music: eventData.music,
-        location: eventData.location,
-        price: eventData.cost,
         description: eventData.description,
+        location: eventData.location,
+        user_id: currentUser?.user?.id,
+        music: eventData.music,
+        cost: eventData.cost,
+        categories: eventData.categories.map((category: any) =>
+        category?.id.toString()
+        ),
       });
     }
   }, [eventDetails, id]);
@@ -64,7 +81,7 @@ const CreateEvent = () => {
       return;
     }
     if (isFormChanged) {
-      // dispatch(createEvent(data));
+      dispatch(updateEvent(data));
       navigate("/events");
     }
   };
@@ -73,6 +90,13 @@ const CreateEvent = () => {
     setIsFormChanged(true);
     const { value } = event.target;
     setData({ ...data, title: value });
+  };
+
+  const handleCategoryChange = (categoryId: string) => {
+    const updatedCategories = data.categories.includes(categoryId)
+      ? data.categories.filter((id) => id !== categoryId)
+      : [...data.categories, categoryId];
+    setData({ ...data, categories: updatedCategories });
   };
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +111,7 @@ const CreateEvent = () => {
 
   const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setData({ ...data, price: value });
+    setData({ ...data, cost: value });
   };
 
   const handleDescriptionChange = (value: string) => {
@@ -97,11 +121,30 @@ const CreateEvent = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-3xl px-5 py-28 pl-20">
+      <div className="w-full max-w-4xl px-5 py-28 pl-20">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* <h2 className="flex text-2xl text-custom-color3 pb-4 justify-center font-semibold">
-            What's your event about?
-          </h2> */}
+          <h2 className="flex text-2xl text-custom-color3 pb-4 justify-center font-semibold">
+            Make your changes!
+          </h2>
+
+          <div className="flex justify-between px-4 text-xl pt-4">
+            <ul>
+              {categories?.map((category: Categories) => (
+                <li key={category.id} className="mb-2">
+                  <input
+                    type="checkbox"
+                    id={`tag-${category.id}`}
+                    className="mr-2"
+                    onChange={() => handleCategoryChange(String(category.id))}
+                    checked={data.categories.includes(String(category.id))}
+                  />
+                  <label htmlFor={`tag-${category.id}`}>
+                    {category.category}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="flex gap-4 justify-between">
             <div className="w-1/2">
               <FormInputsComponent
@@ -114,6 +157,18 @@ const CreateEvent = () => {
                 // errorMessage={errors.title}
                 // updateValue={(value) => setData({ ...data, title: value })}
                 // onChange={handleTitleChange}
+              />
+            </div>
+            <div className="w-1/2">
+              <FormInputsComponent
+                label="Time"
+                id="time"
+                type="time"
+                placeholder="Time"
+                name="time"
+                // errorMessage={errors.time}
+                // updateValue={(value) => setData({ ...data, title: value })}
+                // onChange={handleTimeChange}
               />
             </div>
             <div className="w-1/2">
@@ -155,8 +210,8 @@ const CreateEvent = () => {
                 type="text"
                 placeholder="Price"
                 name="cost"
-                value={data.price}
-                updateValue={(value) => setData({ ...data, price: value })}
+                value={data.cost}
+                updateValue={(value) => setData({ ...data, cost: value })}
                 onChange={handlePriceChange}
               />
               <span className={`text-sm text-gray-400 pl-1 pt-8 h-4`}>
@@ -207,4 +262,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default UpdateEvent;
