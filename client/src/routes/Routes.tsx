@@ -26,7 +26,6 @@ const routes = [
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "/terms", element: <TermsAndConditions /> },
-  // { path: "/forum", element: <Forum /> },
   { path: "*", element: <Home /> },
 ];
 

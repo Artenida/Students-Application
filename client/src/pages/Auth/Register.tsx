@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { selectUser } from "../../redux/user/userSlice";
 import {
   validateRegisterForm,
-  validateConfirmPassword, // Import validateConfirmPassword
+  validateConfirmPassword,
 } from "../../utils/validateUser";
 import { Alert } from "@mui/material";
 
