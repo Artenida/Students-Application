@@ -41,14 +41,6 @@ export const SideLinks = () => {
     },
   ];
 
-  const AccountManagement = [
-    {
-      title: "Delete account",
-      icon: <MdDelete />,
-      path: "/delete",
-    },
-  ];
-
   const Information = [
     {
       title: "Terms and Conditions",
@@ -124,20 +116,20 @@ export const SideLinks = () => {
           Sign out
         </span>
       </div>
-      {AccountManagement?.map((menu: any, index: number) => (
-        <div key={index}>
-          <NavLink
-            to={menu.path}
-            className="flex items-center gap-x-4
-            cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
-          >
-            <span className="block float-left">{menu.icon}</span>
-            <span className={`text-base font-medium flex-1 duration-200`}>
-              {menu.title}
-            </span>
-          </NavLink>
-        </div>
-      ))}
+      <div
+        onClick={handleDeleteAccount}
+        className="text-lg flex items-center gap-x-4
+                  cursor-pointer p-4 hover:bg-custom-color1 rounded-md mt-2"
+      >
+        <span className="block float-left">
+          <MdDelete />
+        </span>
+        <span
+          className={`text-base font-medium flex-1 duration-200`}
+        >
+          Delete Account
+        </span>
+      </div>
 
       <h2 className="text-xl font-semibold text-custom-color3 mt-6">
         Information
