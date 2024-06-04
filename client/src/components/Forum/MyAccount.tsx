@@ -24,7 +24,7 @@ const MyAccount = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { currentUser, user } = useAppSelector(selectUser);
+  const { currentUser } = useAppSelector(selectUser);
   const userID = currentUser?.user?.id;
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const MyAccount = ({
   }, [dispatch, userID]);
 
   const handleProfileClick = () => {
-    if(user?.id === user_id) {
+    if(String(userID) === String(user_id)) {
       navigate('/editAccount');
     }
   }
