@@ -8,7 +8,7 @@ type EventInputs = {
   location: string;
   music: string;
   user_id: string;
-  cost: string;
+  price: string;
   category: string[];
   files: Express.Multer.File[];
 };
@@ -21,7 +21,7 @@ type UpdateEvent = {
     location: string;
     user_id: string;
     music: string;
-    cost: string;
+    price: string;
     categories: string[];
 }
 
@@ -75,7 +75,7 @@ export const createEvent = async (
       location,
       user_id,
       music,
-      cost,
+      price,
       category,
     } = req.body;
     const files: Express.Multer.File[] = Array.isArray(req.files)
@@ -89,7 +89,7 @@ export const createEvent = async (
       user_id,
       files,
       music,
-      cost,
+      price,
       category,
     };
     await Event.createEvent(inputs);
@@ -119,7 +119,7 @@ export const updateEvent = async (
       location,
       user_id,
       music,
-      cost,
+      price,
       categories,
     } = req.body;
     const { id } = req.params;
@@ -132,7 +132,7 @@ export const updateEvent = async (
         location,
         user_id,
         music,
-        cost,
+        price,
         categories,
       };
       await Event.updatePost(inputs);

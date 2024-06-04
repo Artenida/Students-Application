@@ -6,7 +6,7 @@ type EventInputs = {
   date: Date;
   location: string;
   music: string;
-  cost: string;
+  price: string;
   user_id: string;
   category: string[];
   files: Express.Multer.File[];
@@ -23,19 +23,20 @@ class Event {
       e.title,
       e.description,
       e.date,
+      e.time,
       e.location,
-      e.user_id,
       e.image, 
       e.music,
-      e.cost,
+      e.price,
+      e.user_id,
       u.email,
       u.profile_picture,
       GROUP_CONCAT(DISTINCT ec.category_id) AS category_Id,
       GROUP_CONCAT(DISTINCT c.category) AS categories
   FROM events e
   LEFT JOIN users u ON e.user_id = u.id
-  LEFT JOIN events_category ec ON e.id = ec.event_id
-  LEFT JOIN category c ON ec.category_id = c.id
+  LEFT JOIN event_category ec ON e.id = ec.event_id
+  LEFT JOIN categories c ON ec.category_id = c.id
   GROUP BY e.id
   ORDER BY e.date DESC;
   `;
@@ -77,13 +78,13 @@ class Event {
     e.location,
     e.image, 
     e.music,
-    e.cost,
+    e.price,
     GROUP_CONCAT(DISTINCT c.category) AS categories,
     GROUP_CONCAT(DISTINCT ec.category_id) AS category_Id
 FROM events e 
 LEFT JOIN users u ON e.user_id = u.id 
-LEFT JOIN events_category ec ON e.id = ec.event_id 
-LEFT JOIN category c ON ec.category_id = c.id
+LEFT JOIN event_category ec ON e.id = ec.event_id 
+LEFT JOIN categories c ON ec.category_id = c.id
 WHERE e.id = ?
 GROUP BY e.id;
 `;
@@ -132,7 +133,7 @@ GROUP BY e.id;
     const db = connection.getConnection();
 
     try {
-      const createEventQuery = `INSERT INTO events (title, description, date, location, user_id, image, music, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+      const createEventQuery = `INSERT INTO events (title, description, date, location, user_id, image, music, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
       const createEventValues = [
         inputs.title,
         inputs.description,
@@ -141,7 +142,7 @@ GROUP BY e.id;
         inputs.user_id,
         inputs.files[0].path,
         inputs.music,
-        inputs.cost,
+        inputs.price,
       ];
 
       db.query(
@@ -180,7 +181,7 @@ GROUP BY e.id;
     location,
     user_id,
     music,
-    cost,
+    price,
     categories,
   }: {
     title: string;
@@ -190,7 +191,7 @@ GROUP BY e.id;
     location: string;
     user_id: string;
     music: string;
-    cost: string;
+    price: string;
     categories: string[];
   }): Promise<any> {
     const connection = createDatabaseConnection();
@@ -198,7 +199,7 @@ GROUP BY e.id;
 
     try {
       const updateQuery =
-        "UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, cost = ? WHERE id = ?;";
+        "UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, price = ? WHERE id = ?;";
       const updateValues = [
         title,
         description,
@@ -206,18 +207,18 @@ GROUP BY e.id;
         location,
         user_id,
         music,
-        cost,
+        price,
         id,
       ];
 
       db.query(updateQuery, updateValues, async (error, result) => {
         try {
-          if (categories.length > 0) {
+          if (categories?.length > 0) {
             await Event.deleteCategory(id);
             await Event.addCategory(id, categories);
           } else {
             const existingTagsQuery =
-              "SELECT category_id FROM events_category WHERE event_id = ?";
+              "SELECT category_id FROM event_category WHERE event_id = ?";
             db.query(existingTagsQuery, [id], async (error, result) => {
               if (error) {
                 console.error("Error fetching existing categories:", error);
@@ -254,7 +255,7 @@ GROUP BY e.id;
     try {
       if (category) {
         const query =
-          "INSERT INTO events_category (event_id, category_id) VALUES (?, ?)";
+          "INSERT INTO event_category (event_id, category_id) VALUES (?, ?)";
         await new Promise((resolve, reject) => {
           for (const cat of category) {
             db.query(query, [eventId, cat], (error, result) => {
@@ -281,7 +282,7 @@ GROUP BY e.id;
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
-    const query = "DELETE FROM events_category WHERE event_id = ?";
+    const query = "DELETE FROM event_category WHERE event_id = ?";
     return new Promise((resolve, reject) => {
       db.query(query, [eventId], (error, _) => {
         if (error) {
@@ -388,7 +389,7 @@ GROUP BY e.id;
     const db = connection.getConnection();
 
     try {
-      const query = `SELECT * FROM events WHERE cost LIKE ?`;
+      const query = `SELECT * FROM events WHERE price LIKE ?`;
 
       const data = await new Promise((resolve, reject) => {
         db.query(query, [`%${word}%`], (error, result) => {
@@ -476,12 +477,12 @@ GROUP BY e.id;
     e.location,
     e.image,
     e.music,
-    e.cost,
+    e.price,
     GROUP_CONCAT(DISTINCT c.category) AS categories
 FROM events e 
 LEFT JOIN users u ON e.user_id = u.id
-LEFT JOIN events_category ec ON e.id = ec.event_id
-LEFT JOIN category c ON ec.category_id = c.id
+LEFT JOIN event_category ec ON e.id = ec.event_id
+LEFT JOIN categories c ON ec.category_id = c.id
 WHERE c.category LIKE ?
 GROUP BY e.id;`;
 

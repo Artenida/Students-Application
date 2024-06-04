@@ -5,7 +5,7 @@ export class Category {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
     
-    const query = `SELECT * FROM category`;
+    const query = `SELECT * FROM categories`;
     const data = await new Promise((resolve, reject) => {
       db.query(query, (error, result) => {
         connection.closeConnection();
