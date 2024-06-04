@@ -75,7 +75,7 @@ export class User {
     try {
       const userData = await new Promise<any>((resolve, reject) => {
         db.query(
-          `SELECT id, username, email, bio, profile_picture, fields FROM users WHERE id = ?`,
+          `SELECT id, username, email, bio, profile_picture, interested_fields FROM users WHERE id = ?`,
           [id],
           (error, userResult) => {
             if (error) {
@@ -127,7 +127,7 @@ export class User {
       let queryParams: (string | number)[];
 
       query =
-        "UPDATE users SET username = ?, email = ?, bio = ?, fields = ? WHERE id = ?";
+        "UPDATE users SET username = ?, email = ?, bio = ?, interested_fields = ? WHERE id = ?";
       queryParams = [username, email, bio, subject, id];
 
       const result: any = await new Promise((resolve, reject) => {
@@ -157,56 +157,6 @@ export class User {
       throw error;
     }
   }
-
-  // static async addSocialMediaAccounts(userID: string, social_media: string) {
-  //   const connection = createDatabaseConnection();
-  //   const db = connection.getConnection();
-
-  //   try {
-  //     const insertQuery =
-  //       "INSERT INTO socials (user_id, social_media) VALUES (?, ?)";
-  //     const values = [userID, social_media];
-
-  //     await db.query(insertQuery, values);
-  //     connection.closeConnection();
-
-  //     return true;
-  //   } catch (error) {
-  //     connection.closeConnection();
-  //     throw error;
-  //   }
-  // }
-
-  // static async deleteSocialMediaAccounts(id: string): Promise<boolean> {
-  //   const connection = createDatabaseConnection();
-  //   const db = connection.getConnection();
-
-  //   try {
-  //     const query = `DELETE FROM socials WHERE  id = ?;`;
-  //     const result: DeleteResult = await new Promise((resolve, reject) => {
-  //       db.query(query, [id], (error, result) => {
-  //         if (error) {
-  //           console.error("Error deleting account:", error);
-  //           connection.closeConnection();
-  //           reject(error);
-  //         } else {
-  //           resolve(result);
-  //         }
-  //       });
-  //     });
-
-  //     connection.closeConnection();
-
-  //     if (result && result.affectedRows === 0) {
-  //       return false;
-  //     }
-
-  //     return true;
-  //   } catch (error) {
-  //     console.error("Error deleting account:", error);
-  //     throw error;
-  //   }
-  // }
 
   static async updateProfilePicture(userId: string, file: Express.Multer.File) {
     const connection = createDatabaseConnection();

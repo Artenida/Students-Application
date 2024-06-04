@@ -58,56 +58,6 @@ export const updateUser = async (
   }
 };
 
-// export const addSocialMediaAccounts = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ): Promise<void> => {
-//   try {
-//     const { social_media } = req.body;
-//     const { id } = req.params;
-
-//     const success = await User.addSocialMediaAccounts(id, social_media);
-
-//     if (success) {
-//       res.status(200).json({
-//         message: "Social media accounts added successfully",
-//         user: {
-//           id,
-//           social_media,
-//         },
-//       });
-//     } else {
-//       res.status(400).json({
-//         message: "Failed to add social media accounts",
-//       });
-//     }
-//   } catch (error) {
-//     console.error("Error adding social media accounts:", error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
-
-// export const deleteSocialMediaAccounts = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ): Promise<void> => {
-//   try {
-//     const { id } = req.params;
-//     // const { social_media } = req.body;
-
-//     const isDeleted = await User.deleteSocialMediaAccounts(id);
-//     if (!isDeleted) {
-//       return next(res.status(400).json({ message: "Account not found" }));
-//     }
-//     res.status(200).json({ message: "Account deleted successfully" });
-//   } catch (error) {
-//     console.error("Error deleting account:", error);
-//     return next(res.status(500).json({ message: "Error deleting account:" }));
-//   }
-// };
-
 export const updateProfilePicture = async (req: Request, res: Response) => {
   const { userId } = req.body;
   const file: Express.Multer.File = req.file as Express.Multer.File;
