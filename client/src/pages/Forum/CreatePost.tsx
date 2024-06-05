@@ -37,10 +37,12 @@ const CreatePost = () => {
     validateForm({
       title: data.title,
       description: data.description,
+      files: data.files,
     });
     displayErrors({
       title: data.title,
       description: data.description,
+      files: data.files,
     });
   };
 
@@ -91,6 +93,13 @@ const CreatePost = () => {
                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer focus:outline-none focus:border-blue-500"
               />
             </label>
+            <span
+            className={`text-sm text-red-600 pl-1 pt-4  pb-4${
+              errors.description ? "block" : "hidden"
+            } h-4`}
+          >
+            {errors.files}
+          </span>
           </div>
           <FormInputsComponent
             label="Title"

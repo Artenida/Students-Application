@@ -6,6 +6,7 @@ interface CreateEvent {
   location: string;
   date: string;
   time: string;
+  files: FileList | [];
 }
 
 type CreateEventError = {
@@ -14,6 +15,7 @@ type CreateEventError = {
   date: string;
   time: string;
   location: string;
+  files: string;
 };
 
 const validateTitle = (value: string): string => {
@@ -58,13 +60,14 @@ export const validateFiles = (files: FileList | []) => {
   return "";
 };
 
-export const useValidateEventsForm = () => {
+export const useValidateEventFormWithFiles = () => {
   const [errors, setErrors] = useState<CreateEventError>({
     title: '',
     date: '',
     time: '',
     location: '',
     description: '',
+    files: '',
   });
 
   const [hasError, setHasError] = useState(true);
@@ -72,23 +75,65 @@ export const useValidateEventsForm = () => {
   const validateForm = (inputs: CreateEvent) => {
     const titleError = validateTitle(inputs.title);
     const descriptionError = validateDescription(inputs.description);
-    setHasError(!!(titleError || descriptionError));
-  }
+    const locationError = validateLocation(inputs.location);
+    const dateError = validateDate(inputs.date);
+    const timeError = validateTime(inputs.time);
+    const fileError = validateFiles(inputs.files);
+    setHasError(!!(titleError || descriptionError || locationError || dateError || timeError || fileError));
+  };
 
   const displayErrors = (inputs: CreateEvent) => {
     const titleError = validateTitle(inputs.title);
     const descriptionError = validateDescription(inputs.description);
-    // const date = validateDate();
     const locationError = validateLocation(inputs.location);
     const dateError = validateDate(inputs.date);
     const timeError = validateTime(inputs.time);
-    setErrors({title: titleError, description: descriptionError, location: locationError, date: dateError, time: timeError})
-  }
+    const fileError = validateFiles(inputs.files);
+    setErrors({ title: titleError, description: descriptionError, location: locationError, date: dateError, time: timeError, files: fileError });
+  };
 
   return {
     errors,
     hasError,
     validateForm,
     displayErrors,
-  }
+  };
+};
+
+export const useValidateEventFormWithoutFiles = () => {
+  const [errors, setErrors] = useState<CreateEventError>({
+    title: '',
+    date: '',
+    time: '',
+    location: '',
+    description: '',
+    files: '',
+  });
+
+  const [hasError, setHasError] = useState(true);
+
+  const validateForm = (inputs: Omit<CreateEvent, 'files'>) => {
+    const titleError = validateTitle(inputs.title);
+    const descriptionError = validateDescription(inputs.description);
+    const locationError = validateLocation(inputs.location);
+    const dateError = validateDate(inputs.date);
+    const timeError = validateTime(inputs.time);
+    setHasError(!!(titleError || descriptionError || locationError || dateError || timeError));
+  };
+
+  const displayErrors = (inputs: Omit<CreateEvent, 'files'>) => {
+    const titleError = validateTitle(inputs.title);
+    const descriptionError = validateDescription(inputs.description);
+    const locationError = validateLocation(inputs.location);
+    const dateError = validateDate(inputs.date);
+    const timeError = validateTime(inputs.time);
+    setErrors({ title: titleError, description: descriptionError, location: locationError, date: dateError, time: timeError, files: '' });
+  };
+
+  return {
+    errors,
+    hasError,
+    validateForm,
+    displayErrors,
+  };
 };

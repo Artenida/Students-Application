@@ -57,14 +57,6 @@ const UpdatePost = () => {
     setData({ ...data, title: value });
   };
 
-  // const handleDescriptionChange = (
-  //   event: React.ChangeEvent<HTMLTextAreaElement>
-  // ) => {
-  //   setIsFormChanged(true);
-  //   const { value } = event.target;
-  //   setData({ ...data, description: value });
-  // };
-
   const handleDescriptionChange = (value: string) => {
     setIsFormChanged(true);
     setData({ ...data, description: value });
@@ -82,7 +74,6 @@ const UpdatePost = () => {
             name="file"
             value={data.title}
             errorMessage={errors.title}
-            updateValue={(value) => setData({ ...data, title: value })}
             onChange={handleTitleChange}
           />
 

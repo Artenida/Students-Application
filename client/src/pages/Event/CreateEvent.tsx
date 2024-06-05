@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css";
 import cover from "../../assets/share_image.jpg";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../../api/eventThunk";
-import { useValidateEventsForm } from "../../utils/validateEvent";
+import { useValidateEventFormWithFiles } from "../../utils/validateEvent";
 import { selectCategories } from "../../redux/forum/categoriesSlice";
 
 interface Categories {
@@ -36,7 +36,7 @@ const CreateEvent = () => {
   const { currentUser } = useAppSelector(selectUser);
   const userId = currentUser?.user?.id;
   const { errors, hasError, validateForm, displayErrors } =
-    useValidateEventsForm();
+  useValidateEventFormWithFiles();
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const { categories, loading, retrieveError } =
     useAppSelector(selectCategories);
@@ -61,6 +61,7 @@ const CreateEvent = () => {
       location: data.location,
       date: data.date,
       time: data.time,
+      files: data.files,
     });
     displayErrors({
       title: data.title,
@@ -68,6 +69,7 @@ const CreateEvent = () => {
       location: data.location,
       date: data.date,
       time: data.time,
+      files: data.files,
     });
   };
 
@@ -164,6 +166,13 @@ const CreateEvent = () => {
                 className="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer focus:outline-none focus:border-blue-500"
               />
             </label>
+            <span
+            className={`text-sm text-red-600 pl-1 pt-4  pb-4${
+              errors.description ? "block" : "hidden"
+            } h-4`}
+          >
+            {errors.files}
+          </span>
           </div>
 
           <div className="flex justify-between px-4 text-xl pt-4">

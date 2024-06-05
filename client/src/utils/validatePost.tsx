@@ -3,11 +3,13 @@ import { useState } from "react";
 interface CreatePost {
   title: string;
   description: string;
+  files: FileList | [];
 }
 
 type CreatePostError = {
   title: string;
   description: string;
+  files: string;
 };
 
 const validateTitle = (value: string): string => {
@@ -36,6 +38,7 @@ export const useValidateBlogForm = () => {
   const [errors, setErrors] = useState<CreatePostError>({
     title: '',
     description: '',
+    files: '',
   });
 
   const [hasError, setHasError] = useState(true);
@@ -49,7 +52,8 @@ export const useValidateBlogForm = () => {
   const displayErrors = (inputs: CreatePost) => {
     const titleError = validateTitle(inputs.title);
     const descriptionError = validateDescription(inputs.description);
-    setErrors({title: titleError, description: descriptionError})
+    const fileError = validateFiles(inputs.files)
+    setErrors({title: titleError, description: descriptionError, files: fileError})
   }
 
   return {
