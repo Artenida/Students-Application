@@ -19,7 +19,7 @@ export interface EventType {
   image: string;
   profile_picture: string;
   music: string;
-  cost: string;
+  price: string;
   email: string;
 }
 
@@ -54,7 +54,7 @@ const Events = () => {
     if (!currentEvents) return;
   
     const filteredPosts = currentEvents.filter((event) => {
-      const costString = event.cost.toString().toLowerCase();
+      const costString = event.price.toString().toLowerCase();
   
       return (
         costString.includes(searchValue.toLowerCase()) ||
@@ -110,7 +110,7 @@ const Events = () => {
               user_id={event?.user_id}
               profile_picture={event?.profile_picture}
               music={event?.music}
-              cost={event?.cost}
+              cost={event?.price}
               email={event?.email}
               image={event?.image}
             />

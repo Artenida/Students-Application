@@ -94,15 +94,19 @@ const Card: React.FC<EventType> = ({
                   <h2 className="font-bold text-lg md:text-xl lg:text-2xl mb-2">
                     {title}
                   </h2>
-                  <h1 className="text-custom-color3 font-semibold text-2xl mb-2 bg-gray-100 shadow-sm py-1 px-3 rounded-md">
-                    ${cost}
-                  </h1>
+                  {cost ? (
+                    <h1 className="text-custom-color3 font-semibold text-2xl mb-2 bg-gray-100 shadow-sm py-1 px-3 rounded-md">
+                      ${cost}
+                    </h1>
+                  ) : null}
                 </div>
                 <p
                   className="text-sm md:text-base lg:text-lg"
                   style={clampStyle}
                 >
-              <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />{" "}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                  />{" "}
                 </p>
                 <div className="flex justify-end relative">
                   <div

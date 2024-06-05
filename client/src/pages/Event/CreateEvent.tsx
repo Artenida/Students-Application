@@ -70,7 +70,7 @@ const CreateEvent = () => {
       formData.append("description", data.description);
       formData.append("location", data.location);
       formData.append("music", data.music);
-      formData.append("cost", data.price);
+      formData.append("price", data.price);
       formData.append("user_id", userId || "");
       for (let category of data.categories) {
         formData.append("category", category);
@@ -219,10 +219,10 @@ const CreateEvent = () => {
             <div className="w-1/2">
               <FormInputsComponent
                 label="Price"
-                id="cost"
+                id="price"
                 type="text"
                 placeholder="Price"
-                name="cost"
+                name="price"
                 updateValue={(value) => setData({ ...data, price: value })}
                 onChange={handlePriceChange}
               />

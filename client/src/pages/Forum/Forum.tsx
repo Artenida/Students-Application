@@ -123,14 +123,14 @@ const Forum = () => {
           {currentEvents?.slice(0, 3).map((event) => (
             <EventCard
               key={event.id}
-              id={event.id}
-              title={event.title}
-              date={event.date}
-              location={event.location}
-              user_id={event.user_id}
-              profile_picture={event.profile_picture}
-              music={event.music}
-              cost={event.cost}
+              id={event?.id}
+              title={event?.title}
+              date={event?.date}
+              location={event?.location}
+              user_id={event?.user_id}
+              profile_picture={event?.profile_picture}
+              music={event?.music}
+              cost={event?.price}
             />
           ))} 
         </div>

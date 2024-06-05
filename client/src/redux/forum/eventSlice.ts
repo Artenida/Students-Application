@@ -7,12 +7,13 @@ export interface EventType {
   title: string;
   description: string;
   date: Date;
+  time: string;
   location: string;
   user_id: string;
   image: string;
   profile_picture: string;
   music: string;
-  cost: string;
+  price: string;
   email: string;
   }
 interface PostState {
