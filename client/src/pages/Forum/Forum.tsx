@@ -131,6 +131,7 @@ const Forum = () => {
               id={event?.id}
               title={event?.title}
               date={event?.date}
+              time={event?.time}
               location={event?.location}
               user_id={event?.user_id}
               profile_picture={event?.profile_picture}

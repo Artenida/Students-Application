@@ -14,6 +14,7 @@ export interface EventType {
   title: string;
   description: string;
   date: Date;
+  time: string;
   location: string;
   user_id: string;
   image: string;
@@ -29,6 +30,7 @@ const Card: React.FC<EventType> = ({
   description,
   image,
   date,
+  time,
   location,
   music,
   profile_picture,
@@ -36,7 +38,7 @@ const Card: React.FC<EventType> = ({
   cost,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const formattedDateTime = moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  const formattedDateTime = moment(date).format("MMMM Do YYYY");
   const formattedDay = moment(date).format("Do");
   const sanitizedDescription = description
     ? DOMPurify.sanitize(description)
@@ -81,6 +83,7 @@ const Card: React.FC<EventType> = ({
                 <div className="flex items-center gap-2 text-custom-color3">
                   <FaCalendar />
                   <h2>{formattedDateTime}</h2>
+                  <h2>{time}</h2>
                 </div>
                 <div className="flex items-center gap-2">
                   <IoLocation />
@@ -108,7 +111,7 @@ const Card: React.FC<EventType> = ({
                 >
                   <div
                     dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
-                  />{" "}
+                  />
                 </p>
                 <div className="flex justify-end relative">
                   <div

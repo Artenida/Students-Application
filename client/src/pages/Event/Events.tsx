@@ -14,6 +14,7 @@ export interface EventType {
   title: string;
   description: string;
   date: Date;
+  time: string;
   location: string;
   user_id: string;
   image: string;
@@ -107,6 +108,7 @@ const Events = () => {
               title={event?.title}
               description={event?.description}
               date={event?.date}
+              time={event?.time}
               location={event?.location}
               user_id={event?.user_id}
               profile_picture={event?.profile_picture}

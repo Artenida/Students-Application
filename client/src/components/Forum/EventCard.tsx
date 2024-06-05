@@ -9,6 +9,7 @@ export interface EventType {
   id: string;
   title: string;
   date: Date;
+  time: string;
   location: string;
   user_id: string;
   profile_picture: string;
@@ -20,6 +21,7 @@ const EventCard: React.FC<EventType> = ({
   id,
   title,
   date,
+  time,
   location,
   profile_picture,
   music,
