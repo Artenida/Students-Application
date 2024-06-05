@@ -19,7 +19,7 @@ export interface EventType {
   image: string;
   profile_picture: string;
   music: string;
-  price: string;
+  price?: string;
   email: string;
 }
 
@@ -54,14 +54,15 @@ const Events = () => {
     if (!currentEvents) return;
   
     const filteredPosts = currentEvents.filter((event) => {
-      const costString = event.price.toString().toLowerCase();
-  
+      const costString = event.price ? event.price.toString().toLowerCase() : "";
+      const musicString = event.music ? event.music.toLowerCase() : "";
+
       return (
         costString.includes(searchValue.toLowerCase()) ||
         event.title.toLowerCase().includes(searchValue.toLowerCase()) ||
         event.description.toLowerCase().includes(searchValue.toLowerCase()) ||
-        event.music.toLowerCase().includes(searchValue.toLowerCase()) ||
-        event.location.toLowerCase().includes(searchValue.toLowerCase())
+        musicString.toLowerCase().includes(searchValue.toLowerCase()) ||
+        event?.location.toLowerCase().includes(searchValue.toLowerCase())
       );
     });
   
