@@ -76,6 +76,7 @@ class Event {
     e.title,
     e.description,
     e.date,
+    e.time,
     e.location,
     e.image, 
     e.music,
@@ -180,6 +181,7 @@ GROUP BY e.id;
     title,
     description,
     date,
+    time,
     location,
     user_id,
     music,
@@ -190,6 +192,7 @@ GROUP BY e.id;
     description: string;
     id: string;
     date: Date;
+    time: string;
     location: string;
     user_id: string;
     music: string;
@@ -201,11 +204,12 @@ GROUP BY e.id;
 
     try {
       const updateQuery =
-        "UPDATE events SET title = ?, description = ?, date = ?, location = ?, user_id = ?, music = ?, price = ? WHERE id = ?;";
+        "UPDATE events SET title = ?, description = ?, date = ?, time = ?, location = ?, user_id = ?, music = ?, price = ? WHERE id = ?;";
       const updateValues = [
         title,
         description,
         date,
+        time,
         location,
         user_id,
         music,
