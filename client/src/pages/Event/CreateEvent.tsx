@@ -80,7 +80,10 @@ const CreateEvent = () => {
       formData.append("time", data.time);
       formData.append("location", data.location);
       formData.append("music", data.music);
-      formData.append("price", data.price);
+      if (data.price !== null && data.price !== "") {
+        formData.append("price", data.price);
+      }
+      // formData.append("price", data.price);
       formData.append("user_id", userId || "");
       for (let category of data.categories) {
         formData.append("category", category);
