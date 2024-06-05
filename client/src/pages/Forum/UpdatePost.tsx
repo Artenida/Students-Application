@@ -8,25 +8,28 @@ import { useValidateUpdate } from "../../utils/validateUpdate";
 import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Loading from "../../components/Helpful Components/Loading";
 
 const UpdatePost = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { updateError } = useAppSelector(selectPost);
+  const { updateError, postDetails } = useAppSelector(selectPost);
   const { postId } = useParams();
   const { errors, hasError, validateForm, displayErrors } = useValidateUpdate();
-  const { postDetails } = useAppSelector(selectPost);
   const [isFormChanged, setIsFormChanged] = useState(false);
-
-  useEffect(() => {
-    dispatch(getSinglePost(postId));
-  }, [dispatch, postId]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [data, setData] = useState({
     postId: postId ?? "",
     title: "",
     description: "",
   });
+
+  useEffect(() => {
+    if (postId) {
+      dispatch(getSinglePost(postId)).then(() => setIsLoading(false));
+    }
+  }, [dispatch, postId]);
 
   useEffect(() => {
     if (postDetails && postDetails.length > 0) {
@@ -39,15 +42,15 @@ const UpdatePost = () => {
     }
   }, [postDetails, postId]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     validateForm(data);
     displayErrors(data);
     if (hasError) {
       return;
     }
     if (isFormChanged) {
-      dispatch(updatePost(data))
-      navigate('/forum');
+      dispatch(updatePost(data)).then(() => navigate('/forum'));
     }
   };
 
@@ -62,6 +65,10 @@ const UpdatePost = () => {
     setData({ ...data, description: value });
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-3xl px-5 py-12 pl-20">
@@ -71,7 +78,7 @@ const UpdatePost = () => {
             id="title"
             type="text"
             placeholder="Title"
-            name="file"
+            name="title"
             value={data.title}
             errorMessage={errors.title}
             onChange={handleTitleChange}
@@ -91,7 +98,7 @@ const UpdatePost = () => {
             onChange={handleDescriptionChange}
           />
           <div className="pt-12">
-            <MediumButton onClick={handleSubmit}>Save changes</MediumButton>
+            <MediumButton>Save changes</MediumButton>
           </div>
         </form>
       </div>
