@@ -32,7 +32,8 @@ const CreatePost = () => {
     files: [],
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     validateForm({
       title: data.title,
       description: data.description,
@@ -52,8 +53,8 @@ const CreatePost = () => {
       for (let i = 0; i < data.files.length; i++) {
         formData.append("file", data.files[i]);
       }
-      dispatch(createPost(formData))
-      navigate('/forum');
+      dispatch(createPost(formData));
+      navigate("/forum");
     }
   }, [hasError]);
 
@@ -125,7 +126,7 @@ const CreatePost = () => {
           </span>
 
           <div className="pt-12">
-            <MediumButton onClick={handleSubmit}>Post</MediumButton>
+            <MediumButton>Post</MediumButton>
           </div>
         </form>
       </div>
