@@ -32,8 +32,7 @@ const CreatePost = () => {
     files: [],
   });
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     validateForm({
       title: data.title,
       description: data.description,
@@ -73,7 +72,7 @@ const CreatePost = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-3xl px-5 py-28 pl-20">
-        <form onClick={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
             <label htmlFor="file" className="cursor-pointer">
               <img
@@ -126,7 +125,7 @@ const CreatePost = () => {
           </span>
 
           <div className="pt-12">
-            <MediumButton>Post</MediumButton>
+            <MediumButton onClick={handleSubmit}>Post</MediumButton>
           </div>
         </form>
       </div>

@@ -5,6 +5,7 @@ type EventInputs = {
   title: string;
   description: string;
   date: Date;
+  time: string;
   location: string;
   music: string;
   user_id: string;
@@ -18,6 +19,7 @@ type UpdateEvent = {
     description: string;
     id: string;
     date: Date;
+    time: string;
     location: string;
     user_id: string;
     music: string;
@@ -72,6 +74,7 @@ export const createEvent = async (
       title,
       description,
       date,
+      time,
       location,
       user_id,
       music,
@@ -85,6 +88,7 @@ export const createEvent = async (
       title,
       description,
       date,
+      time,
       location,
       user_id,
       files,
@@ -116,6 +120,7 @@ export const updateEvent = async (
       title,
       description,
       date,
+      time,
       location,
       user_id,
       music,
@@ -129,6 +134,7 @@ export const updateEvent = async (
         title,
         description,
         date,
+        time,
         location,
         user_id,
         music,
