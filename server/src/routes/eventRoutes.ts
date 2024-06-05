@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.get("/allEvents", allEvents);
 router.get("/getSingleEvent/:id", getSingleEvent);
-router.post("/createEvent", upload.array("file", 8), createEvent);
+router.post("/createEvent", upload.array("file", 10), createEvent);
 router.put("/updateEvent/:id", updateEvent);
 router.delete("/deleteEvent/:id", deleteEvent);
 router.get("/searchEvent", searchEvent);

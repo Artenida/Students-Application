@@ -4,13 +4,15 @@ interface CreateEvent {
   title: string;
   description: string;
   location: string;
-  // date?: Date:
+  date: string;
+  time: string;
 }
 
 type CreateEventError = {
   title: string;
   description: string;
-  // date?: Date;
+  date: string;
+  time: string;
   location: string;
 };
 
@@ -35,6 +37,19 @@ const validateLocation = (value: string): string => {
   return "";
 };
 
+const validateDate = (value: string): string => {
+  if (!value.trim()) {
+    return "Date is required";
+  }
+  return "";
+};
+
+const validateTime = (value: string): string => {
+  if (!value.trim()) {
+    return "Time is required";
+  }
+  return "";
+};
 
 export const validateFiles = (files: FileList | []) => {
   if (files) {
@@ -46,7 +61,8 @@ export const validateFiles = (files: FileList | []) => {
 export const useValidateEventsForm = () => {
   const [errors, setErrors] = useState<CreateEventError>({
     title: '',
-    // date: new Date,
+    date: '',
+    time: '',
     location: '',
     description: '',
   });
@@ -64,7 +80,9 @@ export const useValidateEventsForm = () => {
     const descriptionError = validateDescription(inputs.description);
     // const date = validateDate();
     const locationError = validateLocation(inputs.location);
-    setErrors({title: titleError, description: descriptionError, location: locationError})
+    const dateError = validateDate(inputs.date);
+    const timeError = validateTime(inputs.time);
+    setErrors({title: titleError, description: descriptionError, location: locationError, date: dateError, time: timeError})
   }
 
   return {

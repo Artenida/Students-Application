@@ -19,6 +19,8 @@ interface Categories {
 
 type CreateEvent = {
   title: string;
+  date: string;
+  time: string;
   location: string;
   music: string;
   price: string;
@@ -42,6 +44,8 @@ const CreateEvent = () => {
   const [data, setData] = useState<CreateEvent>({
     title: "",
     location: "",
+    date: "",
+    time: "",
     music: "",
     price: "",
     description: "",
@@ -55,11 +59,15 @@ const CreateEvent = () => {
       title: data.title,
       description: data.description,
       location: data.location,
+      date: data.date,
+      time: data.time,
     });
     displayErrors({
       title: data.title,
       description: data.description,
       location: data.location,
+      date: data.date,
+      time: data.time,
     });
   };
 
@@ -68,6 +76,8 @@ const CreateEvent = () => {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
+      formData.append("date", data.date);
+      formData.append("time", data.time);
       formData.append("location", data.location);
       formData.append("music", data.music);
       formData.append("price", data.price);
@@ -102,6 +112,16 @@ const CreateEvent = () => {
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setData({ ...data, title: value });
+  };
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, date: value });
+  };
+  
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, time: value });
   };
 
   const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,9 +189,9 @@ const CreateEvent = () => {
                 type="date"
                 placeholder="Date"
                 name="date"
-                // errorMessage={errors.date}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleDateChange}
+                errorMessage={errors.date}
+                updateValue={(value) => setData({ ...data, title: value })}
+                onChange={handleDateChange}
               />
             </div>
             <div className="w-1/2">
@@ -181,9 +201,9 @@ const CreateEvent = () => {
                 type="time"
                 placeholder="Time"
                 name="time"
-                // errorMessage={errors.time}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTimeChange}
+                errorMessage={errors.time}
+                updateValue={(value) => setData({ ...data, title: value })}
+                onChange={handleTimeChange}
               />
             </div>
             <div className="w-1/2">

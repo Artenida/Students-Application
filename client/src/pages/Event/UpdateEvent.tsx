@@ -43,6 +43,8 @@ const UpdateEvent = () => {
     id: id ?? "",
     title: "",
     description: "",
+    date: "",
+    time: "",
     location: "",
     user_id: "",
     music: "",
@@ -60,9 +62,10 @@ const UpdateEvent = () => {
       const eventData = eventDetails[0];
       setData({
         id: id ?? "",
-        // date: eventData.date,
         title: eventData.title,
         description: eventData.description,
+        date: eventData.date,
+        time: eventData.time,
         location: eventData.location,
         user_id: currentUser?.user?.id,
         music: eventData.music,
@@ -119,6 +122,16 @@ const UpdateEvent = () => {
     setData({ ...data, description: value });
   };
 
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, date: value });
+  };
+  
+  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setData({ ...data, time: value });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-4xl px-5 py-28 pl-20">
@@ -128,12 +141,12 @@ const UpdateEvent = () => {
           </h2>
 
           <div className="flex justify-between px-4 text-xl pt-4">
-            <ul>
-              {categories?.map((category: Categories) => (
+            {categories?.map((category: Categories) => (
+              <ul>
                 <li key={category.id} className="mb-2">
                   <input
                     type="checkbox"
-                    id={`tag-${category.id}`}
+                    id={`${category.id}`}
                     className="mr-2"
                     onChange={() => handleCategoryChange(String(category.id))}
                     checked={data.categories.includes(String(category.id))}
@@ -142,9 +155,10 @@ const UpdateEvent = () => {
                     {category.category}
                   </label>
                 </li>
-              ))}
-            </ul>
+              </ul>
+            ))}
           </div>
+          
           <div className="flex gap-4 justify-between">
             <div className="w-1/2">
               <FormInputsComponent
@@ -153,10 +167,10 @@ const UpdateEvent = () => {
                 type="date"
                 placeholder="Date"
                 name="date"
-                // value={data.date}
-                // errorMessage={errors.title}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTitleChange}
+                value={data.date}
+                errorMessage={errors.title}
+                updateValue={(value) => setData({ ...data, date: value })}
+                onChange={handleTitleChange}
               />
             </div>
             <div className="w-1/2">
@@ -166,9 +180,10 @@ const UpdateEvent = () => {
                 type="time"
                 placeholder="Time"
                 name="time"
-                // errorMessage={errors.time}
-                // updateValue={(value) => setData({ ...data, title: value })}
-                // onChange={handleTimeChange}
+                value={data.time}
+                errorMessage={errors.time}
+                updateValue={(value) => setData({ ...data, time: value })}
+                onChange={handleTimeChange}
               />
             </div>
             <div className="w-1/2">

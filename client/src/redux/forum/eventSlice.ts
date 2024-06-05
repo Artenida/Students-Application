@@ -39,7 +39,8 @@ interface EventDetails {
   title: string;
   description: string;
   image: string;
-  date: Date;
+  date: string;
+  time: string;
   categories: Categories[];
   categoryId: string;
   location: string;
