@@ -19,7 +19,7 @@ export interface EventType {
   image: string;
   profile_picture: string;
   music: string;
-  cost: string;
+  cost?: string;
   email: string;
 }
 
@@ -86,10 +86,12 @@ const Card: React.FC<EventType> = ({
                   <IoLocation />
                   <h2>{location}</h2>
                 </div>
-                <div className="flex items-center gap-2">
-                  <IoMdMusicalNote />
-                  <h2>{music}</h2>
-                </div>
+                {music ? (
+                  <div className="flex items-center gap-2">
+                    <IoMdMusicalNote />
+                    <h2>{music}</h2>
+                  </div>
+                ) : null}
                 <div className="flex justify-between items-center text-center">
                   <h2 className="font-bold text-lg md:text-xl lg:text-2xl mb-2">
                     {title}
