@@ -13,6 +13,7 @@ import { retrieveAllEvents } from "../../api/eventThunk";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import Banner from "../../components/Forum/Banner";
 import Searchbar from "../../components/Searchbar";
+import EmptyComponent from "../../components/Helpful Components/EmptyComponent";
 
 export interface EventType {
   id: string;
@@ -104,22 +105,26 @@ const Forum = () => {
           <div>
             <Banner />
           </div>
-          {currentBlogs.map((blog) => (
-            <Card
-              key={blog.id}
-              id={blog.id}
-              username={blog.username}
-              createdAt={blog.createdAt}
-              title={blog.title}
-              description={blog.description}
-              profile_picture={blog.profile_picture}
-              images={blog.images}
-              user_id={blog.user_id}
-            />
-          ))}
+          {currentBlogs && currentBlogs?.length > 0 ? (
+            currentBlogs.map((blog) => (
+              <Card
+                key={blog.id}
+                id={blog.id}
+                username={blog.username}
+                createdAt={blog.createdAt}
+                title={blog.title}
+                description={blog.description}
+                profile_picture={blog.profile_picture}
+                images={blog.images}
+                user_id={blog.user_id}
+              />
+            ))
+          ) : (
+              <EmptyComponent />
+          )}
         </div>
 
-        <div className="ml-14 pl-10 md:ml-0 md:pl-0 md:w-full lg:w-1/3 xl:w-1/4 mr-12">
+        <div className="ml-14 pl-10 md:ml-0 md:pl-0 md:w-full lg:w-1/3 xl:w-1/4 mr-12 max-w-lg">
           {currentEvents?.slice(0, 3).map((event) => (
             <EventCard
               key={event.id}
@@ -132,7 +137,7 @@ const Forum = () => {
               music={event?.music}
               cost={event?.price}
             />
-          ))} 
+          ))}
         </div>
       </div>
 
