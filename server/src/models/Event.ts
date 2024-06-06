@@ -135,14 +135,14 @@ GROUP BY e.id;
     const db = connection.getConnection();
 
     try {
-      const createEventQuery = `INSERT INTO events (title, description, date, time, location, image, music, price, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      const createEventQuery = `INSERT INTO events (title, description, date, time, location, music, price, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
       const createEventValues = [
         inputs.title,
         inputs.description,
         inputs.date,
         inputs.time,
         inputs.location,
-        inputs.files[0].path,
+        // inputs.files[0].path,
         inputs.music,
         inputs.price,
         inputs.user_id,
@@ -204,16 +204,16 @@ GROUP BY e.id;
 
     try {
       const updateQuery =
-        "UPDATE events SET title = ?, description = ?, date = ?, time = ?, location = ?, user_id = ?, music = ?, price = ? WHERE id = ?;";
+        "UPDATE events SET title = ?, description = ?, date = ?, time = ?, location = ?, music = ?, price = ?, user_id = ? WHERE id = ?;";
       const updateValues = [
         title,
         description,
         date,
         time,
         location,
-        user_id,
         music,
         price,
+        user_id,
         id,
       ];
 
