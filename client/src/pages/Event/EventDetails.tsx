@@ -26,21 +26,27 @@ const EventDetails = () => {
   const [selectedEventId, setSelectedEventId] = useState<string>();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const eventId = String(id);
-  const user_id = eventDetails[0].user_id;
-  const formattedDateTime = moment(eventDetails[0]?.date).format(
-    "MMMM Do YYYY"
-  );
-  const sanitizedDescription = eventDetails[0]?.description
-    ? DOMPurify.sanitize(eventDetails[0]?.description)
-    : "";
 
   useEffect(() => {
-    dispatch(getSingleEvent(id ?? ""));
+    if (id) {
+      dispatch(getSingleEvent(id));
+    }
   }, [dispatch, id]);
 
   if (loading) {
     return <Loading />;
   }
+
+  if (!eventDetails || eventDetails.length === 0) {
+    return <div className="pt-32 px-32">No event found.</div>;
+  }
+
+  const event = eventDetails[0];
+  const user_id = event?.user_id;
+  const formattedDateTime = moment(event?.date).format("MMMM Do YYYY");
+  const sanitizedDescription = event?.description
+    ? DOMPurify.sanitize(event?.description)
+    : "";
 
   const handleDeleteAccount = (eventId: string) => {
     setSelectedEventId(eventId);
@@ -55,7 +61,7 @@ const EventDetails = () => {
     if (selectedEventId) {
       dispatch(deleteEvent(selectedEventId)).then(() => {
         setIsDeleteDialogOpen(false);
-        navigate('/events')
+        navigate('/events');
       });
     }
   };
@@ -68,59 +74,59 @@ const EventDetails = () => {
     <div>
       <div className="pt-32 flex justify-center flex-col px-8 md:px-24 lg:px-32 xl:px-32 pb-16">
         <div className="w-full flex justify-center">
-          <Banner image={eventDetails[0]?.image} />
+          <Banner image={event?.image} />
         </div>
         <div className="mt-4 flex gap-4 justify-end">
-            {String(userID) === String(user_id) && (
-              <div className="">
-                  <div className="text-xl">
-                    <div
-                      className="cursor-pointer p-4 hover:bg-gray-100 hover:rounded-full"
-                      onClick={() => handleEditClick(eventId)}
-                    >
-                      <FaEdit />
-                    </div>
-                    <div
-                      className="cursor-pointer p-4 hover:bg-gray-100 hover:rounded-full"
-                      onClick={() => handleDeleteAccount(eventId)}
-                    >
-                      <FaTrash />
-                    </div>
-                  </div>
+          {String(userID) === String(user_id) && (
+            <div className="">
+              <div className="text-xl">
+                <div
+                  className="cursor-pointer p-4 hover:bg-gray-100 hover:rounded-full"
+                  onClick={() => handleEditClick(eventId)}
+                >
+                  <FaEdit />
+                </div>
+                <div
+                  className="cursor-pointer p-4 hover:bg-gray-100 hover:rounded-full"
+                  onClick={() => handleDeleteAccount(eventId)}
+                >
+                  <FaTrash />
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
         <article className="flex flex-col md:flex-row justify-between gap-12 mt-12 px-24 md:px-48 lg:px-32 xl:px-32 pb-16">
           <div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-roboto">
-              {eventDetails && eventDetails[0]?.title}
+              {event?.title}
             </h1>
             <div className="mt-4 text-lg sm:text-xl md:text-2xl">
-              <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />{" "}
+              <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
             </div>
             <div className="mt-8 flex flex-col gap-4">
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <IoMdMusicalNote className="text-custom-color3" />
-                <h2>{eventDetails[0]?.music}</h2>
+                <h2>{event?.music}</h2>
               </div>
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <FaCalendar className="text-custom-color3" />
                 <h2>{formattedDateTime}</h2>
-                <h2>{eventDetails[0]?.time}</h2>
+                <h2>{event?.time}</h2>
               </div>
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <IoLocation className="text-custom-color3" />
-                <h2>{eventDetails[0]?.location}</h2>
+                <h2>{event?.location}</h2>
               </div>
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <MdAlternateEmail className="text-custom-color3" />
                 <h2>
-                   Contact for more:{"   "}  
-                  <a 
-                    href={`mailto:${eventDetails[0]?.email}`}
+                  Contact for more:{" "}
+                  <a
+                    href={`mailto:${event?.email}`}
                     className="text-custom-color3 cursor-pointer"
                   >
-                    {eventDetails[0]?.email}
+                    {event?.email}
                   </a>
                 </h2>
               </div>
@@ -129,9 +135,9 @@ const EventDetails = () => {
 
           <div className="mt-12 md:mt-0">
             <h2 className="text-lg sm:text-xl font-bold">Categories</h2>
-            {eventDetails && eventDetails[0]?.categories.length > 0 ? (
+            {event?.categories?.length > 0 ? (
               <div className="mt-4">
-                {eventDetails[0]?.categories.map((category: any) => (
+                {event?.categories.map((category: any) => (
                   <h3
                     className="bg-gray-200 shadow-sm p-2 rounded-full text-center mb-4"
                     key={category?.id}
