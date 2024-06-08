@@ -69,7 +69,7 @@ const Sidebar = () => {
   return (
     <div className="bg-custom-color4 text-white fixed overflow-y-auto">
       <div>
-        <div className="mt-24 mx-3 md:mx-6">
+        <div className="mt-32 mx-3 md:mx-6">
           <Link to={`/writers/${userId}`}>
           { currentUser && currentUser.user && currentUser?.user?.profile_picture ? (
             <img

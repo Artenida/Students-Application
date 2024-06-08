@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import profile from "../../assets/userProfile.jpg";
 import { BsThreeDots } from "react-icons/bs";
@@ -7,7 +7,6 @@ import { selectUser } from "../../redux/user/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { deletePost, getSinglePost } from "../../api/postThunk";
 import { Dialog } from "../Helpful Components/Dialog";
-import { getUser } from "../../api/userThunk";
 
 interface AuthorProps {
   authorName: string;
@@ -34,12 +33,7 @@ const UserAccount: React.FC<AuthorProps> = ({
   const [showOptions, setShowOptions] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string>();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  // const {user} = useAppSelector(selectUser);
   const userID = currentUser?.user?.id;
-
-  // useEffect(() => {
-  //   dispatch(getUser(userID));
-  // }, [dispatch, userID])
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -88,7 +82,7 @@ const UserAccount: React.FC<AuthorProps> = ({
               {authorName}
             </h4>
             <h3 className="text-gray-500 text-sm">
-              {createdAt && formattedDate}
+              {formattedDate}
             </h3>
             <h3 className="text-gray-500 text-sm">{bio}</h3>
           </div>

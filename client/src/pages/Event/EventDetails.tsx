@@ -17,7 +17,7 @@ const EventDetails = () => {
   const { eventDetails, retrieveError, loading } = useAppSelector(selectEvent);
   const { id } = useParams();
   const formattedDateTime = moment(eventDetails[0]?.date).format(
-    "MMMM Do YYYY, h:mm:ss a"
+    "MMMM Do YYYY"
   );
   const sanitizedDescription = eventDetails[0]?.description
     ? DOMPurify.sanitize(eventDetails[0]?.description)
@@ -53,6 +53,7 @@ const EventDetails = () => {
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <FaCalendar className="text-custom-color3" />
                 <h2>{formattedDateTime}</h2>
+                <h2>{eventDetails[0]?.time}</h2>
               </div>
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <IoLocation className="text-custom-color3" />
