@@ -65,7 +65,7 @@ export const createEvent = createAsyncThunk(
 export const updateEvent = createAsyncThunk(
   "api/events/updateEvent",
   async (
-    input: {
+    data: {
       id: string;
       title: string;
       description: string;
@@ -83,10 +83,10 @@ export const updateEvent = createAsyncThunk(
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/events/updateEvent/${input.id}`, {
+      const response = await createAPI(`api/events/updateEvent/${data.id}`, {
         method: "PUT",
         token: token,
-      })(input);
+      })(data);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -94,9 +94,9 @@ export const updateEvent = createAsyncThunk(
         return rejectWithValue(errorData.message);
       }
 
-      const data = await response.json();
+      const response_json = await response.json();
 
-      return data;
+      return response_json;
     } catch (error: any) {
       console.error("Error:", error.message);
       return rejectWithValue(error.message);

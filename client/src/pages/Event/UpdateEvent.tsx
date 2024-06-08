@@ -38,13 +38,13 @@ const UpdateEvent = () => {
     location: "",
     user_id: "",
     music: "",
-    cost: "",
+    price: "",
     categories: [] as string[],
   });
 
   useEffect(() => {
     const fetchData = async () => {
-      if (categories.length === 0) {
+      if (categories?.length === 0) {
         await dispatch(retrieveAllCategories());
       }
       await dispatch(getSingleEvent(id));
@@ -52,32 +52,34 @@ const UpdateEvent = () => {
     };
 
     fetchData();
-  }, [dispatch, id, categories.length]);
+  }, [dispatch, id, categories?.length]);
 
   useEffect(() => {
     if (eventDetails && eventDetails.length > 0) {
       const eventData = eventDetails[0];
+      const formattedDate = new Date(eventData.date).toISOString().split('T')[0];
+
       if (
         data.title !== eventData.title ||
         data.description !== eventData.description ||
-        data.date !== eventData.date ||
+        formattedDate !== data.date ||
         data.time !== eventData.time ||
         data.location !== eventData.location ||
         data.music !== eventData.music ||
-        data.cost !== eventData.cost ||
-        data.categories.join(',') !== eventData.categories.map((category: any) => category.id.toString()).join(',')
+        data.price !== eventData.price ||
+        data.categories.join(',') !== eventData.categories.map((category) => category.id.toString()).join(',')
       ) {
         setData({
           id: id ?? "",
           title: eventData.title,
           description: eventData.description,
-          date: eventData.date,
+          date: formattedDate,
           time: eventData.time,
           location: eventData.location,
           user_id: currentUser?.user?.id ?? "",
           music: eventData.music,
-          cost: eventData.cost,
-          categories: eventData.categories.map((category: any) =>
+          price: eventData.price,
+          categories: eventData.categories.map((category) =>
             category?.id.toString()
           ),
         });
@@ -93,15 +95,15 @@ const UpdateEvent = () => {
       return;
     }
     if (isFormChanged) {
-      dispatch(updateEvent(data));
+      dispatch(updateEvent(data))
       navigate("/events");
     }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFormChanged(true);
     const { name, value } = event.target;
     setData({ ...data, [name]: value });
+    setIsFormChanged(true);
   };
 
   const handleCategoryChange = (categoryId: string) => {
@@ -129,7 +131,7 @@ const UpdateEvent = () => {
           </h2>
 
           <div className="flex justify-between px-4 text-xl pt-4">
-            {categories.map((category: Categories) => (
+            {categories && categories.map((category: Categories) => (
               <ul key={category.id}>
                 <li className="mb-2">
                   <input
@@ -205,11 +207,11 @@ const UpdateEvent = () => {
             <div className="w-1/2">
               <FormInputsComponent
                 label="Price"
-                id="cost"
+                id="price"
                 type="text"
                 placeholder="Price"
-                name="cost"
-                value={data.cost}
+                name="price"
+                value={data.price}
                 onChange={handleChange}
               />
               <span className={`text-sm text-gray-400 pl-1 pt-8 h-4`}>
