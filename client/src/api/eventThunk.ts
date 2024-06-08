@@ -69,10 +69,12 @@ export const updateEvent = createAsyncThunk(
       id: string;
       title: string;
       description: string;
+      date: string;
+      time: string;
       location: string;
       user_id: string;
       music: string;
-      cost: string;
+      price: string;
       categories: string[];
     },
     { rejectWithValue, getState }
@@ -109,7 +111,7 @@ export const deleteEvent = createAsyncThunk(
       const state: RootState = getState() as RootState;
       const token: string = state.user.token ?? "";
 
-      const response = await createAPI(`api/events/deleteEvents/${eventId}`, {
+      const response = await createAPI(`api/events/deleteEvent/${eventId}`, {
         method: "DELETE",
         token: token,
       })();

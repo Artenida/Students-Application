@@ -45,7 +45,7 @@ interface EventDetails {
   categoryId: string;
   location: string;
   music: string;
-  cost: string;
+  price: string;
 }
 
 const initialState: PostState = {

@@ -52,6 +52,7 @@ const UserAccount: React.FC<AuthorProps> = ({
     if (selectedPostId) {
       dispatch(deletePost(selectedPostId)).then(() => {
         setIsDeleteDialogOpen(false);
+        setShowOptions(false);
       });
     }
   };
