@@ -20,14 +20,9 @@ const MyAccount = ({
   profile_picture: string;
   user_id: string;
 }) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { currentUser } = useAppSelector(selectUser);
   const userID = currentUser?.user?.id;
-
-  useEffect(() => {
-    dispatch(getUser(userID));
-  }, [dispatch, userID]);
 
   const handleProfileClick = () => {
     if(String(userID) === String(user_id)) {
