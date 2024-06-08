@@ -179,3 +179,18 @@ export const searchEvent = async (
     res.status(500).json("Error getting events");
   }
 };
+
+export const getUsersEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userId;
+    const userPosts = await Event.retrieveEventsByUser(userId);
+    res.status(200).json(userPosts);
+  } catch (error) {
+    console.error("Error in getBloggersPost", error);
+    next(error);
+  }
+};

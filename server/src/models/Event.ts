@@ -509,6 +509,53 @@ GROUP BY e.id;`;
       throw error;
     }
   }
+
+  static async retrieveEventsByUser(userId: string) {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    const query = `
+    SELECT 
+    u.id AS user_id,
+    u.username,
+    u.email,
+    u.profile_picture,
+    e.id AS event_id,
+    e.title,
+    e.description,
+    e.date,
+    e.time,
+    e.location,
+    e.image, 
+    e.music,
+    e.price,
+    GROUP_CONCAT(DISTINCT c.category) AS categories,
+    GROUP_CONCAT(DISTINCT ec.category_id) AS category_Id
+FROM events e 
+LEFT JOIN users u ON e.user_id = u.id 
+LEFT JOIN event_category ec ON e.id = ec.event_id 
+LEFT JOIN categories c ON ec.category_id = c.id
+WHERE u.id = ?
+GROUP BY e.id;`;
+
+    try {
+      return new Promise((resolve, reject) => {
+        db.query(query, [userId], (error, result) => {
+          connection.closeConnection();
+          if (error) {
+            reject(error);
+          } else {
+            const postsWithImagesAndTags = this.structureEventResult(result);
+            resolve(postsWithImagesAndTags);
+          }
+        });
+      });
+    } catch (error) {
+      console.error("Error in getUsersPost", error);
+      connection.closeConnection();
+      throw error;
+    }
+  }
 }
 
 export default Event;
