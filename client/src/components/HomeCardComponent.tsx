@@ -24,7 +24,7 @@ const HomeCardComponent: React.FC<HomeCard> = ({
   isLastCard,
 }) => {
   return (
-    <div className="flex flex-col items-center pt-28 rounded-xl">
+    <div className="flex flex-col items-center pt-28 rounded-xl px-8">
       <div>
         <img src={image} alt="WELCOME" className="rounded-xl w-auto h-[350px]"/>
       </div>
@@ -39,7 +39,7 @@ const HomeCardComponent: React.FC<HomeCard> = ({
           </Link>
         </div>
       )}
-      <div className="flex justify-between mt-auto w-full text-custom-color3 font-semibold text-[20px] cursor-pointer pt-12 pb-28 px-72">
+      <div className="flex justify-center mt-auto w-full text-custom-color3 font-semibold text-[20px] cursor-pointer pt-12 pb-28 md:mx-72 ">
         <div className="flex items-center">
           {showPrevious && (
             <div className="flex items-center mr-auto" onClick={onPrevious}>
@@ -48,7 +48,7 @@ const HomeCardComponent: React.FC<HomeCard> = ({
             </div>
           )}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center pt-24">
           {showNext && (
             <div className="flex items-center ml-auto" onClick={onNext}>
               Next

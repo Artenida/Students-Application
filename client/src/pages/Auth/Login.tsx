@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row items-center h-screen p-4 gap-12 md:pr-16">
-      <div className="md:w-1/2">
+      <div className="md:w-1/2 pt-24">
         <img
           src={home}
           alt="WELCOME"

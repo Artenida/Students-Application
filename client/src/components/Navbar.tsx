@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo2.png";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
@@ -7,18 +7,31 @@ import { IoMdMenu } from "react-icons/io";
 import { Dialog } from "@mui/material";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import { selectUser } from "../redux/user/userSlice";
 
 const Navbar = () => {
   const [mobile, setMobile] = useState(false);
+  const { isLoggedIn } = useAppSelector(selectUser);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setMobile(!mobile);
   };
 
+  const handleClick = () => {
+    if(isLoggedIn) {
+      navigate('/forum');
+    } else {
+      navigate('/')
+    }
+  }
+  
+
   return (
     <header className="flex justify-between items-center p-4 fixed w-full bg-white shadow-lg z-50">
-      <Link to={"/forum"}>
-        <div className="flex items-center gap-2">
+      <div onClick={handleClick}>
+        <div className="flex items-center gap-2 cursor-pointer">
           <img
             src={logo}
             alt=""
@@ -28,7 +41,7 @@ const Navbar = () => {
             Edu<span className="text-custom-color4">Connect</span>
           </h1>
         </div>
-      </Link>
+      </div>
       <div>
         <div className="hidden md:flex mr-8">
           <ul className="flex mt-2 gap-8">

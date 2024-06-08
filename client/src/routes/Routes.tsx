@@ -26,6 +26,8 @@ const routes = [
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "/terms", element: <TermsAndConditions /> },
+  { path: "/about", element: <About /> },
+  { path: "/contact", element: <Contact /> },
   { path: "*", element: <Home /> },
 ];
 
@@ -45,7 +47,7 @@ const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<Writers />} path="/writers/:userId" />
             <Route element={<Forum />} path="/forum" />
-            <Route element={<About />} path="/about" />
+            {/* <Route element={<About />} path="/about" /> */}
             <Route element={<CreatePost />} path="/createPost" />
             <Route element={<UpdatePost />} path="/updatePost/:postId" />
             <Route element={<Events />} path="/events" />
@@ -53,7 +55,7 @@ const AppRoutes = () => {
             <Route element={<CreateEvent />} path="/createEvent" />
             <Route element={<UpdateEvent />} path="/updateEvent/:id" />
             <Route element={<ChangePassword />} path="/changePassword" />
-            <Route element={<Contact />} path="/contact" />
+            {/* <Route element={<Contact />} path="/contact" /> */}
             <Route element={<Account />} path="/editAccount" />
           </Route>
         </Routes>

@@ -1,11 +1,11 @@
 const TermsAndConditions = () => {
   return (
-    <div className="bg-gray-100 min-h-screen pt-16">
-      <div className="flex flex-col md:flex-row justify-center pt-24 space-y-8 lg:space-y-0 lg:space-x-8 pr-4 pl-20">
+    <div className="bg-gray-100 min-h-screen px-20">
+      <div className="flex flex-col md:flex-row justify-center pt-24 space-y-8 lg:space-y-0 lg:space-x-8 pr-4">
         <div className="bg-white p-6 lg:p-10 w-full md:w-[700px] rounded-xl">
           <h1 className="text-xl">Terms and Conditions</h1>
           <h3 className="text-custom-color3 mt-5 text-lg">Acceptance of terms</h3>
-          <p className="text-sm">
+          <p className="text-md">
             BY USING THE SERVICES YOU ARE AGREEING, ON BEHALF OF YOURSELF AND
             THOSE YOU REPRESENT, TO COMPLY WITH AND BE LEGALLY BOUND BY THESE
             TERMS AS WELL AS OUR PRIVACY POLICY AND ALL APPLICABLE LAWS. IF YOU,
@@ -16,7 +16,7 @@ const TermsAndConditions = () => {
             REGISTERED CANCEL YOUR ACCOUNT.
           </p>
           <h3 className="text-custom-color3 mt-5">Registration</h3>
-          <p className="text-sm">
+          <p className="text-md">
             Certainly! Here's a paragraph for the Registration section of your
             Terms and Conditions: "Registration on our platform is a
             straightforward process designed to enhance your experience and
@@ -38,11 +38,11 @@ const TermsAndConditions = () => {
         </div>
         <div className="bg-custom-color1 p-6 w-full md:w-[300px] rounded-xl">
           <h3 className="text-custom-color3 mt-6 text-lg">Short brief</h3>
-          <p className="text-sm">
+          <p className="text-md">
             By using EduConnect you agree to all terms below
           </p>
-          <h3 className="text-custom-color3 mt-20 lg:mt-28">Short brief</h3>
-          <p className="text-sm">
+          <h3 className="text-custom-color3 mt-28 lg:mt-28">Short brief</h3>
+          <p className="text-md">
             Registration offers seamless access to our platform's features,
             including a student forum, event updates, and real-time chat. Your
             information is securely managed and used only to enhance your

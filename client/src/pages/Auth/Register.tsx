@@ -92,7 +92,7 @@ const Register = () => {
 
   return (
     <div className="flex flex-col md:flex-row items-center h-screen p-2 gap-12 md:pr-16">
-      <div className="md:w-1/2 md:order-1">
+      <div className="md:w-1/2 md:order-1 pt-24">
         <img
           src={home}
           alt="WELCOME"
@@ -110,7 +110,7 @@ const Register = () => {
 
       <form
         action=""
-        className="w-full md:w-2/3 lg:w-1/2 md:mr-0 md:ml-12 px-8 rounded-xl md:order-2"
+        className="w-full md:w-2/3 lg:w-1/2 md:mr-0 md:ml-12 px-8 rounded-xl md:order-2 pb-8"
         onSubmit={handleSubmit}
       >
         <div className="flex justify-between flex-col mt-7 gap-4">
