@@ -1,11 +1,9 @@
-import { FaEdit } from "react-icons/fa";
 import profile from "../../assets/userProfile.jpg";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getUser } from "../../api/userThunk";
-import { Link } from "react-router-dom";
 
 const MyAccount = ({
   username,

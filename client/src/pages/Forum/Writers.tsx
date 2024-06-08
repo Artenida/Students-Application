@@ -5,9 +5,6 @@ import { useEffect } from "react";
 import { getWritersPosts } from "../../api/postThunk";
 import Card from "../../components/Forum/Card";
 import MyAccount from "../../components/Forum/MyAccount";
-import { getUser } from "../../api/userThunk";
-import { selectUser } from "../../redux/user/userSlice";
-import UserSidebar from "../../components/UserSidebar";
 
 export interface WritersType {
   id: string;
@@ -18,9 +15,9 @@ export interface WritersType {
   profile_picture: string;
   bio: string;
   description: string;
-  createdAt: Date;
+  created_at: Date;
   user_id: string;
-  fields: string;
+  interested_fields: string;
 }
 
 export interface Image {
@@ -31,7 +28,6 @@ const Writers = () => {
   const dispatch = useAppDispatch();
   const { writersPosts, retrieveError, loading } = useAppSelector(selectPost);
   const { userId } = useParams();
-  const { currentUser } = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(getWritersPosts(userId));
@@ -39,12 +35,11 @@ const Writers = () => {
 
   const typedPosts = writersPosts as WritersType[];
 
-  const { username, bio, email, profile_picture, user_id, fields } =
+  const { username, bio, email, profile_picture, user_id, interested_fields } =
     typedPosts?.[0] || {};
 
     return (
     <div className="pt-24">
-      {/* {String(user_id) === String(userId) ? <UserSidebar /> : ""} */}
       <div className="w-full flex flex-col justify-center items-center">
         <MyAccount
           username={username}
@@ -52,15 +47,16 @@ const Writers = () => {
           email={email}
           profile_picture={profile_picture}
           user_id={user_id}
-          fields={fields}
+          fields={interested_fields}
+          
         />
-        <div className="mt-12 pl-12">
+        <div className="mt-12 pl-12 mx-8">
           {writersPosts.length > 0 &&
             writersPosts.map((writer: WritersType, index: number) => (
               <Card
                 key={writer.id}
                 username={writer.username}
-                createdAt={writer.createdAt}
+                created_at={writer.created_at}
                 title={writer.title}
                 description={writer.description}
                 images={writer.images}

@@ -16,7 +16,7 @@ export interface Paginated {
   username: string;
   profile_picture: string | undefined;
   description: string;
-  createdAt: Date;
+  created_at: Date;
   user_id: string;
 }
 
@@ -27,7 +27,7 @@ export interface Image {
 const Card: React.FC<Paginated> = ({
   id,
   username,
-  createdAt,
+  created_at,
   title,
   description,
   profile_picture,
@@ -60,7 +60,7 @@ const Card: React.FC<Paginated> = ({
               postId={id}
               authorName={username}
               profile_picture={profile_picture}
-              createdAt={createdAt}
+              createdAt={created_at}
               userId={user_id}
             />
           </div>

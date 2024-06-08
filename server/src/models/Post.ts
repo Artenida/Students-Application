@@ -384,7 +384,8 @@ FROM
 WHERE 
     u.id = ? 
 GROUP BY 
-    u.id, u.username, u.profile_picture, u.bio, u.email, p.id, p.title, p.description, p.createdAt;`;
+    u.id, u.username, u.profile_picture, u.bio, u.email, p.id, p.title, p.description, p.createdAt
+ORDER BY p.createdAt DESC`;
 
     try {
       return new Promise((resolve, reject) => {

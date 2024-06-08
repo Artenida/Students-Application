@@ -111,7 +111,7 @@ const Forum = () => {
                 key={blog.id}
                 id={blog.id}
                 username={blog.username}
-                createdAt={blog.createdAt}
+                created_at={blog.created_at}
                 title={blog.title}
                 description={blog.description}
                 profile_picture={blog.profile_picture}

@@ -33,7 +33,7 @@ interface Paginated {
   username: string;
   profile_picture: string | undefined;
   description: string;
-  createdAt: Date;
+  created_at: Date;
   user_id: string;
 }
 interface PaginatedPosts {
