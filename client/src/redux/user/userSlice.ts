@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
 import {
-  addSocialMediaAccount,
-  deleteSocialMediaAccounts,
+  contact,
   deleteUser,
   getUser,
   loginUser,
@@ -20,6 +19,7 @@ interface UserState {
   socialMedia: SocialMediaType;
   loading: boolean;
   loginError: string | null;
+  contactError: string | null;
   registerError: string | null;
   socialMediaError: string | null;
   deleteError: string | null;
@@ -29,6 +29,7 @@ interface UserState {
   isUpdated: boolean;
   user: any;
   success: boolean;
+  contactMessage: any;
 }
 
 const initialState: UserState = {
@@ -38,6 +39,7 @@ const initialState: UserState = {
     social_media: " ",
   },
   loginError: null,
+  contactError: null,
   registerError: null,
   deleteError: null,
   updateError: null,
@@ -48,6 +50,7 @@ const initialState: UserState = {
   isUpdated: false,
   user: null,
   success: false,
+  contactMessage: null,
 };
 
 const userSlice = createSlice({
@@ -132,42 +135,27 @@ const userSlice = createSlice({
         state.updateError = action.payload as string | null;
       })
 
-      .addCase(addSocialMediaAccount.pending, (state) => {
-        state.loading = true;
-        state.socialMediaError = null;
-      })
-      .addCase(addSocialMediaAccount.fulfilled, (state, action) => {
-        state.loading = false;
-        state.socialMediaError = null;
-        state.isLoggedIn = true;
-        state.socialMedia = action.payload;
-      })
-      .addCase(addSocialMediaAccount.rejected, (state, action) => {
-        state.loading = true;
-        state.socialMediaError = action.payload as string | null;
-      })
-
-      .addCase(deleteSocialMediaAccounts.pending, (state) => {
-        state.deleteError = null;
-        state.loading = true;
-      })
-      .addCase(deleteSocialMediaAccounts.fulfilled, (state) => {
-        state.isLoggedIn = true;
-        state.deleteError = null;
-        state.loading = false;
-      })
-      .addCase(deleteSocialMediaAccounts.rejected, (state, action) => {
-        state.loading = false;
-        state.deleteError = action.payload as string;
-      })
-
       .addCase(updateProfilePicture.fulfilled, (state, action) => {
         state.isUpdated = true;
       })
 
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
-      });
+      })
+
+      .addCase(contact.pending, (state) => {
+        state.loading = true;
+        state.contactError = null;
+      })
+      .addCase(contact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.contactError = null;
+        state.contactMessage = action.payload;
+      })
+      .addCase(contact.rejected, (state, action) => {
+        state.loading = false;
+        state.contactError = action.payload as string;
+      })
   },
 });
 

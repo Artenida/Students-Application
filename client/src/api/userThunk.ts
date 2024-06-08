@@ -7,6 +7,12 @@ type UserBodyType = {
   password: string;
 };
 
+type ContactType = {
+  from: string,
+  subject: string,
+  message: string,
+}
+
 type UserBodyTypeRegister = {
   username: string;
   password: string;
@@ -112,26 +118,6 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const addSocialMediaAccount = createAsyncThunk(
-  "api/users/addAccount",
-  async ({ id, social_media } : {id: String, social_media: string}, { rejectWithValue, getState }) => {
-    try {
-      const state: RootState = getState() as RootState;
-      const token: string = state.user.token ?? "";
-
-      const response = await createAPI(`api/users/addAccount/${id}`, {
-        method: "POST",
-        token: token,
-        body: JSON.stringify({id, social_media}),
-      })({id, social_media});
-      const data = await response.json();
-      return !response.ok ? rejectWithValue(data.message) : data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 export const updateProfilePicture = createAsyncThunk(
   "api/users/updatePicture",
   async (formData: FormData, { rejectWithValue, getState }) => {
@@ -174,23 +160,17 @@ export const getUser = createAsyncThunk(
   }
 );
 
-export const deleteSocialMediaAccounts = createAsyncThunk(
-  "api/users/deleteAccounts",
-  async (id: number, { rejectWithValue, getState }) => {
+export const contact = createAsyncThunk(
+  "api/auth/contact",
+  async (body: ContactType, { rejectWithValue }) => {
     try {
-      const state: RootState = getState() as RootState;
-      const token = state.user.token ?? "";
-      const response = await createAPI(`api/users/deleteAccounts/${id}`, {
-        method: "DELETE",
-        token: token,
-      })(null);
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        return rejectWithValue(errorMessage);
-      }
-      return { success: true };
+      const response = await createAPI("api/auth/contact", { method: "POST" })(
+        body
+      );
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error);
     }
   }
 );
