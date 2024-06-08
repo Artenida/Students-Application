@@ -36,7 +36,6 @@ const Card: React.FC<Paginated> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const shouldShowReadMore = description.length > 300;
-  // const sanitizedHTML = shouldShowReadMore ? DOMPurify.sanitize(shouldShowReadMore) : "";
   const sanitizedDescription = description
     ? DOMPurify.sanitize(description)
     : "";
