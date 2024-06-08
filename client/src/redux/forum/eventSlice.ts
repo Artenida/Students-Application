@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
-import { deleteEvent, retrieveAllEvents, createEvent, getSingleEvent, updateEvent } from "../../api/eventThunk";
+import { deleteEvent, retrieveAllEvents, createEvent, getSingleEvent, updateEvent, getUsersEvents } from "../../api/eventThunk";
 
 export interface EventType {
   id: string;
@@ -16,7 +16,8 @@ export interface EventType {
   price: string;
   email: string;
   }
-interface PostState {
+interface EventState {
+  usersEvents: [];
   currentEvents: EventType[];
   loading: boolean;
   retrieveError: string | null;
@@ -48,7 +49,8 @@ interface EventDetails {
   price: string;
 }
 
-const initialState: PostState = {
+const initialState: EventState = {
+  usersEvents: [],
   currentEvents: [],
   retrieveError: null,
   deleteError: null,
@@ -136,6 +138,20 @@ const eventSlice = createSlice({
         state.successfulUpdate = false;
         state.loading = false;
         state.updateError = action.payload as string;
+      })
+
+      .addCase(getUsersEvents.pending, (state) => {
+        state.loading = true;
+        state.retrieveError = null;
+      })
+      .addCase(getUsersEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.usersEvents = action.payload;
+        state.retrieveError = null;
+      })
+      .addCase(getUsersEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.retrieveError = action.payload as string;
       })
   },
 });

@@ -15,7 +15,7 @@ const MyAccount = ({
 }: {
   username: string;
   fields: string;
-  email: string;
+  email?: string;
   bio: string;
   profile_picture: string;
   user_id: string;
@@ -54,11 +54,6 @@ const MyAccount = ({
             {username}
           </h2>
           <h2 className="text-xl text-custom-color3 ml-2 mt-1">{fields}</h2>
-          {currentUser?.user?.id === user_id && (
-            <div className="pt-2">
-              <span className="ml-2 text-lg text-custom-color3">{email}</span>
-            </div>
-          )}
           <div>
             <span className="ml-2 text-custom-color3">{bio}</span>
           </div>

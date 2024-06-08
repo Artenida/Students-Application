@@ -20,6 +20,7 @@ import EventDetails from "../pages/Event/EventDetails";
 import About from "../pages/Forum/About";
 import CreateEvent from "../pages/Event/CreateEvent";
 import UpdateEvent from "../pages/Event/UpdateEvent";
+import UserEvents from "../pages/Event/UserEvents";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -46,6 +47,7 @@ const AppRoutes = () => {
           ))}
           <Route element={<PrivateRoutes />}>
             <Route element={<Writers />} path="/writers/:userId" />
+            <Route element={<UserEvents />} path="/userEvents/:userId" />
             <Route element={<Forum />} path="/forum" />
             {/* <Route element={<About />} path="/about" /> */}
             <Route element={<CreatePost />} path="/createPost" />

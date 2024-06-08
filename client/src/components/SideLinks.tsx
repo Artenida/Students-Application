@@ -32,7 +32,7 @@ export const SideLinks = () => {
     {
       title: "My events",
       icon: <FaRegCalendarCheck />,
-      path: `/myEvents`,
+      path: `/userEvents/${userId}`,
     },
     {
       title: "Change Password",

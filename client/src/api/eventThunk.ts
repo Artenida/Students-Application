@@ -155,3 +155,21 @@ export const filterEvents = createAsyncThunk(
     }
   }
 );
+
+export const getUsersEvents = createAsyncThunk(
+  "api/events/users",
+  async (userId: string | undefined, { rejectWithValue }) => {
+    try {
+      const response = await createAPI(`api/events/users/${userId}`, {
+        method: "GET",
+      })();
+      if (!response.ok) {
+        throw new Error("Failed to retrieve events");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
