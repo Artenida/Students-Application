@@ -28,7 +28,9 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      dispatch(contact(formData)); // Dispatch the action with the payload directly
+      await dispatch(contact(formData)).unwrap();
+      if(isLoggedIn) navigate('/forum')
+      else navigate('/')
       alert('Email sent successfully');
     } catch (err) {
       alert('Error sending email');

@@ -74,14 +74,10 @@ export const login = async (
   }
 };
 
-export const contact = () => {
-  async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  var {from, subject, message} = req.body
-  console.log('Received contact request:', req.body); // Log the request body
+export const contact = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { from, subject, message } = req.body;
+    console.log('Received contact request:', req.body); 
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -97,13 +93,13 @@ export const contact = () => {
       subject: subject,
       text: message,
     };
-    transporter.sendMail(mailConfig, function (error: any, info: any) {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ message: 'An error occurred while sending the email' });
-      }
-      console.log("Successful", info);
-      res.status(200).json({ message: 'Email sent successfully' + info.response });
-    });
+    
+    const info = await transporter.sendMail(mailConfig);
+    console.log("Successful", info);
+    res.status(200).json({ message: 'Email sent successfully', info: info.response });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while sending the email' });
   }
-}
+};
+
