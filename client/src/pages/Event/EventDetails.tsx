@@ -115,10 +115,13 @@ const EventDetails = () => {
               <div className="flex items-center gap-3 text-base md:text-xl">
                 <MdAlternateEmail className="text-custom-color3" />
                 <h2>
-                  Contact for more:{" "}
-                  <span className="text-custom-color3 cursor-pointer">
+                   Contact for more:{"   "}  
+                  <a 
+                    href={`mailto:${eventDetails[0]?.email}`}
+                    className="text-custom-color3 cursor-pointer"
+                  >
                     {eventDetails[0]?.email}
-                  </span>
+                  </a>
                 </h2>
               </div>
             </div>
