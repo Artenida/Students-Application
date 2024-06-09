@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const generateTokenAndSetCookie = (userId: string, res: Response): void => {
+const generateTokenAndSetCookie = (userId: any, res: Response): void => {
   const secret = process.env.JWT_SECRET;
 
   if (!secret) {
