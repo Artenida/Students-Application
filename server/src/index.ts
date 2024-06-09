@@ -9,6 +9,7 @@ import commentRoutes from "./routes/commentRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import chatAuthRoutes from "./routes/chatAuthRoutes";
 import messageRoutes from "./routes/messageRoutes";
+import chatUserRoutes from "./routes/chatUserRoutes";
 import connectToMongoDB from "./connectToMongoDB";
 import cookieParser from "cookie-parser";
 
@@ -35,6 +36,7 @@ app.use(`${base_url}categories`, categoryRoutes);
 
 app.use(`${base_url}authChat`, chatAuthRoutes);
 app.use(`${base_url}messages`, messageRoutes);
+app.use(`${base_url}usersChat`, chatUserRoutes);
 
 
 app.listen(process.env.DEV_PORT, () => {
