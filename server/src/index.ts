@@ -7,6 +7,9 @@ import postRoutes from "./routes/postRoutes";
 import eventRoutes from "./routes/eventRoutes";
 import commentRoutes from "./routes/commentRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
+import chatAuthRoutes from "./routes/chatAuthRoutes";
+import connectToMongoDB from "./connectToMongoDB";
+
 import path from "path";
 
 dotenv.config();
@@ -27,6 +30,9 @@ app.use(`${base_url}events`, eventRoutes);
 app.use(`${base_url}comments`, commentRoutes);
 app.use(`${base_url}categories`, categoryRoutes);
 
+app.use(`${base_url}authChat`, chatAuthRoutes);
+
 app.listen(process.env.DEV_PORT, () => {
+  connectToMongoDB();
   console.log(`Server is listening at http://localhost:${process.env.DEV_PORT}`);
 });
