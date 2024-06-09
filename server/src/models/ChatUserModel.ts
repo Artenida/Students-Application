@@ -1,4 +1,11 @@
 import mongoose from "mongoose";
+interface UserDocument extends Document {
+	_id?: string;
+	username: string;
+	password: string;
+	createdAt: Date;
+	updatedAt: Date;
+  }
 
 const userSchema = new mongoose.Schema(
 	{
@@ -19,4 +26,4 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-export default User;
+export { User, UserDocument };

@@ -19,7 +19,7 @@ const generateTokenAndSetCookie = (userId: any, res: Response): void => {
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
     httpOnly: true, // Prevent XSS attacks
     sameSite: "strict", // Prevent CSRF attacks
-    secure: process.env.NODE_ENV !== "development", // Use secure cookies in production
+    // secure: process.env.NODE_ENV !== "development", // Use secure cookies in production
   });
 };
 

@@ -8,7 +8,9 @@ import eventRoutes from "./routes/eventRoutes";
 import commentRoutes from "./routes/commentRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import chatAuthRoutes from "./routes/chatAuthRoutes";
+import messageRoutes from "./routes/messageRoutes";
 import connectToMongoDB from "./connectToMongoDB";
+import cookieParser from "cookie-parser";
 
 import path from "path";
 
@@ -19,6 +21,7 @@ const base_url = process.env.BASE_URL;
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 const Path = path.join(__dirname, '../uploads');
 app.use('/uploads', express.static(Path));
@@ -31,6 +34,8 @@ app.use(`${base_url}comments`, commentRoutes);
 app.use(`${base_url}categories`, categoryRoutes);
 
 app.use(`${base_url}authChat`, chatAuthRoutes);
+app.use(`${base_url}messages`, messageRoutes);
+
 
 app.listen(process.env.DEV_PORT, () => {
   connectToMongoDB();

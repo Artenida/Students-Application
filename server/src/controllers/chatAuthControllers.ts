@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import User from "../models/ChatUserModel";
+import {User} from "../models/ChatUserModel";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie";
 
 interface SignupRequest extends Request {
