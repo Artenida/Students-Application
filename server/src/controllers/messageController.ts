@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Conversation from "../models/ConversationModel";
-import Message from "../models/ConversationModel";
+import Message from "../models/MessageModel";
 // import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {
@@ -38,7 +38,7 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
 		// await newMessage.save();
 
 		// this will run in parallel
-		await Promise.all([conversation.save(), newMessage.save()]);
+		await Promise.all([newMessage.save(), conversation.save()]);
 
 		// SOCKET IO FUNCTIONALITY WILL GO HERE
 		// const receiverSocketId = getReceiverSocketId(receiverId);
