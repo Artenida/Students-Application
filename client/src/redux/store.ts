@@ -4,8 +4,9 @@ import postReducer from './forum/postSlice'
 import commentsReducer from './forum/commentSlice'
 import eventReducer from './forum/eventSlice'
 import categoriesReducer from './forum/categoriesSlice'
+import conversationReducer from './chat/conversationSlice'
 import storage from 'redux-persist/lib/storage'
-import { persistReducer } from 'redux-persist';
+import { persistReducer } from 'redux-persist'
 import { persistStore } from 'redux-persist'
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     comments: commentsReducer,
     event: eventReducer,
     categories: categoriesReducer,
+    conversation: conversationReducer,
 });
 
 const persistConfig = {
