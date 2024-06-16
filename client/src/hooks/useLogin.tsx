@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
 export interface AuthUser {
-    id: string;
+    _id: string;
     username: string;
     password: string;
   }

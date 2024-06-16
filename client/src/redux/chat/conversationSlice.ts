@@ -1,8 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ConversationState {
-  selectedConversation: string | null;
-  messages: any[];
+export interface Conversation {
+  _id: string;
+  username: string;
+}
+export interface Message {
+  _id: string;
+  text: string;
+  timestamp: number;
+  shouldShake?: boolean;
+}
+
+export interface ConversationState {
+  selectedConversation: Conversation | null;
+  messages: Message[];
 }
 
 const initialState: ConversationState = {
@@ -11,17 +22,22 @@ const initialState: ConversationState = {
 };
 
 const conversationSlice = createSlice({
-  name: 'conversation',
+  name: "conversation",
   initialState,
   reducers: {
-    setSelectedConversation: (state, action: PayloadAction<string | null>) => {
+    setSelectedConversation: (state, action: PayloadAction<Conversation | null>) => {
       state.selectedConversation = action.payload;
     },
-    setMessages: (state, action: PayloadAction<any[]>) => {
+    addMessage: (state, action: PayloadAction<Message>) => {
+      state.messages = [...state.messages, action.payload];
+    },
+    setMessages: (state, action: PayloadAction<Message[]>) => {
       state.messages = action.payload;
     },
   },
 });
 
-export const { setSelectedConversation, setMessages } =  conversationSlice.actions;
+export const { setSelectedConversation, addMessage, setMessages } =
+  conversationSlice.actions;
+
 export default conversationSlice.reducer;

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // AuthContextTypes.ts
 export interface AuthUser {
-    id: string;
+    _id: string;
     username: string;
     password: string;
   }
