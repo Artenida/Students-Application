@@ -50,7 +50,7 @@ const Sidebar = () => {
       name: "Share event",
     },
     {
-      path: "/chat",
+      path: "/loginChat",
       icon: <IoIosChatbubbles />,
       name: "Chat",
     },

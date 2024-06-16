@@ -24,7 +24,8 @@ module.exports = {
         md: '1060px',
       }
     },
-    plugins: [],
+    // eslint-disable-next-line no-undef
+    plugins: [require("daisyui")],
   }
   
   

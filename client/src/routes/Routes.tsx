@@ -22,6 +22,8 @@ import CreateEvent from "../pages/Event/CreateEvent";
 import UpdateEvent from "../pages/Event/UpdateEvent";
 import UserEvents from "../pages/Event/UserEvents";
 import Chat from "../pages/Chat/Chat";
+import Signup from "../pages/Chat/Signup";
+import LoginChat from "../pages/Chat/LoginChat";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -59,6 +61,8 @@ const AppRoutes = () => {
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Account />} path="/editAccount" />
             <Route element={<Chat />} path="/chat" />
+            <Route element={<LoginChat />} path="/loginChat" />
+            <Route element={<Signup />} path="/registerChat" />
           </Route>
         </Routes>
       </Router>
