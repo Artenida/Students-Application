@@ -1,8 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSignup from "../../hooks/useSignup";
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -12,6 +13,7 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await signup({ username, password, confirmPassword });
+    navigate('/loginChat')
   };
 
   return (

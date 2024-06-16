@@ -63,7 +63,7 @@ const Sidebar = () => {
 
   const handleSignOut = () => {
     dispatch(signOutSuccess());
-    navigate("/login");
+    navigate("/loginChat");
   };
 
   return (

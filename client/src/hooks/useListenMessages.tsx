@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import notificationSound from "../assets/sounds/notification.mp3";
+// import notificationSound from "../assets/sounds/notification.mp3";
 import { useSocketContext } from "../context/SocketContext";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
@@ -22,8 +22,8 @@ const useListenMessages = () => {
     if (socket) {
       socket.on("newMessage", (newMessage: Message) => {
         newMessage.shouldShake = true;
-        const sound = new Audio(notificationSound);
-        sound.play();
+        // const sound = new Audio(notificationSound);
+        // sound.play();
         dispatch(setMessages([...messages, newMessage]));
       });
 
