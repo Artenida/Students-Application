@@ -10,8 +10,7 @@ const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const { authUser } = useAuthContext();
-  console.log(authUser?.token)
-
+  
   useEffect(() => {
     const getConversations = async () => {
       setLoading(true);

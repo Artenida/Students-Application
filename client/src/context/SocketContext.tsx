@@ -24,7 +24,7 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (authUser) {
-      const newSocket = io("https://localhost:5000", {
+      const newSocket = io("http://localhost:5000", {
         query: {
           userId: authUser._id,
         },
