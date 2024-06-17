@@ -12,12 +12,12 @@ import messageRoutes from "./routes/messageRoutes";
 import chatUserRoutes from "./routes/chatUserRoutes";
 import connectToMongoDB from "./connectToMongoDB";
 import cookieParser from "cookie-parser";
-
+import { app } from './socket/socket';
 import path from "path";
 
 dotenv.config();
 
-const app = express();
+// const app = express();
 const base_url = process.env.BASE_URL;
 
 app.use(cors({

@@ -24,7 +24,7 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (authUser) {
-      const newSocket = io("https://chat-app-yt.onrender.com", {
+      const newSocket = io("https://localhost:5000", {
         query: {
           userId: authUser._id,
         },
