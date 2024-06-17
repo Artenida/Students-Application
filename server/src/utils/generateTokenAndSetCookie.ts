@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const generateTokenAndSetCookie = (userId: any, res: Response): void => {
+const generateTokenAndSetCookie = (userId: any, res: Response): string => {
   const secret = process.env.JWT_SECRET;
 
   if (!secret) {
@@ -21,6 +21,7 @@ const generateTokenAndSetCookie = (userId: any, res: Response): void => {
     sameSite: "strict", // Prevent CSRF attacks
     // secure: process.env.NODE_ENV !== "development", // Use secure cookies in production
   });
+  return token;
 };
 
 export default generateTokenAndSetCookie;

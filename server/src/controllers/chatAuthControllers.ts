@@ -72,11 +72,13 @@ export const login = async (req: LoginRequest, res: Response): Promise<void> => 
       return;
     }
 
-    generateTokenAndSetCookie(user._id, res);
+    const token = generateTokenAndSetCookie(user._id, res);
+    console.log(token)
 
     res.status(200).json({
       _id: user._id,
       username: user.username,
+      token,
     });
   } catch (error: any) {
     console.log("Error in login controller", error.message);

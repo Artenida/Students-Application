@@ -20,7 +20,10 @@ dotenv.config();
 const app = express();
 const base_url = process.env.BASE_URL;
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000", // Adjust to match your frontend URL
+  credentials: true, // Allow cookies
+}));
 app.use(express.json());
 app.use(cookieParser());
 

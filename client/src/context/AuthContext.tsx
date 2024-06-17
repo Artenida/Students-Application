@@ -1,18 +1,17 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 // import { AuthUser, AuthContextType } from "./AuthContextTypes";
 
-// AuthContextTypes.ts
 export interface AuthUser {
-    _id: string;
-    username: string;
-    password: string;
-  }
-  
-  export interface AuthContextType {
-    authUser: AuthUser | null;
-    setAuthUser: (user: AuthUser | null) => void;
-  }
-  
+  _id: string;
+  username: string;
+  password: string;
+  token: string;
+}
+
+export interface AuthContextType {
+  authUser: AuthUser | null;
+  setAuthUser: (user: AuthUser | null) => void;
+}
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,12 +28,28 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
-  const [authUser, setAuthUser] = useState<AuthUser | null>(
-    JSON.parse(localStorage.getItem("chat-user") || "null")
-  );
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("chat-user");
+    if (storedUser) {
+      setAuthUser(JSON.parse(storedUser));
+    }
+    console.log(storedUser)
+
+  }, []);
+
+  const updateAuthUser = (user: AuthUser | null) => {
+    setAuthUser(user);
+    if (user) {
+      localStorage.setItem("chat-user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("chat-user");
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ authUser, setAuthUser }}>
+    <AuthContext.Provider value={{ authUser, setAuthUser: updateAuthUser }}>
       {children}
     </AuthContext.Provider>
   );
