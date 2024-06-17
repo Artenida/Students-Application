@@ -24,6 +24,7 @@ import UserEvents from "../pages/Event/UserEvents";
 import Chat from "../pages/Chat/Chat";
 import Signup from "../pages/Chat/Signup";
 import LoginChat from "../pages/Chat/LoginChat";
+import { useAuthContext } from "../context/AuthContext";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -37,7 +38,7 @@ const routes = [
 
 const AppRoutes = () => {
   const {isLoggedIn} = useAppSelector(selectUser);
-
+  const {authUser} = useAuthContext();
   return (
     <div className="App">
       <Router>
@@ -60,9 +61,9 @@ const AppRoutes = () => {
             <Route element={<UpdateEvent />} path="/updateEvent/:id" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Account />} path="/editAccount" />
-            <Route element={<Chat />} path="/chat" />
-            <Route element={<LoginChat />} path="/loginChat" />
-            <Route element={<Signup />} path="/registerChat" />
+            <Route element={authUser ? <Chat /> : <LoginChat />} path="/chat" />
+            <Route element={authUser ? <Chat/> : <LoginChat />} path="/loginChat" />
+            <Route element={authUser ? <Chat/> : <Signup />} path="/registerChat" />
           </Route>
         </Routes>
       </Router>
