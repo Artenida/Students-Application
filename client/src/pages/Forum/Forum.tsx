@@ -120,7 +120,7 @@ const Forum = () => {
               />
             ))
           ) : (
-              <EmptyComponent />
+              <EmptyComponent firstMessage="No posts yet" secondMessage="Be the first to post"/>
           )}
         </div>
 

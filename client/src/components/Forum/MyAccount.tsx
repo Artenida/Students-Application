@@ -25,10 +25,10 @@ const MyAccount = ({
   const userID = currentUser?.user?.id;
 
   const handleProfileClick = () => {
-    if(String(userID) === String(user_id)) {
-      navigate('/editAccount');
+    if (String(userID) === String(user_id)) {
+      navigate("/editAccount");
     }
-  }
+  };
   return (
     <div
       className="flex ml-16 md:ml-0 px-12 md:pr-40 md:pl-12 mt-8 cursor-pointer"
@@ -37,11 +37,19 @@ const MyAccount = ({
       <div className="flex gap-4 relative pt-12 w-full">
         <div className="relative">
           <div className="w-32 h-32 self-center shadow-md overflow-hidden rounded-full border-4">
-            <img
-              src={`http://localhost:5000/${profile_picture}` || profile}
-              alt="Profile"
-              className="rounded-full w-32 h-32"
-            />
+            {profile_picture ? (
+              <img
+                src={`http://localhost:5000/${profile_picture}`}
+                alt="Profile"
+                className="rounded-full w-32 h-32"
+              />
+            ) : (
+              <img
+                src={profile}
+                alt="Profile"
+                className="rounded-full w-32 h-32"
+              />
+            )}
           </div>
         </div>
         <div className="p-4">

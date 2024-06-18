@@ -121,7 +121,7 @@ const Events = () => {
         </div>
       ) : (
         <div className="flex justify-center">
-          <EmptyComponent />
+          <EmptyComponent firstMessage="No events found for this topic" secondMessage="Try to search another one"/>
         </div>
       )}
     </div>

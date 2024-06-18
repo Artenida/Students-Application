@@ -7,6 +7,7 @@ import MyAccount from "../../components/Forum/MyAccount";
 import Card from "../../components/Events/Card";
 import { selectEvent } from "../../redux/forum/eventSlice";
 import { getUsersEvents } from "../../api/eventThunk";
+import EmptyComponent from "../../components/Helpful Components/EmptyComponent";
 
 export interface UserEventTypes {
   id: string;
@@ -32,7 +33,7 @@ export interface Image {
 
 const UserEvents = () => {
   const dispatch = useAppDispatch();
-  const {usersEvents} = useAppSelector(selectEvent);
+  const { usersEvents } = useAppSelector(selectEvent);
   const { userId } = useParams();
 
   useEffect(() => {
@@ -43,22 +44,24 @@ const UserEvents = () => {
 
   const { username, bio, email, profile_picture, user_id, interested_fields } =
     typedPosts?.[0] || {};
-    
-    console.log(usersEvents)
 
-    return (
+  console.log(usersEvents);
+
+  return (
     <div className="pt-24">
       <div className="w-full flex flex-col justify-center items-center">
-        <MyAccount
-          username={username}
-          bio={bio}
-          profile_picture={profile_picture}
-          user_id={user_id}
-          fields={interested_fields}
-        />
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 w-full mt-12 gap-4 md:px-24 sm:px-4 px-4">
-          {usersEvents && usersEvents.length > 0 &&
-            usersEvents.map((events: UserEventTypes, index: number) => (
+        {usersEvents.length > 0 && (
+          <MyAccount
+            username={username}
+            bio={bio}
+            profile_picture={profile_picture}
+            user_id={user_id}
+            fields={interested_fields}
+          />
+        )}
+        {usersEvents && usersEvents.length > 0 ? (
+          usersEvents.map((events: UserEventTypes, index: number) => (
+            <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 w-full mt-12 gap-4 md:px-24 sm:px-4 px-4">
               <Card
                 key={events.id}
                 id={events.id}
@@ -74,8 +77,14 @@ const UserEvents = () => {
                 image={events.image}
                 profile_picture={events.profile_picture}
               />
-            ))}
-        </div>
+            </div>
+          ))
+        ) : (
+          <EmptyComponent
+            firstMessage="You haven't posted any event yet"
+            secondMessage="Start your event now!"
+          />
+        )}
       </div>
     </div>
   );

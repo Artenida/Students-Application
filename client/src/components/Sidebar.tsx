@@ -55,7 +55,7 @@ const Sidebar = () => {
       name: "Chat",
     },
     {
-      path: `/writers/${userId}`,
+      path: `/editAccount`,
       icon: <MdAccountCircle />,
       name: "My space",
     }
