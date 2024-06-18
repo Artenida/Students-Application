@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router, Navigate } from "react-router-dom";
 import Home from "../pages/Auth/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
@@ -61,9 +61,9 @@ const AppRoutes = () => {
             <Route element={<UpdateEvent />} path="/updateEvent/:id" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Account />} path="/editAccount" />
-            <Route element={authUser ? <Chat /> : <LoginChat />} path="/chat" />
-            <Route element={authUser ? <Chat/> : <LoginChat />} path="/loginChat" />
-            <Route element={authUser ? <Chat/> : <Signup />} path="/registerChat" />
+            <Route element={authUser ? <Chat /> : <Navigate to={'/loginChat'} />} path="/chat" />
+            <Route element={authUser ? <Navigate to={'/'}/> : <LoginChat />} path="/loginChat" />
+            <Route element={authUser ? <Navigate to={'/'}/> : <Signup />} path="/registerChat" />
           </Route>
         </Routes>
       </Router>
