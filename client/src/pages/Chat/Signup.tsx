@@ -13,23 +13,19 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await signup({ username, password, confirmPassword });
-    navigate('/loginChat')
+    navigate("/loginChat");
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-6 rounded-lg shadow-md bg-gray-100">
+    <div className="flex flex-col items-center justify-center h-screen pt-12">
+      <div className="w-full max-w-md p-6 rounded-lg">
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          Register to chat
+          <span className="text-gray-400 ">Register to chat with</span>
           <span className="text-custom-color3"> Edu</span>
           <span className="text-custom-color4">Connect</span>
         </h1>
 
-        {error && (
-          <div className="mb-4 text-red-500 text-center">
-            {error}
-          </div>
-        )}
+        {error && <div className="mb-4 text-red-500 text-center">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -41,7 +37,9 @@ const SignUp: React.FC = () => {
               placeholder="johndoe"
               className="w-full input input-bordered h-10"
               value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUsername(e.target.value)
+              }
             />
           </div>
 
@@ -54,7 +52,9 @@ const SignUp: React.FC = () => {
               placeholder="Enter Password"
               className="w-full input input-bordered h-10"
               value={password}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
             />
           </div>
 
@@ -67,7 +67,9 @@ const SignUp: React.FC = () => {
               placeholder="Confirm Password"
               className="w-full input input-bordered h-10"
               value={confirmPassword}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setConfirmPassword(e.target.value)
+              }
             />
           </div>
 
@@ -79,11 +81,29 @@ const SignUp: React.FC = () => {
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2 border border-slate-700" disabled={loading}>
-              {loading ? <span className="loading loading-spinner"></span> : "Sign Up"}
+            <button
+              className="btn btn-block btn-md mt-2 border bg-custom-color4 hover:bg-gray-400 text-white text-xl"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner"></span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </div>
         </form>
+      </div>
+      <div className="mt-4 p-4 bg-red-100 rounded-md text-gray-700">
+        <p className="mb-2">
+          Note: This section is optional, you may not use it if you don't need
+          too!
+        </p>
+        <p className="mb-2">
+          The name you choose during registration will be your display name in
+          the chat, visible to other users.
+        </p>
+        <p>Please select a simple and easy-to-remember name.</p>
       </div>
     </div>
   );

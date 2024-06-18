@@ -16,7 +16,7 @@ const LoginChat: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen gap-12">
       <div className="w-full max-w-md p-6 rounded-lg">
         <h1 className="text-3xl font-semibold text-center text-gray-400 mb-6">
           Chat with
@@ -51,11 +51,11 @@ const LoginChat: React.FC = () => {
             />
           </div>
           <Link to="/registerChat" className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block">
-            {"Don't"} have an account?
+            Don't have an account?
           </Link>
 
           <div>
-            <button className="btn btn-block btn-sm mt-2" disabled={loading}>
+            <button className="btn btn-block btn-md mt-2 bg-custom-color4 hover:bg-gray-400 text-white text-xl" disabled={loading}>
               {loading ? <span className="loading loading-spinner"></span> : "Login"}
             </button>
           </div>
