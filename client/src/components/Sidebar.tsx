@@ -102,7 +102,7 @@ const Sidebar = () => {
                   handleSignOut();
                 }}
               />
-              Logout
+              <span className="hidden md:block">Logout</span>
             </div>
           </div>
         </div>

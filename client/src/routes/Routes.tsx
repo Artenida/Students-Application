@@ -62,8 +62,8 @@ const AppRoutes = () => {
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<Account />} path="/editAccount" />
             <Route element={authUser ? <Chat /> : <Navigate to={'/loginChat'} />} path="/chat" />
-            <Route element={authUser ? <Navigate to={'/'}/> : <LoginChat />} path="/loginChat" />
-            <Route element={authUser ? <Navigate to={'/'}/> : <Signup />} path="/registerChat" />
+            <Route element={authUser ? <Navigate to={'/chat'}/> : <LoginChat />} path="/loginChat" />
+            <Route element={authUser ? <Navigate to={'/chat'}/> : <Signup />} path="/registerChat" />
           </Route>
         </Routes>
       </Router>
