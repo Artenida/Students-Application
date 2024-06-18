@@ -8,7 +8,7 @@ import { setMessages } from "../redux/chat/conversationSlice";
 
 interface Message {
 	_id: string;
-	text: string;
+	message: string;
 	timestamp: number;
   shouldShake?: boolean; 
   }

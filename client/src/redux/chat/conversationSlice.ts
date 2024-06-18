@@ -6,7 +6,7 @@ export interface Conversation {
 }
 export interface Message {
   _id: string;
-  text: string;
+  message: string;
   timestamp: number;
   shouldShake?: boolean;
 }

@@ -6,7 +6,7 @@ import { RootState } from "../../../redux/store";
 interface Message {
 	_id: string;
 	senderId?: string; 
-	text: string;
+	message: string;
 	timestamp: number;
 	createdAt?: string;
 	shouldShake?: boolean;
@@ -28,7 +28,7 @@ interface Message {
 
 	return (
 		<div className={`chat ${chatClassName}`}>
-			<div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}>{message.text}</div>
+			<div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}>{message.message}</div>
 			<div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>{formattedTime}</div>
 		</div>
 	);

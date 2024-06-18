@@ -3,7 +3,7 @@ import Sidebar from "../../components/Chat/Sidebar/Sidebar";
 
 const Chat = () => {
     return (
-      <div className='pt-32 px-28 flex h-[500px]'>
+      <div className='pt-32 pl-28 flex justify-center gap-2'>
         <Sidebar />
         <MessageContainer />
       </div>

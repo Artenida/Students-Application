@@ -6,7 +6,7 @@ const Sidebar = () => {
 	return (
 		<div className='border-slate-100 flex flex-col'>
 			<SearchInput />
-			<div className='divider px-3'></div>
+			<div className='divider px-4'></div>
 			<Conversations />
 			<LogoutButton />
 		</div>

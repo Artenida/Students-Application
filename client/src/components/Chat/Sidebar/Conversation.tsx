@@ -26,7 +26,7 @@ const Conversation: FC<ConversationProps> = ({
 
   const isSelected = selectedConversation?.id === conversation.id; // Adjusted to check against conversation._id
   const isOnline = onlineUsers.includes(conversation.id);
-console.log(conversation)
+
   const handleConversationSelect = () => {
     dispatch(setSelectedConversation(conversation)); // Pass conversation._id as string
   };
@@ -34,13 +34,13 @@ console.log(conversation)
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-custom-color2 rounded p-2 py-1 cursor-pointer ${
-          isSelected ? "bg-custom-color1" : ""
+        className={`flex gap-2 items-center hover:bg-custom-color1 rounded p-2 py-1 cursor-pointer ${
+          isSelected ? "bg-custom-color2" : ""
         }`}
         onClick={handleConversationSelect}
       >
         <div className="flex flex-col flex-1">
-          <div className="flex gap-3 justify-between">
+          <div className="flex gap-6 justify-between">
             <p className="font-bold text-black">{conversation.username}</p>
             <span className="text-xl">{emoji}</span>
           </div>
