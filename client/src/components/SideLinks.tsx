@@ -67,7 +67,6 @@ export const SideLinks = () => {
 
   const handleConfirmDelete = () => {
     dispatch(deleteUser(currentUser.user.id));
-    console.log("User account deleted successfully");
     dispatch(signOutSuccess());
     navigate("/");
     setIsDeleteDialogOpen(false);

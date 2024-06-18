@@ -35,8 +35,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     if (storedUser) {
       setAuthUser(JSON.parse(storedUser));
     }
-    console.log(storedUser)
-
   }, []);
 
   const updateAuthUser = (user: AuthUser | null) => {
