@@ -21,7 +21,7 @@ root.render(
             <App />
           </SocketContextProvider>
         </AuthContextProvider>
-      </PersistGate>{" "}
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
