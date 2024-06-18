@@ -20,9 +20,9 @@ const useGetMessages = () => {
     const getMessages = async () => {
       setLoading(true);
       try {
-        if (selectedConversation && selectedConversation._id) {
+        if (selectedConversation && selectedConversation.id) {
           const res = await fetch(
-            `http://localhost:5000/api/messages/${selectedConversation._id}`,
+            `http://localhost:5000/api/messages/${selectedConversation.id}`,
             {
               // method: "GET",
               // credentials: "include",

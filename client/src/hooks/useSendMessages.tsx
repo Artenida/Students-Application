@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { addMessage } from '../redux/chat/conversationSlice';
+import { addMessage, setSelectedConversation } from '../redux/chat/conversationSlice';
 import { useAuthContext } from "../context/AuthContext";
 
 const useSendMessage = () => {
@@ -10,12 +10,12 @@ const useSendMessage = () => {
   const messages = useSelector((state: RootState) => state.conversation.messages);
   const selectedConversation = useSelector((state: RootState) => state.conversation.selectedConversation);
   const { authUser } = useAuthContext();
-  console.log(selectedConversation?._id)
+  console.log(selectedConversation?.id)
 
   const sendMessage = async (message: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/messages/send/${selectedConversation?._id}`, {
+      const res = await fetch(`http://localhost:5000/api/messages/send/${selectedConversation?.id}`, {
         method: "POST",
         credentials: "include",
         headers: {

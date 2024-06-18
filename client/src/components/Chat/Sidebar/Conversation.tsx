@@ -6,7 +6,7 @@ import { useSocketContext } from "../../../context/SocketContext";
 
 interface ConversationProps {
   conversation: {
-    _id: string;
+    id: string;
     username: string;
   };
   lastIdx: boolean;
@@ -24,9 +24,9 @@ const Conversation: FC<ConversationProps> = ({
   );
   const { onlineUsers } = useSocketContext();
 
-  const isSelected = selectedConversation?._id === conversation._id; // Adjusted to check against conversation._id
-  const isOnline = onlineUsers.includes(conversation._id);
-
+  const isSelected = selectedConversation?.id === conversation.id; // Adjusted to check against conversation._id
+  const isOnline = onlineUsers.includes(conversation.id);
+console.log(conversation)
   const handleConversationSelect = () => {
     dispatch(setSelectedConversation(conversation)); // Pass conversation._id as string
   };
@@ -34,14 +34,14 @@ const Conversation: FC<ConversationProps> = ({
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer ${
-          isSelected ? "bg-sky-500" : ""
+        className={`flex gap-2 items-center hover:bg-custom-color2 rounded p-2 py-1 cursor-pointer ${
+          isSelected ? "bg-custom-color1" : ""
         }`}
         onClick={handleConversationSelect}
       >
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">{conversation.username}</p>
+            <p className="font-bold text-black">{conversation.username}</p>
             <span className="text-xl">{emoji}</span>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
 interface Conversation {
-  _id: string;
+  id: string;
   username: string;
 }
 

@@ -3,7 +3,7 @@ import Sidebar from "../../components/Chat/Sidebar/Sidebar";
 
 const Chat = () => {
     return (
-      <div className='pt-32 pl-56 flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden'>
+      <div className='pt-32 px-28 flex h-[500px]'>
         <Sidebar />
         <MessageContainer />
       </div>

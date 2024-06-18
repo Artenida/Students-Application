@@ -5,10 +5,10 @@ import Conversation from "./Conversation";
 const Conversations = () => {
 	const { loading, conversations } = useGetConversations();
 	return (
-		<div className='py-2 flex flex-col overflow-auto'>
+		<div className='py-2 overflow-auto'>
 			{conversations.map((conversation, idx) => (
 				<Conversation
-					key={conversation._id}
+					key={conversation.id}
 					conversation={conversation}
 					emoji={getRandomEmoji()}
 					lastIdx={idx === conversations.length - 1}
