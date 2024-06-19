@@ -12,6 +12,7 @@ import { FaClipboardList } from "react-icons/fa6";
 import { MdAddBox } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import logo from "../assets/logo1.png"
+import useLogout from "../hooks/useLogout";
 
 export type SidebarRoutes = {
   path: string;
@@ -22,6 +23,7 @@ export type SidebarRoutes = {
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { loading, logout } = useLogout();
   const { currentUser } = useAppSelector(selectUser);
   const imagePath = currentUser?.user?.profile_picture
     ? currentUser?.user?.profile_picture.replace(/\\/g, "/")
@@ -63,6 +65,7 @@ const Sidebar = () => {
 
   const handleSignOut = () => {
     dispatch(signOutSuccess());
+    logout();
     navigate("/loginChat");
   };
 
