@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setSelectedConversation } from "../../../redux/chat/conversationSlice";
 import { useSocketContext } from "../../../context/SocketContext";
-
+import avatar from "../../../assets/avatar.png"
 interface ConversationProps {
   conversation: {
     id: string;
@@ -39,6 +39,12 @@ const Conversation: FC<ConversationProps> = ({
         }`}
         onClick={handleConversationSelect}
       >
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
+					<div className='w-12 rounded-full'>
+						<img src={avatar} alt='user avatar' />
+					</div>
+				</div>
+
         <div className="flex flex-col flex-1">
           <div className="flex gap-6 justify-between">
             <p className="font-bold text-black">{conversation.username}</p>
