@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 export interface AuthUser {
   _id: string;
   username: string;
-  password: string;
+  // password: string;
   token: string;
 }
 

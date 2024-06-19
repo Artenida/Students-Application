@@ -1,11 +1,11 @@
 import express from "express";
-import { login, logout, signup } from "../controllers/chatAuthControllers";
+import { loginOrRegister, logout, signup } from "../controllers/chatAuthControllers";
 
 const router = express.Router();
 
 router.post("/signup", signup);
 
-router.post("/login", login);
+router.post("/login", loginOrRegister);
 
 router.post("/logout", logout);
 

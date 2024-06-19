@@ -61,19 +61,32 @@ export const signup = async (req: SignupRequest, res: Response): Promise<void> =
   }
 };
 
-export const login = async (req: LoginRequest, res: Response): Promise<void> => {
+export const loginOrRegister = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { username } = req.body;
-    const user = await User.findOne({ username });
-    // const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+    const { username, password } = req.body;
+    
+    // Check if user exists
+    let user = await User.findOne({ username });
 
     if (!user) {
-      res.status(400).json({ error: "Invalid username or password" });
-      return;
+      // If user does not exist, register the user
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user = new User({
+        username,
+        password: hashedPassword
+      });
+      await user.save();
+    } else {
+      // If user exists, check if the password is correct
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        res.status(400).json({ error: "Invalid username or password" });
+        return;
+      }
     }
 
+    // Generate token and set cookie
     const token = generateTokenAndSetCookie(user._id, res);
-    console.log(token)
 
     res.status(200).json({
       _id: user._id,
@@ -81,7 +94,7 @@ export const login = async (req: LoginRequest, res: Response): Promise<void> => 
       token,
     });
   } catch (error: any) {
-    console.log("Error in login controller", error.message);
+    console.log("Error in loginOrRegister controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
