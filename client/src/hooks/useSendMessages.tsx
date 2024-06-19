@@ -10,7 +10,6 @@ const useSendMessage = () => {
   const messages = useSelector((state: RootState) => state.conversation.messages);
   const selectedConversation = useSelector((state: RootState) => state.conversation.selectedConversation);
   const { authUser } = useAuthContext();
-  console.log(selectedConversation?.id)
 
   const sendMessage = async (message: string) => {
     setLoading(true);

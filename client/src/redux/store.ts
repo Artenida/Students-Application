@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import userReducer from './user/userSlice'
 import postReducer from './forum/postSlice'
+import chatReducer from './chat/chatUsersSlice'
 import commentsReducer from './forum/commentSlice'
 import eventReducer from './forum/eventSlice'
 import categoriesReducer from './forum/categoriesSlice'
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     event: eventReducer,
     categories: categoriesReducer,
     conversation: conversationReducer,
+    chatUser: chatReducer,
 });
 
 const persistConfig = {
