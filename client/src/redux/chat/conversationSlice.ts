@@ -4,6 +4,7 @@ export interface Conversation {
   id: string;
   username: string;
 }
+
 export interface Message {
   _id: string;
   message: string;
@@ -29,7 +30,7 @@ const conversationSlice = createSlice({
       state.selectedConversation = action.payload;
     },
     addMessage: (state, action: PayloadAction<Message>) => {
-      state.messages = [...state.messages, action.payload];
+      state.messages.push(action.payload);
     },
     setMessages: (state, action: PayloadAction<Message[]>) => {
       state.messages = action.payload;
@@ -37,7 +38,6 @@ const conversationSlice = createSlice({
   },
 });
 
-export const { setSelectedConversation, addMessage, setMessages } =
-  conversationSlice.actions;
+export const { setSelectedConversation, addMessage, setMessages } = conversationSlice.actions;
 
 export default conversationSlice.reducer;

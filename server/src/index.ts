@@ -30,6 +30,10 @@ const io = new Server(server, {
 
 const userSocketMap: Record<string, string> = {};
 
+export const getReceiverSocketId = (receiverId: string) => {
+  return userSocketMap[receiverId];
+};
+
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
 
@@ -46,10 +50,6 @@ io.on('connection', (socket) => {
     io.emit('getOnlineUsers', Object.keys(userSocketMap));
   });
 });
-
-export const getReceiverSocketId = (receiverId: string) => {
-  return userSocketMap[receiverId];
-};
 
 app.use(cors({
   origin: 'http://localhost:3000',

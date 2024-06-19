@@ -2,36 +2,31 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 // import notificationSound from "../assets/sounds/notification.mp3";
 import { useSocketContext } from "../context/SocketContext";
-import { useAppSelector } from "../redux/hooks";
-import { RootState } from "../redux/store";
-import { setMessages } from "../redux/chat/conversationSlice";
+import { addMessage } from "../redux/chat/conversationSlice";
+import { Message } from "../redux/chat/conversationSlice";
+import notificationSound from "../assets/sound/notification.mp3"
 
-interface Message {
-	_id: string;
-	message: string;
-	timestamp: number;
-  shouldShake?: boolean; 
-  }
 
 const useListenMessages = () => {
   const { socket } = useSocketContext();
   const dispatch = useDispatch();
-  const messages = useAppSelector((state: RootState) => state.conversation.messages);
 
   useEffect(() => {
     if (socket) {
-      socket.on("newMessage", (newMessage: Message) => {
+      const handleMessage = (newMessage: Message) => {
         newMessage.shouldShake = true;
-        // const sound = new Audio(notificationSound);
-        // sound.play();
-        dispatch(setMessages([...messages, newMessage]));
-      });
+        const sound = new Audio(notificationSound);
+			  sound.play();
+        dispatch(addMessage(newMessage));
+      };
+
+      socket.on("newMessage", handleMessage);
 
       return () => {
-        socket.off("newMessage");
+        socket.off("newMessage", handleMessage);
       };
     }
-  }, [socket, dispatch, messages]);
+  }, [socket, dispatch]);
 };
 
 export default useListenMessages;

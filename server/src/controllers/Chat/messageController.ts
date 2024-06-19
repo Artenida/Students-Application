@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Conversation from "../../models/ConversationModel";
 import Message from "../../models/MessageModel";
-// import { getReceiverSocketId, io } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../../socket/socket";
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {
 	try {
@@ -41,11 +41,11 @@ export const sendMessage = async (req: Request, res: Response): Promise<void> =>
 		await Promise.all([newMessage.save(), conversation.save()]);
 
 		// SOCKET IO FUNCTIONALITY WILL GO HERE
-		// const receiverSocketId = getReceiverSocketId(receiverId);
-		// if (receiverSocketId) {
-		// 	// io.to(<socket_id>).emit() used to send events to specific client
-		// 	io.to(receiverSocketId).emit("newMessage", newMessage);
-		// }
+		const receiverSocketId = getReceiverSocketId(receiverId);
+		if (receiverSocketId) {
+			// io.to(<socket_id>).emit() used to send events to specific client
+			io.to(receiverSocketId).emit("newMessage", newMessage);
+		}
 
 		res.status(201).json(newMessage);
 	} catch (error: any) {
