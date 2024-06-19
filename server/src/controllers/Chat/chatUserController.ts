@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User, UserDocument } from "../models/ChatUserModel";
+import { User, UserDocument } from "../../models/ChatUserModel";
 
 interface AuthenticatedRequest extends Request {
   user?: UserDocument;

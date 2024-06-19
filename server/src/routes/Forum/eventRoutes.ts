@@ -1,7 +1,7 @@
 import express from "express";
-import { verifyToken } from "../middleware/verifyToken";
+import { verifyToken } from "../../middleware/verifyToken";
 import multer from "multer";
-import { allEvents, createEvent, deleteEvent, getSingleEvent, getUsersEvents, searchEvent, updateEvent } from "../controllers/eventControllers";
+import { allEvents, createEvent, deleteEvent, getSingleEvent, getUsersEvents, searchEvent, updateEvent } from "../../controllers/Forum/eventControllers";
 
 const storage = multer.diskStorage({
   destination: function (req, files, cb) {

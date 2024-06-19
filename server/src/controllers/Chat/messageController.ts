@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import Conversation from "../models/ConversationModel";
-import Message from "../models/MessageModel";
+import Conversation from "../../models/ConversationModel";
+import Message from "../../models/MessageModel";
 // import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req: Request, res: Response): Promise<void> => {

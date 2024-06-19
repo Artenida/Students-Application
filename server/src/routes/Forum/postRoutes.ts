@@ -9,12 +9,12 @@ import {
   searchPosts,
   updatePost,
   getBloggersPost,
-} from "../controllers/postControllers";
+} from "../../controllers/Forum/postControllers";
 import {
   validateCreatePost,
   validateUpdatePost,
-} from "../middleware/validations";
-import { verifyToken } from "../middleware/verifyToken";
+} from "../../middleware/validations";
+import { verifyToken } from "../../middleware/verifyToken";
 import multer from "multer";
 
 const storage = multer.diskStorage({

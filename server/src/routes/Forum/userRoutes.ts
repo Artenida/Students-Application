@@ -7,8 +7,8 @@ import {
   // addSocialMediaAccounts,
   // deleteSocialMediaAccounts,
   // changePassword,
-} from "../controllers/userControllers";
-import { verifyToken } from "../middleware/verifyToken";
+} from "../../controllers/Forum/userControllers";
+import { verifyToken } from "../../middleware/verifyToken";
 import multer from "multer";
 
 const router: Router = express.Router();

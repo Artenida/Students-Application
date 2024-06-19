@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { Secret } from "jsonwebtoken";
-import { User } from "../models/User";
+import { User } from "../../models/User";
 import bcrypt from "bcrypt";
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';

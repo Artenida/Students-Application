@@ -1,5 +1,5 @@
 import express from "express";
-import { loginOrRegister, logout, signup } from "../controllers/chatAuthControllers";
+import { loginOrRegister, logout, signup } from "../../controllers/Chat/chatAuthControllers";
 
 const router = express.Router();
 

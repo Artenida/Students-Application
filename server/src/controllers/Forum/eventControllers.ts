@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import Event from "../models/Event";
+import Event from "../../models/Event";
 
 type EventInputs = {
   title: string;
