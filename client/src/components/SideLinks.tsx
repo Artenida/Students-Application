@@ -15,10 +15,12 @@ import {
 } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import useLogout from "../hooks/useLogout";
 
 export const SideLinks = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { loading, logout } = useLogout();
   const { currentUser } = useAppSelector(selectUser);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const userId = currentUser.user.id;
@@ -74,6 +76,7 @@ export const SideLinks = () => {
 
   const handleSignOut = () => {
     dispatch(signOutSuccess());
+    logout();
     navigate("/login");
   };
 
