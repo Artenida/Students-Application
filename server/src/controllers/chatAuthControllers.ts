@@ -6,26 +6,26 @@ import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie";
 interface SignupRequest extends Request {
   body: {
     username: string;
-    password: string;
-    confirmPassword: string;
+    // password: string;
+    // confirmPassword: string;
   };
 }
 
 interface LoginRequest extends Request {
   body: {
     username: string;
-    password: string;
+    // password: string;
   };
 }
 
 export const signup = async (req: SignupRequest, res: Response): Promise<void> => {
   try {
-    const { username, password, confirmPassword } = req.body;
+    const { username } = req.body;
 
-    if (password !== confirmPassword) {
-      res.status(400).json({ error: "Passwords don't match" });
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   res.status(400).json({ error: "Passwords don't match" });
+    //   return;
+    // }
 
     const user = await User.findOne({ username });
 
@@ -35,12 +35,12 @@ export const signup = async (req: SignupRequest, res: Response): Promise<void> =
     }
 
     // HASH PASSWORD HERE
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
       username,
-      password: hashedPassword
+      // password: hashedPassword
     });
 
     if (newUser) {
@@ -63,11 +63,11 @@ export const signup = async (req: SignupRequest, res: Response): Promise<void> =
 
 export const login = async (req: LoginRequest, res: Response): Promise<void> => {
   try {
-    const { username, password } = req.body;
+    const { username } = req.body;
     const user = await User.findOne({ username });
-    const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+    // const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
-    if (!user || !isPasswordCorrect) {
+    if (!user) {
       res.status(400).json({ error: "Invalid username or password" });
       return;
     }
