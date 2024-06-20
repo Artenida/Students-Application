@@ -38,6 +38,11 @@ type RegisterUserResponse = {
   data: any;
   error?: string;
 };
+type PasswordTypes = {
+  id: string,
+  oldPassword: string,
+  newPassword: string,
+}
 
 export const loginUser = createAsyncThunk(
   "api/auth/login",
@@ -171,6 +176,26 @@ export const contact = createAsyncThunk(
       return !response.ok ? rejectWithValue(data.message) : data;
     } catch (error: any) {
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "api/users/changePassword",
+  async ( body : PasswordTypes, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState = getState() as RootState;
+      const token: string = state.user.token ?? "";
+
+      const response = await createAPI(`api/users/changePassword/${body?.id}`, {
+        method: "PUT",
+        token: token,
+        body: JSON.stringify(body),
+      })(body);
+      const data = await response.json();
+      return !response.ok ? rejectWithValue(data.message) : data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
   }
 );

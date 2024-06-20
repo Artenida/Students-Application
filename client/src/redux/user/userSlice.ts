@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../redux/store";
 import {
+  changePassword,
   contact,
   deleteUser,
   getUser,
@@ -155,6 +156,23 @@ const userSlice = createSlice({
       .addCase(contact.rejected, (state, action) => {
         state.loading = false;
         state.contactError = action.payload as string;
+      })
+
+      .addCase(changePassword.pending, (state) => {
+        state.loading = true;
+        state.isUpdated = true;
+        state.updateError = null;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isUpdated = true;
+        state.updateError = null;
+        state.isLoggedIn = true;
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.loading = true;
+        state.isUpdated = false;
+        state.updateError = action.payload as string | null;
       })
   },
 });

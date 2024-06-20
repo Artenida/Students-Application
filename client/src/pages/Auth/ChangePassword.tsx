@@ -1,11 +1,53 @@
 import { MediumButton } from "../../components/Helpful Components/ButtonComponent";
 import FormInputsComponent from "../../components/Helpful Components/FormInputsComponent";
 import { FaLock } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { selectUser } from "../../redux/user/userSlice";
+import { changePassword } from "../../api/userThunk";
 
 const ChangePassword = () => {
+  const dispatch = useAppDispatch();
+  const { isUpdated, loading, updateError } = useAppSelector(selectUser);
+  const navigate = useNavigate();
+  const { currentUser } = useAppSelector(selectUser);
+
+  const [formData, setFormData] = useState({
+    id: currentUser?.user?.id,
+    oldPassword: "",
+    newPassword: "",
+  });
+
+  const [formDataErrors, setFormDataErrors] = useState({
+    oldPassword: "",
+    newPassword: "",
+  });
+  console.log(formData)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    // const updatedErrors = validateLoginForm(id, value, formDataErrors);
+    setFormData({ ...formData, [id]: value });
+    // setFormDataErrors(updatedErrors);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const errors = Object.values(formDataErrors).some((error) => error !== "");
+
+    event.preventDefault();
+    if (!errors) {
+      dispatch(changePassword(formData)).then(() => {
+        alert("Updated succesfully");
+        navigate("/editAccount");
+      });
+    } else {
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-screen p-4">
-      <div className="h-[600px] w-[600px] rounded-xl p-4 border border-custom-color2 relative">
+      <div className="h-[480px] w-[600px] rounded-xl p-4 border border-custom-color2 relative">
         <div className="absolute p-4">
           <div className="bg-custom-color1 rounded-full p-3 text-custom-color4">
             <FaLock size={24} />
@@ -22,27 +64,33 @@ const ChangePassword = () => {
           </h6>
         </div>
 
-        <div className="flex justify-between flex-col gap-5 mt-8">
+        <form
+          action=""
+          className="flex justify-between flex-col gap-5 mt-8"
+          onSubmit={handleSubmit}
+        >
           <FormInputsComponent
-            id="currentPassword"
+            id="oldPassword"
             placeholder="Current password"
             type="password"
             label="Current password"
+            onChange={handleChange}
           />
           <FormInputsComponent
             id="newPassword"
             placeholder="New password"
             type="password"
             label="New password"
+            onChange={handleChange}
           />
-          <FormInputsComponent
+          {/* <FormInputsComponent
             id="confirmPassword"
             placeholder="Confirm Password"
             type="password"
             label="Confirm Password"
-          />
+          /> */}
           <MediumButton children={"Save"} />
-        </div>
+        </form>
       </div>
     </div>
   );
