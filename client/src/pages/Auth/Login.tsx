@@ -13,7 +13,6 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn, loading, loginError } = useAppSelector(selectUser);
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -27,7 +26,7 @@ const Login = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     const updatedErrors = validateLoginForm(id, value, formDataErrors);
-    setFormData({ ...formData, [id]: value.trim() });
+    setFormData({ ...formData, [id]: value });
     setFormDataErrors(updatedErrors);
   };
 
@@ -50,11 +49,7 @@ const Login = () => {
   return (
     <div className="flex flex-col md:flex-row items-center h-screen p-4 gap-12 md:pr-16">
       <div className="md:w-1/2 pt-24">
-        <img
-          src={home}
-          alt="WELCOME"
-          className="rounded-xl"
-        />
+        <img src={home} alt="WELCOME" className="rounded-xl" />
         <div className="text-center mt-4 text-custom-color3">
           <h2 className="font-bold text-[20px]">Welcome Back!</h2>
           <h6 className="mt-2">
