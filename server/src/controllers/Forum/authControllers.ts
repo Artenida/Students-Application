@@ -103,3 +103,50 @@ export const contact = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
+export const forgotPassword =(req: Request, res: Response) => {
+  sendEmail(req.body)
+  .then((response: any) => res.send(response.message))
+  .catch((error) => res.status(500).send(error.message));
+}
+
+function sendEmail({ recipient_email, OTP }: { recipient_email: string, OTP: string }) {
+  return new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mail_configs = {
+      from: process.env.MY_EMAIL,
+      to: recipient_email,
+      subject: 'EduConnect PASSWORD RECOVERY',
+      html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Recovery</title>
+</head>
+<body>
+  <div style="font-family: Arial, sans-serif; width: 100%; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd;">
+    <h2 style="color: #00466a;">EduConnect Password Recovery</h2>
+    <p>Hi,</p>
+    <p>Thank you for choosing EduConnect. Use the following OTP to complete your password recovery procedure. The OTP is valid for 5 minutes.</p>
+    <h2 style="background: #00466a; color: #fff; padding: 10px; text-align: center; border-radius: 4px;">${OTP}</h2>
+    <p>Regards,<br />EduConnect Team</p>
+  </div>
+</body>
+</html>`,
+    };
+
+    transporter.sendMail(mail_configs, (error, info) => {
+      if (error) {
+        console.log(error);
+        return reject({ message: 'An error has occurred' });
+      }
+      return resolve({ message: 'Email sent successfully' });
+    });
+  });
+}
