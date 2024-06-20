@@ -23,7 +23,6 @@ const ChangePassword = () => {
     oldPassword: "",
     newPassword: "",
   });
-  console.log(formData)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -33,16 +32,14 @@ const ChangePassword = () => {
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const errors = Object.values(formDataErrors).some((error) => error !== "");
+    // const errors = Object.values(formDataErrors).some((error) => error !== "");
 
     event.preventDefault();
-    if (!errors) {
-      dispatch(changePassword(formData)).then(() => {
+      dispatch(changePassword(formData));
+      if(!updateError) {
         alert("Updated succesfully");
         navigate("/editAccount");
-      });
-    } else {
-    }
+      }
   };
 
   return (
