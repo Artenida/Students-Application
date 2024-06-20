@@ -20,7 +20,7 @@ interface UpdateResult {
   result?: string;
 }
 export class User {
-  static async findById(id: string): Promise<UserData> {
+  static async findById(id: string): Promise<UserData[]> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
 
@@ -29,13 +29,13 @@ export class User {
       FROM users 
       WHERE id = ?;
       `;
-      const data = await new Promise<UserData>((resolve, reject) => {
+      const data = await new Promise<UserData[]>((resolve, reject) => {
         db.query(checkQuery, [id], (error, data) => {
           connection.closeConnection();
           if (error) {
             reject(error);
           } else {
-            resolve(data as UserData);
+            resolve(data as UserData[]);
           }
         });
       });
@@ -288,21 +288,21 @@ export class User {
   }
 
   static async updatePassword(
-    password: string,
-    id: string,
+    newPassword: string,
+    id: string
   ): Promise<UpdateResult> {
     const connection = createDatabaseConnection();
     const db = connection.getConnection();
-
+  
     try {
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
       let query: string;
       let queryParams: (string | number)[];
-
-      query =
-        "UPDATE users SET password = ? WHERE id = ?";
+  
+      query = "UPDATE users SET password = ? WHERE id = ?";
       queryParams = [hashedPassword, id];
-
+  
       const result: any = await new Promise((resolve, reject) => {
         db.query(query, queryParams, (error, result) => {
           if (error) {
@@ -316,13 +316,13 @@ export class User {
           }
         });
       });
-
+  
       connection.closeConnection();
-
+  
       if (!result) {
         throw new Error("User update failed");
       }
-
+  
       return result;
     } catch (error) {
       console.error("Error updating user:", error);
@@ -330,4 +330,5 @@ export class User {
       throw error;
     }
   }
+  
 }

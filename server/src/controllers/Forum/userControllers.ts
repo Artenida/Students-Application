@@ -128,6 +128,7 @@ export const changePassword = async (
 
     // Retrieve user by id
     const user = await User.findById(id);
+    console.log(user[0].password)
 
     if (!user) {
       res.status(404).json({ message: "User not found" });
@@ -135,18 +136,18 @@ export const changePassword = async (
     }
 
     // Verify old password
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      oldPassword,
+      user[0].password
+    );
 
     if (!isPasswordValid) {
       res.status(400).json({ message: "Invalid old password" });
       return;
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // Adjust salt rounds as needed
-
-    // Update user's password in the database
-    const updateResult = await User.updatePassword(id, hashedPassword);
+    // Update user's password
+    const updateResult = await User.updatePassword(newPassword, id);
 
     if (updateResult.success) {
       res.status(200).json({ message: "Password changed successfully" });
