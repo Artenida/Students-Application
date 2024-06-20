@@ -150,3 +150,4 @@ function sendEmail({ recipient_email, OTP }: { recipient_email: string, OTP: str
     });
   });
 }
+

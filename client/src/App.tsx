@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import { RecoveryProvider } from "./context/RecoveryProvider";
 import AppRoutes from "./routes/Routes";
+
 
 const App = () => {
   return (
-    <div>
-      <AppRoutes />
-    </div>
+    <RecoveryProvider>
+      <div>
+        <AppRoutes />
+      </div>
+    </RecoveryProvider>
   );
 };
 

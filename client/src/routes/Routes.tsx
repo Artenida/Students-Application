@@ -25,6 +25,9 @@ import Chat from "../pages/Chat/Chat";
 import Signup from "../pages/Chat/Signup";
 import LoginChat from "../pages/Chat/LoginChat";
 import { useAuthContext } from "../context/AuthContext";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
+import OTPVerification from "../pages/Auth/OTPInput";
+import Reset from "../pages/Auth/Reset";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -33,6 +36,9 @@ const routes = [
   { path: "/terms", element: <TermsAndConditions /> },
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
+  { path: "/forgotPassword", element: <ForgotPassword /> },
+  { path: "/otp", element: <OTPVerification /> },
+  { path: "/reset", element: <Reset /> },
   { path: "*", element: <Home /> },
 ];
 
