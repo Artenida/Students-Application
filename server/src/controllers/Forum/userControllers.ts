@@ -33,11 +33,10 @@ export const updateUser = async (
     const { id } = req.params;
 
     const userUpdateResult = await User.updateUser(id, username, email, bio, fields);
-    // const universityUpdateResult = await User.updateUniversity(id, subject);
 
     if (userUpdateResult.success) {
       res.status(200).json({
-        message: "User and university updated successfully",
+        message: "User updated successfully",
         user: {
           id,
           username,
@@ -89,3 +88,31 @@ export const deleteUser = async (
   }
 };
 
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { password, email } = req.body;
+
+    const changePassword = await User.resetPassword(password, email);
+
+    if (changePassword.success) {
+      res.status(200).json({
+        message: "Password changes successfully",
+        user: {
+          password,
+          email,
+        },
+      });
+    } else {
+      res.status(400).json({
+        message: changePassword.message,
+      });
+    }
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

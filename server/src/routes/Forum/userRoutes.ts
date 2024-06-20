@@ -4,6 +4,7 @@ import {
   updateUser,
   deleteUser,
   updateProfilePicture,
+  resetPassword,
   // addSocialMediaAccounts,
   // deleteSocialMediaAccounts,
   // changePassword,
@@ -24,6 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.put("/resetPassword", resetPassword);
 // router.use(verifyToken);
 router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);

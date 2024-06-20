@@ -215,4 +215,48 @@ export class User {
       throw error;
     }
   }
+
+  static async resetPassword(
+    password: string,
+    email: string,
+  ): Promise<UpdateResult> {
+    const connection = createDatabaseConnection();
+    const db = connection.getConnection();
+
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      let query: string;
+      let queryParams: (string | number)[];
+
+      query =
+        "UPDATE users SET password = ? WHERE email = ?";
+      queryParams = [hashedPassword, email];
+
+      const result: any = await new Promise((resolve, reject) => {
+        db.query(query, queryParams, (error, result) => {
+          if (error) {
+            console.error("Error updating user:", error);
+            reject("Error updating user");
+          } else {
+            resolve({
+              success: true,
+              message: "User updated successfully",
+            });
+          }
+        });
+      });
+
+      connection.closeConnection();
+
+      if (!result) {
+        throw new Error("User update failed");
+      }
+
+      return result;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      connection.closeConnection();
+      throw error;
+    }
+  }
 }
