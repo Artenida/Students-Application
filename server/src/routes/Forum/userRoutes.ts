@@ -5,6 +5,7 @@ import {
   deleteUser,
   updateProfilePicture,
   resetPassword,
+  changePassword,
   // addSocialMediaAccounts,
   // deleteSocialMediaAccounts,
   // changePassword,
@@ -29,7 +30,7 @@ router.put("/resetPassword", resetPassword);
 // router.use(verifyToken);
 router.use("/find/:userId", getUser);
 router.put("/updateUser/:id", updateUser);
-// router.put("/changePassword/:id", changePassword);
+router.put("/changePassword/:id", changePassword);
 router.delete("/delete/:id", deleteUser);
 router.put("/updatePicture", upload.single("files"), updateProfilePicture);
 

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../../models/User";
+import bcrypt from "bcrypt";
 
 export const getUser = async (
   req: Request,
@@ -100,9 +101,8 @@ export const resetPassword = async (
 
     if (changePassword.success) {
       res.status(200).json({
-        message: "Password changes successfully",
+        message: "Password changed successfully",
         user: {
-          password,
           email,
         },
       });
@@ -110,6 +110,48 @@ export const resetPassword = async (
       res.status(400).json({
         message: changePassword.message,
       });
+    }
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const changePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    // Retrieve user by id
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Verify old password
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      res.status(400).json({ message: "Invalid old password" });
+      return;
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10); // Adjust salt rounds as needed
+
+    // Update user's password in the database
+    const updateResult = await User.updatePassword(id, hashedPassword);
+
+    if (updateResult.success) {
+      res.status(200).json({ message: "Password changed successfully" });
+    } else {
+      res.status(500).json({ message: "Failed to change password" });
     }
   } catch (error) {
     console.error("Error updating password:", error);
