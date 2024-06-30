@@ -5,6 +5,7 @@ import { MediumButton } from "../Helpful Components/ButtonComponent";
 import FormInputsComponent from "../Helpful Components/FormInputsComponent";
 import { validateUpdateForm } from "../../utils/validateUser";
 import { updateUser } from "../../api/userThunk";
+import { Alert } from "@mui/material";
 
 interface FormData {
   username: string;
@@ -116,6 +117,11 @@ const PersonalInfo = () => {
       <div className="mt-4">
         <MediumButton children={"Save"} onClick={handleUpdate} />
       </div>
+      {updateError && (
+          <Alert severity="error" className="mt-4">
+            {updateError}
+          </Alert>
+        )}
     </div>
   );
 };

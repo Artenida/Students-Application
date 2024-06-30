@@ -29,7 +29,9 @@ const ProfilePicture = () => {
     formData.append("files", image ?? "");
 
     try {
-      dispatch(updateProfilePicture(formData));
+      dispatch(updateProfilePicture(formData)).then(() => {
+        alert("Profile updated successfully");
+      });
       dispatch(getUser(userId));
     } catch (error) {
       console.error("Error updating profile picture:", error);

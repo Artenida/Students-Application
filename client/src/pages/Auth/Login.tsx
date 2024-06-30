@@ -105,7 +105,7 @@ const Login = () => {
         </div>
         {loginError && (
           <Alert severity="error" className="mt-4">
-            Error on login.
+            {loginError}
           </Alert>
         )}
       </form>

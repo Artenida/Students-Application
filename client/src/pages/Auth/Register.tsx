@@ -166,7 +166,7 @@ const Register = () => {
         </div>
         {registerError && (
           <Alert severity="error" className="mt-4">
-            Error on register.
+            {registerError}
           </Alert>
         )}
       </form>
