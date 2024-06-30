@@ -24,9 +24,9 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading, logout } = useLogout();
-  const { currentUser } = useAppSelector(selectUser);
-  const imagePath = currentUser?.user?.profile_picture
-    ? currentUser?.user?.profile_picture.replace(/\\/g, "/")
+  const { user, currentUser } = useAppSelector(selectUser);
+  const imagePath = user?.profile_picture
+    ? user?.profile_picture.replace(/\\/g, "/")
     : "";
   const userId = currentUser.user.id;
 
