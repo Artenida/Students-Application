@@ -17,8 +17,7 @@ const TermsAndConditions = () => {
           </p>
           <h3 className="text-custom-color3 mt-5">Registration</h3>
           <p className="text-md">
-            Certainly! Here's a paragraph for the Registration section of your
-            Terms and Conditions: "Registration on our platform is a
+            Registration on our platform is a
             straightforward process designed to enhance your experience and
             ensure the security of our services. By registering, you gain access
             to a wealth of features including participation in our student
@@ -33,7 +32,7 @@ const TermsAndConditions = () => {
             provided is accurate and current, and agree to maintain the
             confidentiality of your login credentials. Should you have any
             concerns or inquiries regarding the registration process or your
-            account, our support team is readily available to assist you."
+            account, our support team is readily available to assist you.
           </p>
         </div>
         <div className="bg-custom-color1 p-6 w-full md:w-[300px] rounded-xl">

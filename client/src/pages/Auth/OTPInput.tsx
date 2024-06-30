@@ -44,7 +44,6 @@ const OTPVerification: React.FC = () => {
 
   const verifyOTP = () => {
     if (parseInt(OTPinput.join("")) === otp) {
-      // setPage("reset");
       navigate('/reset')
     } else {
       alert("The code you have entered is not correct, try again or re-send the link");
