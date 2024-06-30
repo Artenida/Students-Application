@@ -37,8 +37,8 @@ const useLogin = () => {
       localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data);
     } catch (error: any) {
-    //   toast.error(error.message);
     console.log(error)
+    alert(error.message)
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default useLogin;
 function handleInputErrors(username: string, password: string): boolean {
   if (!username || !password) {
     console.log("Please fill in all fields")
-    // toast.error("Please fill in all fields");
+    alert("Please fill in all fields")
     return false;
   }
 

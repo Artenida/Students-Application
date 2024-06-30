@@ -9,20 +9,22 @@ const SearchInput: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const dispatch = useDispatch();
   const { conversations } = useGetConversations();
-  const selectedConversation = useSelector(
-    (state: RootState) => state.conversation.selectedConversation
-  );
+  // const selectedConversation = useSelector(
+  //   (state: RootState) => state.conversation.selectedConversation
+  // );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!search) {
       console.log("Search term is required");
+      alert("Search term is required");
       return;
     }
 
     if (search.length < 3) {
       console.log("Search term must be at least 3 characters long");
+      alert("Search term must be at least 3 characters long")
       return;
     }
 
@@ -35,7 +37,7 @@ const SearchInput: React.FC = () => {
       setSearch("");
     } else {
       console.log("No such user found!");
-      // toast.error("No such user found!");
+      alert("No such user found!")
     }
   };
 

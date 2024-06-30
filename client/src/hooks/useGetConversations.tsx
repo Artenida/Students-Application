@@ -33,7 +33,7 @@ const useGetConversations = () => {
         setConversations(formattedData);
       } catch (error: any) {
         console.log(error.message);
-        // Handle errors as needed
+        alert(error.message)
       } finally {
         setLoading(false);
       }

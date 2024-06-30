@@ -29,6 +29,7 @@ const useSendMessage = () => {
       dispatch(addMessage(data));
     } catch (error: any) {
       console.log(error.message);
+      alert(error.message)
     } finally {
       setLoading(false);
     }
