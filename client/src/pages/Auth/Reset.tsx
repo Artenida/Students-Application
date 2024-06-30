@@ -12,22 +12,47 @@ const ResetPassword: React.FC = () => {
 
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const { email } = context;
+
+  // const resetPassword = async () => {
+  //   if (password === confirmPassword) {
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:5000/api/users/resetPassword",
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           }
+  //         }
+  //       );
+
+  //       if (response.ok) {
+  //         navigate('/login')
+  //       } else {
+  //         console.log("Failed to reset password");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     alert("Passwords do not match");
+  //   }
+  // };
 
   const resetPassword = async () => {
     if (password === confirmPassword) {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/users/resetPassword",
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            }
-          }
-        );
-
+        const response = await fetch("http://localhost:5000/api/users/resetPassword", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password, email })
+        });
+  
         if (response.ok) {
-          navigate('/login')
+          navigate('/login');
         } else {
           console.log("Failed to reset password");
         }
