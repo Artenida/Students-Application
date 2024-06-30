@@ -34,7 +34,7 @@ router.get("/allPosts", getPosts);
 router.get("/getSinglePost/:id", getSinglePost);
 router.post("/createPost", verifyToken, upload.array("file", 5), validateCreatePost, createPost);
 router.delete("/delete/:id", verifyToken, deletePost);
-router.put("/updatePost/:id", updatePost);
+router.put("/updatePost/:id", verifyToken, updatePost);
 router.get("/users/:userId", getBloggersPost);
 router.get("/paginatedPosts", getPaginatedPosts);
 router.get("/search", searchPosts);
